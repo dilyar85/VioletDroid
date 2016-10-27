@@ -3,6 +3,7 @@
 ## Group Members
 Saifuding Diliyaer, Xin Yan, Lance Barrett, Weihang Xiao
 
+
 ## Installation Note
 This project is based on the buildToolsVersion "24.0.2" and gradle version "2.2.2", plase make sure you have upaded your Android Studio and Gradle to the newest version before running it on your own machine. 
 
