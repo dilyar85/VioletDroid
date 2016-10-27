@@ -3,8 +3,8 @@
 ## Group Members
 Saifuding Diliyaer, Xin Yan, Lance Barrett, Weihang Xiao
 
-## Group Notes
-Please pull all the codes from 'master' branch and make ture they can run successfully on all of our machines (so that we know it would also run on the professor's machine, hopefully). 
+## Installation Note
+This project is based on the buildToolsVersion "24.0.2" and gradle version "2.2.2", plase make sure you have upaded your Android Studio and Gradle to the newest version before running it on your own machine. 
 
 ## Add Your Contribution
 Before start your own implement on this project, please make sure you are in a new branch other than "master". Type these in terminal:
