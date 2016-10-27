@@ -24,8 +24,9 @@ git add .
 git commit -m "Your commit message"
 git push origin "current_branch_name"
 ```
-After doing this, you can see a green button appeared on the top of project's GitHub page. Click it to creat a new pull request, feel free to add some comments on what new features you have added to the project, and clcik the "Creat pull request" button at the bottom. Dilyar will merge it if there is nothing goes wrong. 
+After doing this, you can see a green button appeared on the top of project's GitHub page. 
 <img src="https://github.com/dilyar85/VioletDroid/blob/master/screenshots/compare_pull_request.png" alt="create_pull_request_image">
+Click it to creat a new pull request, feel free to add some comments on what new features you have added to the project, and clcik the "Creat pull request" button at the bottom. Dilyar will merge it if there is nothing goes wrong. 
 <img src="https://github.com/dilyar85/VioletDroid/blob/master/screenshots/create_pull_request.png" alt="creat_pull_requst_image">
 
 # Let's make this project awesome togeter! 
