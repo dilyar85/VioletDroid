@@ -8,7 +8,7 @@ Saifuding Diliyaer, Xin Yan, Lance Barrett, Weihang Xiao
 This project is based on the buildToolsVersion "24.0.2" and gradle version "2.2.2", plase make sure you have upaded your Android Studio and Gradle to the newest version before running it on your own machine. 
 
 ## Current Screenshot
-<img src="https://github.com/dilyar85/VioletDroid/blob/master/screenshots/current_screenshots.png" alt="current_screenshots_image" width="300">
+<img src="https://github.com/dilyar85/VioletDroid/blob/master/screenshots/current_screenshot.png" alt="current_screenshots_image" width="300">
 
 ## Add Your Contribution
 Before start your own implement on this project, please make sure you are in a new branch other than "master". Type these in terminal:
