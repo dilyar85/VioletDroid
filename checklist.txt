@@ -1,0 +1,8 @@
+Week 1
+
+Reports for all team members: Ok
+Wiki doc with features: Ok
+Issues: Ok
+Code and build script: Ok
+
+What is projectFilesBackup?
