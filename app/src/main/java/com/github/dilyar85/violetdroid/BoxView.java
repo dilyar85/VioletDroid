@@ -19,8 +19,7 @@ public class BoxView extends EditText {
 
     public BoxView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        cancelEditable();
-
+        //cancelEditable();
 
         TypedArray arr =  context.obtainStyledAttributes(attrs, R.styleable.BoxView);
         defaultSize = arr.getDimensionPixelSize(R.styleable.BoxView_default_size, 100);
@@ -48,7 +47,9 @@ public class BoxView extends EditText {
 
     public void setEditable() {
         this.setFocusable(true);
+        this.requestFocus();
         this.setClickable(true);
+
     }
 
     public void cancelEditable() {
