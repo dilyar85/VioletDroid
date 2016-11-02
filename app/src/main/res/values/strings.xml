@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">VioletDroid</string>
     <string name="dummy">VioletDroid, to be continued!</string>
-    <string name="class_rectangle">Rectangle Class</string>
+    <string name="class_rectangle">Class</string>
     <string name="dependency_line">Dependency</string>
     <string name="aggregation_line">Aggregation</string>
     <string name="inheritance_line">Inheritance</string>
