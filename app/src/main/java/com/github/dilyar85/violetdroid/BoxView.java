@@ -49,12 +49,12 @@ public class BoxView extends EditText {
         this.setFocusable(true);
         this.requestFocus();
         this.setClickable(true);
-
     }
 
     public void cancelEditable() {
         this.setFocusable(false);
         this.setClickable(false);
+        this.clearFocus();
     }
 
     @Override
