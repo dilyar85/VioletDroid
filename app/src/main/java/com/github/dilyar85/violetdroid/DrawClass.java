@@ -38,11 +38,11 @@ public class DrawClass extends View {
       if (action == MotionEvent.ACTION_DOWN) {
          current = find(x, y);
          if (current == null) {
-            current = new Rect(x, y, x + 20, y + 20);
+            current = new Rect(x, y, x + 50, y + 50);
             rects.add(current);
          }
       } else if (action == MotionEvent.ACTION_MOVE) {
-         current.set(x - 10, y - 10, x + 10, y + 10);
+         current.set(x - 25, y - 25, x + 25, y + 25);
       }
       postInvalidate();
       return true;
