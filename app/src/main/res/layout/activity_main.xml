@@ -10,6 +10,24 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.github.dilyar85.violetdroid.MainActivity">
+<!--
+    <android.support.v7.widget.RecyclerView
+
+        android:id="@+id/element_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_weight = "2"
+        android:layout_height="0dp"/>
+
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pager"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="8"/>
+
+        -->
+
     <Button
         android:id="@+id/boxButton"
         android:layout_alignParentBottom="true"

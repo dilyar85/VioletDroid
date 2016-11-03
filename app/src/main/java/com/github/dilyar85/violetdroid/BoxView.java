@@ -47,7 +47,6 @@ public class BoxView extends EditText {
 
     public void setEditable() {
         this.setFocusable(true);
-        this.requestFocus();
         this.setClickable(true);
     }
 
