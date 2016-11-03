@@ -137,6 +137,9 @@ public class MainActivity extends AppCompatActivity {
                 }
                 case MotionEvent.ACTION_MOVE:
                     bView.cancelEditable();
+                    InputMethodManager imm = (InputMethodManager)
+                            getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(bView.getWindowToken(), 0);
                     params.topMargin = (int) event.getRawY() - bView.getHeight();
                     params.leftMargin = (int) event.getRawX() - (bView.getWidth() / 2);
                     bView.setLayoutParams(params);
