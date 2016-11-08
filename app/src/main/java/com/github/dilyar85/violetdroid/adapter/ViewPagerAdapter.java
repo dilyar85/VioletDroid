@@ -8,7 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.github.dilyar85.violetdroid.MyFragment;
+import com.github.dilyar85.violetdroid.CanvasFragment;
 
 public class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
@@ -26,7 +26,7 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int i) {
 
 
-        Fragment fragment = new MyFragment();
+        Fragment fragment = new CanvasFragment();
         return fragment;
     }
 
