@@ -1,6 +1,8 @@
 package com.github.dilyar85.violetdroid;
 
+import android.content.ClipData;
 import android.os.Bundle;
+import android.support.v4.app.ListFragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,11 +13,13 @@ import com.github.dilyar85.violetdroid.adapter.ViewPagerAdapter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import android.app.Activity;
+
 
 /**
  * MainActivity class
  */
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity{
 
     final static String LOG_TAG = MainActivity.class.getSimpleName();
 
@@ -30,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -39,8 +43,6 @@ public class MainActivity extends AppCompatActivity {
         initView();
 
     }
-
-
 
     /**
      * Init views
@@ -61,5 +63,8 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+
+
 
 }
