@@ -21,12 +21,19 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     private Context mContext;
     private String[] elementDescription;
     private int[] elementImageIds;
+    private int elementSize = 6;
+
+    private final static int rectangle = 0;
+    private final static int dependency = 1;
+    private final static int aggregation = 2;
+    private final static int inheritance = 3;
+    private final static int active_period = 4;
+    private final static int method_line = 5;
 
     /**
      * An inner ViewHolder class for adapter
      */
     class ViewHolder extends RecyclerView.ViewHolder {
-
 
         @BindView(R.id.element_imageview)
         ImageView imageView;
@@ -37,9 +44,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
         /**
          * Construct a ViewHolder
+         *
          * @param itemView the given itemview
          */
         ViewHolder(View itemView) {
+
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
@@ -49,11 +58,13 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
     /**
      * Construct a RecyclerAdapter
+     *
      * @param context context for this adapter
      */
     public RecyclerAdapter(Context context) {
 
         mContext = context;
+
         elementDescription = new String[]{mContext.getString(R.string.class_rectangle),
                 mContext.getString(R.string.dependency_line),
                 mContext.getString(R.string.aggregation_line),
@@ -62,7 +73,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                 mContext.getString(R.string.sequence_line)};
         elementImageIds = new int[]{R.drawable.rectangle, R.drawable.dependency,
         R.drawable.aggregation,R.drawable.inheritance,R.drawable.sequenc_rectangle_call,R.drawable.sequence_line};
+
+
     }
+
+
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -70,8 +85,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         // create a new view
         View view = LayoutInflater.from(parent.getContext()).
                 inflate(R.layout.item_element, parent, false);
-
-
 
         return new ViewHolder(view);
     }
@@ -84,8 +97,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         holder.imageView.setImageResource(elementImageIds[position]);
         holder.textView.setText(elementDescription[position]);
 
-
-
     }
 
 
@@ -93,10 +104,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     @Override
     public int getItemCount() {
 
-        return elementDescription.length;
+        return elementSize;
     }
-
-
-
 
 }
