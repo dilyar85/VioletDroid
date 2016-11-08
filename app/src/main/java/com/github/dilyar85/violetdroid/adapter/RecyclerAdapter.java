@@ -60,7 +60,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                 mContext.getString(R.string.inheritance_line),
                 mContext.getString(R.string.sequence_rectangle),
                 mContext.getString(R.string.sequence_line)};
-        elementImageIds = new int[]{R.drawable.rectangle, R.drawable.arrow};
+        elementImageIds = new int[]{R.drawable.rectangle, R.drawable.dependency,
+        R.drawable.aggregation,R.drawable.inheritance,R.drawable.sequenc_rectangle_call,R.drawable.sequence_line};
     }
 
     @Override
@@ -80,7 +81,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-        holder.imageView.setImageResource(R.drawable.rectangle);
+        holder.imageView.setImageResource(elementImageIds[position]);
         holder.textView.setText(elementDescription[position]);
 
 
