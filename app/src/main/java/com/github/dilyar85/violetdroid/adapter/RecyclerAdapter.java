@@ -64,22 +64,16 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     public RecyclerAdapter(Context context) {
 
         mContext = context;
-        elementDescription = new String[elementSize];
-        elementImageIds = new int[elementSize];
 
-        elementDescription[rectangle] = mContext.getString(R.string.class_rectangle);
-        elementDescription[dependency] = mContext.getString(R.string.dependency_line);
-        elementDescription[aggregation] = mContext.getString(R.string.aggregation_line);
-        elementDescription[inheritance] = mContext.getString(R.string.inheritance_line);
-        elementDescription[active_period] = mContext.getString(R.string.sequence_rectangle);
-        elementDescription[method_line] = mContext.getString(R.string.sequence_line);
+        elementDescription = new String[]{mContext.getString(R.string.class_rectangle),
+                mContext.getString(R.string.dependency_line),
+                mContext.getString(R.string.aggregation_line),
+                mContext.getString(R.string.inheritance_line),
+                mContext.getString(R.string.sequence_rectangle),
+                mContext.getString(R.string.sequence_line)};
+        elementImageIds = new int[]{R.drawable.rectangle, R.drawable.dependency,
+        R.drawable.aggregation,R.drawable.inheritance,R.drawable.sequenc_rectangle_call,R.drawable.sequence_line};
 
-        elementImageIds[rectangle] = R.drawable.rectangle;
-        elementImageIds[dependency] = R.drawable.dependency;
-        elementImageIds[aggregation] = R.drawable.aggregation;
-        elementImageIds[inheritance] = R.drawable.inheritance;
-        elementImageIds[active_period] = R.drawable.association;
-        elementImageIds[method_line] = R.drawable.directed_association;
 
     }
 

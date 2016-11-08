@@ -1,6 +1,11 @@
 package com.github.dilyar85.violetdroid;
 
+import android.content.ClipData;
 import android.os.Bundle;
+
+import android.support.v4.app.ListFragment;
+import android.support.v4.view.ViewPager;
+
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,11 +16,15 @@ import com.github.dilyar85.violetdroid.adapter.RecyclerAdapter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import android.app.Activity;
+
 
 /**
  * MainActivity class
  */
+
 public class MainActivity extends AppCompatActivity implements View.OnTouchListener {
+
 
     final static String LOG_TAG = MainActivity.class.getSimpleName();
 
@@ -30,7 +39,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -39,8 +48,6 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         initView();
 
     }
-
-
 
     /**
      * Init views
@@ -64,9 +71,13 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
 
 
 
+
+
+
     @Override
     public boolean onTouch(View v, MotionEvent event) {
 
         return false;
     }
+
 }
