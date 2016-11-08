@@ -9,10 +9,10 @@ import android.view.ViewGroup;
 import butterknife.ButterKnife;
 
 /**
- * Created by Dilyar on 11/2/16.
+ * A canvas fragment to allow user draw diagrams
  */
 
-public class MyFragment extends Fragment {
+public class CanvasFragment extends Fragment {
 
 
 
