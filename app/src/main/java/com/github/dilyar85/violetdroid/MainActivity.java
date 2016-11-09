@@ -65,8 +65,6 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         mRecyclerAdapter = new RecyclerAdapter(this);
         mRecyclerView.setAdapter(mRecyclerAdapter);
 
-
-
     }
 
 

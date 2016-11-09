@@ -8,7 +8,7 @@ task checkstyle(type: Checkstyle) {
     include '**/*.java'
     exclude '**/gen/**'
     classpath = files()
-    ignoreFailures = false;
+    ignoreFailures = true;
 }
 
 apply plugin: 'android-apt'
