@@ -1,5 +1,16 @@
 apply plugin: 'com.android.application'
 apply plugin: 'checkstyle'
+
+check.dependsOn 'checkstyle'
+
+task checkstyle(type: Checkstyle) {
+    source 'src'
+    include '**/*.java'
+    exclude '**/gen/**'
+    classpath = files()
+    ignoreFailures = true;
+}
+
 apply plugin: 'android-apt'
 
 android {
