@@ -6,10 +6,8 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -28,7 +26,6 @@ import butterknife.ButterKnife;
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
 
     private static final String LOG_TAG = "RecyclerAdapter";
-    private ShapeDragListener shapeDragListener;
 
     private Context mContext;
     private String[] elementDescription;
@@ -130,11 +127,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         ClassBoxView newBox = new ClassBoxView(mContext);
         newBox.setLayoutParams(mRparams);
         newBox.setGravity(Gravity.CENTER);
-        newBox.setEditable();
+       // newBox.setEditable();
         newBox.setCursorVisible(true);
-        newBox.setOnTouchListener(shapeDragListener);
-        newBox.setHeight(100);
-        newBox.setWidth(100);
         newBox.setBackgroundResource(R.drawable.box_bg);
         mRlayout.addView(newBox);
     }
@@ -145,44 +139,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         return elementSize;
     }
 
-    private class ShapeDragListener implements View.OnTouchListener {
 
-
-        @Override
-        public boolean onTouch(View view, MotionEvent event) {
-
-
-            if (!(view instanceof ClassBoxView)) return false;
-            ClassBoxView bView = (ClassBoxView) view;
-
-
-            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) view.getLayoutParams();
-
-            switch (event.getAction())
-            {
-                case MotionEvent.ACTION_DOWN: {
-                    bView.setEditable();
-                    if (bView.requestFocus()) {
-                        InputMethodManager imm = (InputMethodManager)
-                                mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
-                        imm.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT);
-                    }
-                    break;
-                }
-                case MotionEvent.ACTION_MOVE:
-                    bView.cancelEditable();
-                    InputMethodManager imm = (InputMethodManager)
-                            mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(bView.getWindowToken(), 0);
-                    params.topMargin = (int) event.getRawY() - bView.getHeight();
-                    params.leftMargin = (int) event.getRawX() - (bView.getWidth() / 2);
-                    bView.setLayoutParams(params);
-                    break;
-            }
-
-            return true;
-        }
-    }
 
 
 

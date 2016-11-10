@@ -5,8 +5,6 @@
               android:layout_height="match_parent">
 
 
-
-
     <RelativeLayout
         android:background="@drawable/main_background"
         android:id="@+id/canvas_layout"
