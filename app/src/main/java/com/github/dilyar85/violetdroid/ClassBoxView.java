@@ -2,13 +2,16 @@ package com.github.dilyar85.violetdroid;
 
 import android.app.Activity;
 import android.content.Context;
+import android.support.v7.app.AppCompatActivity;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.WindowManager;
+import android.view.ViewManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 
 /**
  * Created by joyyan on 11/9/16.
@@ -16,6 +19,7 @@ import android.widget.EditText;
 
 public class ClassBoxView extends EditText implements View.OnTouchListener {
     private Context mContext;
+
 
     private int screenWidth, screenHeight;
     private void getDisplayMetrics() {
@@ -37,6 +41,8 @@ public class ClassBoxView extends EditText implements View.OnTouchListener {
         mContext = context;
         getDisplayMetrics();
         setOnTouchListener(this);
+        setRemovalListener();
+
     }
 
     public ClassBoxView(Context context, AttributeSet attrs) {
@@ -44,6 +50,7 @@ public class ClassBoxView extends EditText implements View.OnTouchListener {
         mContext = context;
         getDisplayMetrics();
         setOnTouchListener(this);
+        setRemovalListener();
     }
 
     public ClassBoxView(Context context, AttributeSet attrs, int defStyle) {
@@ -51,10 +58,11 @@ public class ClassBoxView extends EditText implements View.OnTouchListener {
         mContext = context;
         getDisplayMetrics();
         setOnTouchListener(this);
+        setRemovalListener();
     }
 
     public static void hideSoftInput(Activity mContext, View view) {
-        mContext.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+     //   mContext.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         InputMethodManager imm = (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
         if (imm.isActive()) {
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
@@ -62,7 +70,7 @@ public class ClassBoxView extends EditText implements View.OnTouchListener {
     }
 
     public static void showSoftInput(Activity mContext, View view) {
-        mContext.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+       // mContext.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         InputMethodManager imm = (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
         if (imm.isActive()) {
             imm.showSoftInput(view, 0);
@@ -76,6 +84,7 @@ public class ClassBoxView extends EditText implements View.OnTouchListener {
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         int action = event.getAction();
+
         switch (action) {
             case MotionEvent.ACTION_DOWN:
                 downX = (int) event.getRawX();
@@ -125,6 +134,8 @@ public class ClassBoxView extends EditText implements View.OnTouchListener {
             case MotionEvent.ACTION_UP:
                 upX = (int) event.getRawX();
                 upY = (int) event.getRawY();
+                lastX = upX;
+                lastY = upY;
 
                 rangeDifferenceX = upX - downX;
                 rangeDifferenceY = upY - downY;
@@ -137,18 +148,15 @@ public class ClassBoxView extends EditText implements View.OnTouchListener {
                             v.setFocusable(true);
                             v.setFocusableInTouchMode(true);
 
-
                         } else {
                             v.setFocusable(false);
                             v.setFocusableInTouchMode(false);
-
                         }
                     }
                 } else {
                     if (rangeDifferenceX <= 0 && rangeDifferenceX >= -mDistance) {
                         v.setFocusable(true);
                         v.setFocusableInTouchMode(true);
-
 
                     } else {
                         v.setFocusable(false);
@@ -163,4 +171,32 @@ public class ClassBoxView extends EditText implements View.OnTouchListener {
         return false;
     }
 
+    private void setRemovalListener () {
+        setOnLongClickListener(new OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                ((ViewManager) getParent()).removeView(ClassBoxView.this);
+                return true;
+            }
+        });
+    }
+
+
+    public void addToCanvas() {
+
+        RelativeLayout mRlayout = (RelativeLayout) ((AppCompatActivity) mContext).
+                findViewById(R.id.canvas_layout);
+
+        RelativeLayout.LayoutParams mRparams = new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.WRAP_CONTENT,
+                RelativeLayout.LayoutParams.WRAP_CONTENT);
+
+
+        setLayoutParams(mRparams);
+        setGravity(Gravity.CENTER);
+        // newBox.setEditable();
+        setCursorVisible(true);
+        setBackgroundResource(R.drawable.box_bg);
+        mRlayout.addView(this);
+    }
 }

@@ -1,17 +1,25 @@
 package com.github.dilyar85.violetdroid.adapter;
 
 import android.content.Context;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.github.dilyar85.violetdroid.ClassBoxView;
 import com.github.dilyar85.violetdroid.R;
+import com.github.dilyar85.violetdroid.RelationArrow;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
 
 /**
  * Adapter class for RecyclerView
@@ -103,12 +111,14 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             public void onClick(View v) {
 
 
+
                 addBorder(v);
+
+
 
             }
         });
     }
-
 
 
     /**
@@ -148,6 +158,25 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 //        newBox.setBackgroundResource(R.drawable.box_bg);
 //        mRlayout.addView(newBox);
 //    }
+
+//    private void addBoxComponent() {
+//
+//        RelativeLayout mRlayout = (RelativeLayout) ((AppCompatActivity) mContext).
+//                findViewById(R.id.canvas_layout);
+//
+//        RelativeLayout.LayoutParams mRparams = new RelativeLayout.LayoutParams(
+//                RelativeLayout.LayoutParams.WRAP_CONTENT,
+//                RelativeLayout.LayoutParams.WRAP_CONTENT);
+//
+//        ClassBoxView newBox = new ClassBoxView(mContext);
+//        newBox.setLayoutParams(mRparams);
+//        newBox.setGravity(Gravity.CENTER);
+//       // newBox.setEditable();
+//        newBox.setCursorVisible(true);
+//        newBox.setBackgroundResource(R.drawable.box_bg);
+//        mRlayout.addView(newBox);
+//    }
+
 
     @Override
     public int getItemCount() {
