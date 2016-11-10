@@ -1,29 +1,22 @@
 package com.github.dilyar85.violetdroid;
 
-import android.content.ClipData;
 import android.os.Bundle;
-
-import android.support.v4.app.ListFragment;
-import android.support.v4.view.ViewPager;
-
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.MotionEvent;
-import android.view.View;
+import android.widget.Button;
 
 import com.github.dilyar85.violetdroid.adapter.RecyclerAdapter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import android.app.Activity;
 
 
 /**
  * MainActivity class
  */
 
-public class MainActivity extends AppCompatActivity implements View.OnTouchListener {
+public class MainActivity extends AppCompatActivity {
 
 
     final static String LOG_TAG = MainActivity.class.getSimpleName();
@@ -36,6 +29,8 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
 //    ViewPagerAdapter mPagerAdapter;
     RecyclerAdapter mRecyclerAdapter;
 
+    private Button mButton;
+
 
 
     @Override
@@ -46,7 +41,6 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         ButterKnife.bind(this);
 
         initView();
-
     }
 
     /**
@@ -60,13 +54,9 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
 
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
-
-
         mRecyclerAdapter = new RecyclerAdapter(this);
         mRecyclerView.setAdapter(mRecyclerAdapter);
 
-
-
     }
 
 
@@ -74,10 +64,5 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
 
 
 
-    @Override
-    public boolean onTouch(View v, MotionEvent event) {
-
-        return false;
-    }
 
 }
