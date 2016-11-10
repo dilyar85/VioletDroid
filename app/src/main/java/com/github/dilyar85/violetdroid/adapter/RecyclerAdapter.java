@@ -1,26 +1,20 @@
 package com.github.dilyar85.violetdroid.adapter;
 
 import android.content.Context;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.github.dilyar85.violetdroid.ClassBoxView;
 import com.github.dilyar85.violetdroid.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * Created by Dilyar on 11/1/16.
+ * Adapter class for RecyclerView
  */
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
@@ -38,6 +32,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     private final static int inheritance = 3;
     private final static int active_period = 4;
     private final static int method_line = 5;
+
+
+
 
     /**
      * An inner ViewHolder class for adapter
@@ -99,39 +96,58 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
         holder.imageView.setImageResource(elementImageIds[position]);
         holder.textView.setText(elementDescription[position]);
+
         holder.imageView.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
-                switch (position) {
-                    case rectangle:
-                        Log.d(LOG_TAG, "Clicked -- " + elementDescription[0] );
-                        Toast.makeText( mContext, "Wow!", Toast.LENGTH_LONG).show();
-                        addBoxComponent();
-                        break;
-                }
+
+
+                addBorder(v);
 
             }
         });
     }
 
 
-    private void addBoxComponent() {
 
-        RelativeLayout mRlayout = (RelativeLayout) ((AppCompatActivity) mContext).
-                findViewById(R.id.canvas_layout);
+    /**
+     * Add border or remove it on the element image view
+     * @param v selected image view
+     */
+    private void addBorder(View v) {
 
-        RelativeLayout.LayoutParams mRparams = new RelativeLayout.LayoutParams(
-                RelativeLayout.LayoutParams.WRAP_CONTENT,
-                RelativeLayout.LayoutParams.WRAP_CONTENT);
+//        LinearLayout layout = (LinearLayout) v.getParent();
 
-        ClassBoxView newBox = new ClassBoxView(mContext);
-        newBox.setLayoutParams(mRparams);
-        newBox.setGravity(Gravity.CENTER);
-       // newBox.setEditable();
-        newBox.setCursorVisible(true);
-        newBox.setBackgroundResource(R.drawable.box_bg);
-        mRlayout.addView(newBox);
+        String tag = (String) v.getTag();
+        if (tag.equals(mContext.getString(R.string.view_not_selected_tag))) {
+            v.setBackgroundResource(R.drawable.custom_border);
+            v.setTag(mContext.getString(R.string.view_selected_tag));
+        } else {
+            v.setBackgroundResource(0);
+            v.setTag(mContext.getString(R.string.view_not_selected_tag));
+        }
+
+
     }
+
+//    private void addBoxComponent() {
+//
+//        RelativeLayout mRlayout = (RelativeLayout) ((AppCompatActivity) mContext).
+//                findViewById(R.id.canvas_layout);
+//
+//        RelativeLayout.LayoutParams mRparams = new RelativeLayout.LayoutParams(
+//                RelativeLayout.LayoutParams.WRAP_CONTENT,
+//                RelativeLayout.LayoutParams.WRAP_CONTENT);
+//
+//        ClassBoxView newBox = new ClassBoxView(mContext);
+//        newBox.setLayoutParams(mRparams);
+//        newBox.setGravity(Gravity.CENTER);
+//       // newBox.setEditable();
+//        newBox.setCursorVisible(true);
+//        newBox.setBackgroundResource(R.drawable.box_bg);
+//        mRlayout.addView(newBox);
+//    }
 
     @Override
     public int getItemCount() {

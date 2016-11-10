@@ -4,6 +4,8 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorBoxBg">#FEF9E7</color>
-    <color name="colorBoxBd">#3498DB</color>
+    <color name="colorBoxed">#3498DB</color>
+    <color name="skyBlue">#87CEEB</color>
+
 
 </resources>

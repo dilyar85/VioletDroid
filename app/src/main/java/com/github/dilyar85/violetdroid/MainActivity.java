@@ -40,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+
+
         initView();
     }
 
@@ -56,6 +58,9 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
         mRecyclerAdapter = new RecyclerAdapter(this);
         mRecyclerView.setAdapter(mRecyclerAdapter);
+
+
+
 
     }
 
