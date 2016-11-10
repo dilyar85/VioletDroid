@@ -1,21 +1,14 @@
 package com.github.dilyar85.violetdroid.adapter;
 
 import android.content.Context;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.github.dilyar85.violetdroid.ClassBoxView;
 import com.github.dilyar85.violetdroid.R;
-import com.github.dilyar85.violetdroid.RelationArrow;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,12 +27,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     private int[] elementImageIds;
     private int elementSize = 6;
 
-    private final static int rectangle = 0;
-    private final static int dependency = 1;
-    private final static int aggregation = 2;
-    private final static int inheritance = 3;
-    private final static int active_period = 4;
-    private final static int method_line = 5;
 
 
 
