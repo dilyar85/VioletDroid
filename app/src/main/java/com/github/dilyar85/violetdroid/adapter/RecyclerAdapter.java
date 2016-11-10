@@ -1,19 +1,16 @@
 package com.github.dilyar85.violetdroid.adapter;
 
 import android.content.Context;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.github.dilyar85.violetdroid.ClassBoxView;
+import com.github.dilyar85.violetdroid.RelationArrow;
 import com.github.dilyar85.violetdroid.R;
 
 import butterknife.BindView;
@@ -105,8 +102,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                 switch (position) {
                     case rectangle:
                         Log.d(LOG_TAG, "Clicked -- " + elementDescription[0] );
-                        Toast.makeText( mContext, "Wow!", Toast.LENGTH_LONG).show();
-                        addBoxComponent();
+                        new ClassBoxView(mContext).addToCanvas();
+                        break;
+                    case dependency:
+                        new RelationArrow(mContext, 0, 0, 300, 300).addToCanvas();
                         break;
                 }
 
@@ -114,24 +113,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         });
     }
 
-
-    private void addBoxComponent() {
-
-        RelativeLayout mRlayout = (RelativeLayout) ((AppCompatActivity) mContext).
-                findViewById(R.id.canvas_layout);
-
-        RelativeLayout.LayoutParams mRparams = new RelativeLayout.LayoutParams(
-                RelativeLayout.LayoutParams.WRAP_CONTENT,
-                RelativeLayout.LayoutParams.WRAP_CONTENT);
-
-        ClassBoxView newBox = new ClassBoxView(mContext);
-        newBox.setLayoutParams(mRparams);
-        newBox.setGravity(Gravity.CENTER);
-       // newBox.setEditable();
-        newBox.setCursorVisible(true);
-        newBox.setBackgroundResource(R.drawable.box_bg);
-        mRlayout.addView(newBox);
-    }
 
     @Override
     public int getItemCount() {
