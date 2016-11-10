@@ -15,13 +15,10 @@ import butterknife.ButterKnife;
 public class CanvasFragment extends Fragment {
 
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-
-
     }
 
     @Override
@@ -30,7 +27,6 @@ public class CanvasFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_main, container, false);
         ButterKnife.bind(this, view);
-
 
         return view;
 
