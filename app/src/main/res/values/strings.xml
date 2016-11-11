@@ -7,4 +7,6 @@
     <string name="inheritance_line">Inheritance</string>
     <string name="sequence_rectangle">Active Period</string>
     <string name="sequence_line">Method Line</string>
+    <string name="view_selected_tag">Selected</string>
+    <string name="view_not_selected_tag">NotSelected</string>
 </resources>

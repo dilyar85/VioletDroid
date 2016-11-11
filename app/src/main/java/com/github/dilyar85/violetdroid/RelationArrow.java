@@ -55,7 +55,7 @@ public class RelationArrow extends UMLComponent {
         super.onDraw(canvas);
 
         Paint p = new Paint();
-        p.setColor(context.getResources().getColor(R.color.colorBoxBd));
+        p.setColor(context.getResources().getColor(R.color.colorBoxed));
         p.setStrokeWidth(3.0f);
         p.setAntiAlias(true);
 

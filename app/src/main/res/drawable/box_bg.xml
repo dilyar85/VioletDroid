@@ -10,7 +10,7 @@
     <!-- view border color and width -->
     <stroke
         android:width="2dp"
-        android:color="@color/colorBoxBd" >
+        android:color="@color/colorBoxed" >
     </stroke>
 
     <!-- The radius makes the corners rounded -->
