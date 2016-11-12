@@ -20,13 +20,18 @@ import android.widget.RelativeLayout;
 public class ClassBoxView extends EditText implements View.OnTouchListener {
     private Context mContext;
 
-
     private int screenWidth, screenHeight;
+
+
+
     private void getDisplayMetrics() {
+
         DisplayMetrics dm = getResources().getDisplayMetrics();
         screenWidth = dm.widthPixels;
         screenHeight = dm.heightPixels - 50;
     }
+
+
 
     private int lastX, lastY;
 
@@ -34,9 +39,12 @@ public class ClassBoxView extends EditText implements View.OnTouchListener {
     private int upX, upY; //
     private int rangeDifferenceX, rangeDifferenceY;
     private int mDistance = 10;
-    private int mL,mB,mR,mT;
+    private int mL, mB, mR, mT;
+
+
 
     public ClassBoxView(Context context) {
+
         super(context);
         mContext = context;
         getDisplayMetrics();
@@ -45,7 +53,10 @@ public class ClassBoxView extends EditText implements View.OnTouchListener {
 
     }
 
+
+
     public ClassBoxView(Context context, AttributeSet attrs) {
+
         super(context, attrs);
         mContext = context;
         getDisplayMetrics();
@@ -53,7 +64,10 @@ public class ClassBoxView extends EditText implements View.OnTouchListener {
         setRemovalListener();
     }
 
+
+
     public ClassBoxView(Context context, AttributeSet attrs, int defStyle) {
+
         super(context, attrs, defStyle);
         mContext = context;
         getDisplayMetrics();
@@ -61,28 +75,37 @@ public class ClassBoxView extends EditText implements View.OnTouchListener {
         setRemovalListener();
     }
 
+
+
     public static void hideSoftInput(Activity mContext, View view) {
-     //   mContext.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+        //   mContext.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         InputMethodManager imm = (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
         if (imm.isActive()) {
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
     }
 
+
+
     public static void showSoftInput(Activity mContext, View view) {
-       // mContext.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+        // mContext.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         InputMethodManager imm = (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
         if (imm.isActive()) {
             imm.showSoftInput(view, 0);
         }
     }
 
-    public interface IOnKeyboardStateChangedListener{
+
+
+    public interface IOnKeyboardStateChangedListener {
         public void openKeyboard();
     }
 
+
+
     @Override
     public boolean onTouch(View v, MotionEvent event) {
+
         int action = event.getAction();
 
         switch (action) {
@@ -129,7 +152,7 @@ public class ClassBoxView extends EditText implements View.OnTouchListener {
 
                 v.setFocusable(false);
                 v.setFocusableInTouchMode(false);
-                hideSoftInput((Activity)mContext, v);
+                hideSoftInput((Activity) mContext, v);
                 break;
             case MotionEvent.ACTION_UP:
                 upX = (int) event.getRawX();
@@ -171,15 +194,21 @@ public class ClassBoxView extends EditText implements View.OnTouchListener {
         return false;
     }
 
-    private void setRemovalListener () {
+
+
+    private void setRemovalListener() {
+
         setOnLongClickListener(new OnLongClickListener() {
+
             @Override
             public boolean onLongClick(View v) {
+
                 ((ViewManager) getParent()).removeView(ClassBoxView.this);
                 return true;
             }
         });
     }
+
 
 
     public void addToCanvas() {
@@ -190,7 +219,6 @@ public class ClassBoxView extends EditText implements View.OnTouchListener {
         RelativeLayout.LayoutParams mRparams = new RelativeLayout.LayoutParams(
                 RelativeLayout.LayoutParams.WRAP_CONTENT,
                 RelativeLayout.LayoutParams.WRAP_CONTENT);
-
 
         setLayoutParams(mRparams);
         setGravity(Gravity.CENTER);

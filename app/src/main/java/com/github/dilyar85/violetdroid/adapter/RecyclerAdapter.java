@@ -1,17 +1,13 @@
 package com.github.dilyar85.violetdroid.adapter;
 
 import android.content.Context;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.github.dilyar85.violetdroid.ClassBoxView;
 import com.github.dilyar85.violetdroid.R;
 
 import butterknife.BindView;
@@ -29,7 +25,23 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     private String[] elementDescription;
     private int[] elementImageIds;
     private int elementSize = 6;
+
     private View selectedView;
+    private long lastClickedTime = 0;
+    private static final long DOUBLE_CLICK_TIME_DELTA = 500;//milliseconds
+    private static ElementViewListener mElementViewListener;
+
+    public interface ElementViewListener {
+        void viewAdded(View view);
+    }
+
+
+
+    public static void setElementViewListener(ElementViewListener elementViewListener) {
+
+        mElementViewListener = elementViewListener;
+    }
+
 
 
 
@@ -45,9 +57,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     class ViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.element_imageview)
-        public ImageView imageView;
+        ImageView imageView;
         @BindView(R.id.element_desc_textview)
-        public TextView textView;
+         TextView textView;
 
 
 
@@ -104,15 +116,38 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         holder.imageView.setImageResource(elementImageIds[position]);
         holder.textView.setText(elementDescription[position]);
 
+        holder.imageView.setTag(R.id.view_resource_key, elementImageIds[position]);
+
         holder.imageView.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                selectedView = addBorder(v);
+
+
+                addViewToCanvas(v);
+                addBorder(v);
+
             }
         });
+
+
     }
 
+
+
+    /**
+     * Add view to canvas if it is double tapped
+     * @param v tapped view
+     */
+    private void addViewToCanvas(View v) {
+
+        if (selectedView == v && System.currentTimeMillis() - lastClickedTime <= DOUBLE_CLICK_TIME_DELTA) {
+
+            mElementViewListener.viewAdded(v);
+            lastClickedTime = 0;
+        }
+
+    }
 
 
 
@@ -121,11 +156,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
      *
      * @param v selected image view
      */
-    private View addBorder(View v) {
+    private void addBorder(View v) {
 
         if (selectedView != null) selectedView.setBackgroundResource(0);
         v.setBackgroundResource(R.drawable.custom_border);
-        return v;
+        selectedView = v;
+        lastClickedTime = System.currentTimeMillis();
 
 //        String tag = (String) v.getTag();
 //        if (tag.equals(mContext.getString(R.string.view_not_selected_tag))) {
@@ -161,23 +197,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
 
 
-    private void addBoxComponent() {
-
-        RelativeLayout mRlayout = (RelativeLayout) ((AppCompatActivity) mContext).
-                findViewById(R.id.canvas_layout);
-
-        RelativeLayout.LayoutParams mRparams = new RelativeLayout.LayoutParams(
-                RelativeLayout.LayoutParams.WRAP_CONTENT,
-                RelativeLayout.LayoutParams.WRAP_CONTENT);
-
-        ClassBoxView newBox = new ClassBoxView(mContext);
-        newBox.setLayoutParams(mRparams);
-        newBox.setGravity(Gravity.CENTER);
-        // newBox.setEditable();
-        newBox.setCursorVisible(true);
-        newBox.setBackgroundResource(R.drawable.box_bg);
-        mRlayout.addView(newBox);
-    }
 
 
 
