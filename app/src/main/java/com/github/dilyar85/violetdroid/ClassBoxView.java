@@ -224,7 +224,7 @@ public class ClassBoxView extends EditText implements View.OnTouchListener {
         setGravity(Gravity.CENTER);
         // newBox.setEditable();
         setCursorVisible(true);
-        setBackgroundResource(R.drawable.box_bg);
+        setBackgroundResource(R.drawable.rectangle);
         mRlayout.addView(this);
     }
 }

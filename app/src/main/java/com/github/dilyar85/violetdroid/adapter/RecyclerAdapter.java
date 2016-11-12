@@ -191,7 +191,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 //        newBox.setGravity(Gravity.CENTER);
 //       // newBox.setEditable();
 //        newBox.setCursorVisible(true);
-//        newBox.setBackgroundResource(R.drawable.box_bg);
+//        newBox.setBackgroundResource(R.drawable.rectangle);
 //        mRlayout.addView(newBox);
 //    }
 

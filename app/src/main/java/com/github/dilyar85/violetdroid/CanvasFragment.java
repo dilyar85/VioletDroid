@@ -49,13 +49,20 @@ public class CanvasFragment extends Fragment implements RecyclerAdapter.ElementV
     @Override
     public void viewAdded(View view) {
 
+        int tag = (int) view.getTag(R.id.view_resource_key);
+//        if (tag == R.drawable.rectangle) {
+//
+//
+//        }
+
         ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
         ImageView imageView = new ImageView(getActivity());
         imageView.setLayoutParams(params);
 
-        imageView.setImageResource((int) view.getTag(R.id.view_resource_key));
+        imageView.setImageResource(tag);
+        imageView.setTag(R.id.view_resource_key, tag);
 
         mCustomCanvasLayout.addView(imageView);
 

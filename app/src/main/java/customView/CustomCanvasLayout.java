@@ -3,10 +3,13 @@ import android.app.Activity;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
-import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
+
+import com.github.dilyar85.violetdroid.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +26,12 @@ public class CustomCanvasLayout extends ViewGroup {
 
     int deviceWidth;
 
+    View selectedChild;
+
+    private Context mContext;
+
+    private float downX, downY, distanceX, distanceY;
+
 
 
     /**
@@ -32,9 +41,11 @@ public class CustomCanvasLayout extends ViewGroup {
      */
     private void init(Context context) {
 
+        mContext = context;
         DisplayMetrics displaymetrics = new DisplayMetrics();
         ((Activity) context).getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
         deviceWidth = displaymetrics.widthPixels;
+        imageViews = new ArrayList<>();
 
     }
 
@@ -50,7 +61,7 @@ public class CustomCanvasLayout extends ViewGroup {
 
         super(context);
         init(context);
-        imageViews = new ArrayList<>();
+
     }
 
 
@@ -78,14 +89,12 @@ public class CustomCanvasLayout extends ViewGroup {
 
         //get the available size of child view
         final int childLeft = this.getPaddingLeft();
-        final int childTop = this.getPaddingTop();
+
         final int childRight = this.getMeasuredWidth() - this.getPaddingRight();
+        final int layoutWidth = this.getMeasuredWidth() - this.getPaddingRight() - this.getPaddingLeft();
         final int childBottom = this.getMeasuredHeight() - this.getPaddingBottom();
-
-        final int childWidth = this.getMeasuredWidth() - this.getPaddingRight() - this.getPaddingLeft();
-
-        final int childHeight = childBottom - childTop;
-        Log.e(LOG_TAG, "childWidth: " + this.getMeasuredWidth());
+        final int childTop = this.getPaddingTop();
+        final int layoutHeight = childBottom - childTop;
 
         maxHeight = 0;
         curLeft = childLeft;
@@ -93,15 +102,14 @@ public class CustomCanvasLayout extends ViewGroup {
 
         for (int i = 0; i < count; i++) {
             View child = getChildAt(i);
+            curWidth = deviceWidth / 5;
+            curHeight = curWidth;
+
+//            int[] sizes = getViewSizes(child);
 
             if (child.getVisibility() == GONE)
                 return;
 
-            //Get the maximum size of the child
-            child.measure(MeasureSpec.makeMeasureSpec(childWidth, MeasureSpec.AT_MOST), MeasureSpec.makeMeasureSpec(childHeight, MeasureSpec.AT_MOST));
-            curWidth = deviceWidth / 5;
-            Log.e(LOG_TAG, "curWidth: " + curWidth);
-            curHeight = 100;
             //wrap is reach to the end
             if (curLeft + curWidth >= childRight) {
                 curLeft = childLeft;
@@ -116,6 +124,24 @@ public class CustomCanvasLayout extends ViewGroup {
             curLeft += curWidth;
         }
     }
+
+//    private int[] getViewSizes(View view) {
+//
+//
+////        //Get the maximum size of the child
+////        view.measure(MeasureSpec.makeMeasureSpec(layoutWidth, MeasureSpec.AT_MOST),
+////                MeasureSpec.makeMeasureSpec(layoutHeight, MeasureSpec.AT_MOST));
+//        int[] sizes = new int[2];
+//        int width = deviceWidth / 4;
+//
+//        if (view.getTag() == R.drawable.rectangle) {
+//            sizes[1] =
+//        }
+//        Log.e(LOG_TAG, "curWidth: " + curWidth);
+//        curHeight = 100;
+//
+//
+//    }
 
 //    @Override
 //    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
@@ -159,31 +185,70 @@ public class CustomCanvasLayout extends ViewGroup {
 //                resolveSizeAndState(maxHeight, heightMeasureSpec, childState << MEASURED_HEIGHT_STATE_SHIFT));
 //    }
 
-//    @Override
-//    public boolean onTouchEvent(MotionEvent event) {
-//
-//
-//        Log.e(LOG_TAG, "x: " + event.getX());
-//        Log.e(LOG_TAG, "y: " + event.getY());
-//
-//        switch (event.getAction()) {
-//            case MotionEvent.ACTION_MOVE:
-//                setX(event.getX());
-//                setY(event.getY());
-//                break;
-//
-//            case MotionEvent.ACTION_UP:
-////                params.topMargin = (int) event.getRawY() - getHeight();
-////                params.leftMargin = (int) event.getRawX() - (getWidth() / 2);
-////                setLayoutParams(params);
-//                break;
-//
-//            case MotionEvent.ACTION_DOWN:
-////                setLayoutParams(params);
-//                break;
-//        }
-//
-//        return true;
-//
-//    }
+
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+
+        float eventX = event.getX();
+        float eventY = event.getY();
+
+        switch (event.getAction()) {
+
+            case MotionEvent.ACTION_DOWN:
+                if (selectedChild == null) selectedChild = getChildFrom(eventX, eventY);
+                break;
+
+            case MotionEvent.ACTION_MOVE:
+                if (selectedChild != null) {
+                    distanceX = eventX - downX;
+                    distanceY = eventY - downY;
+                    selectedChild.setX(selectedChild.getX() + distanceX);
+                    selectedChild.setY(selectedChild.getY() + distanceY);
+                    downX = eventX;
+                    downY = eventY;
+                }
+                break;
+
+            case MotionEvent.ACTION_UP:
+                //Clear border on selected child view and remove reference
+                if (selectedChild != null) {
+                    selectedChild.setBackgroundResource(0);
+                    selectedChild = null;
+                }
+                break;
+
+        }
+
+        return true;
+
+    }
+
+
+
+    /**
+     * Return child based on eventX and eventY
+     *
+     * @param eventX eventX
+     * @param eventY eventY
+     * @return selected child if touches a view, otherwise return null
+     */
+    private View getChildFrom(float eventX, float eventY) {
+
+        View child = null;
+        for (int i = getChildCount() - 1; i >= 0; i--) {
+
+            child = getChildAt(i);
+            if (eventX > child.getX() && eventX < child.getX() + child.getWidth()
+                    && eventY > child.getY() && eventY < child.getY() + child.getHeight()) {
+
+                downX = eventX;
+                downY = eventY;
+                child.setBackgroundResource(R.drawable.custom_border);
+                Toast.makeText(mContext, "Selected!", Toast.LENGTH_SHORT).show();
+                return child;
+            }
+        }
+        return child;
+    }
 }
