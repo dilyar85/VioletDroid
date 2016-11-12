@@ -6,7 +6,7 @@ I meant "object-oriented design". How are you building this? What key classes?
 
 Each team member has made at least one commit: No
 
-Weihang?
+Xin - no commit
 
 Code builds on the command line, including javadoc and CheckStyle: Concern
 
