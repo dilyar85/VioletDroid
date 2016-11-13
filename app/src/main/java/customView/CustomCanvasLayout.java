@@ -33,17 +33,6 @@ public class CustomCanvasLayout extends ViewGroup {
 
     private float downX, downY, distanceX, distanceY;
 
-    private float leftBound = this.getLeft();
-    private float rightBound = this.getRight();
-    private float topBound = this.getTop();
-    private float bottomBound = this.getBottom();
-
-    final int childLeft = this.getPaddingLeft();
-    final int childRight = this.getMeasuredWidth() - this.getPaddingRight();
-    final int layoutWidth = this.getMeasuredWidth() - this.getPaddingRight() - this.getPaddingLeft();
-    final int childBottom = this.getMeasuredHeight() - this.getPaddingBottom();
-    final int childTop = this.getPaddingTop();
-    final int layoutHeight = childBottom - childTop;
 
 
 
@@ -101,7 +90,12 @@ public class CustomCanvasLayout extends ViewGroup {
         int curWidth, curHeight, curLeft, curTop, maxHeight;
 
         //get the available size of child view
-
+        final int childLeft = this.getPaddingLeft();
+        final int childRight = this.getMeasuredWidth() - this.getPaddingRight();
+        final int layoutWidth = this.getMeasuredWidth() - this.getPaddingRight() - this.getPaddingLeft();
+        final int childBottom = this.getMeasuredHeight() - this.getPaddingBottom();
+        final int childTop = this.getPaddingTop();
+        final int layoutHeight = childBottom - childTop;
 
         maxHeight = 0;
         curLeft = childLeft;
@@ -261,13 +255,20 @@ public class CustomCanvasLayout extends ViewGroup {
         float x = selectedChild.getLeft();
         float y = selectedChild.getTop();
 
+        float parentHeight = ((View) getParent()).getMeasuredHeight();
+        float parentWeight = ((View) getParent()).getMeasuredWidth();
+        float parentLeftPadding = ((View) getParent()).getPaddingLeft();
+        float parentTopPadding = ((View) getParent()).getPaddingTop();
+        float parentRightPadding = ((View) getParent()).getPaddingTop();
+        float parentBottomPadding = ((View) getParent()).getPaddingBottom();
 
-            if(eventX < this.getPaddingLeft() || eventX > (this.getMeasuredWidth() - layoutWidth)){
-                x = this.getPaddingLeft();
-                y = childTop;
-            } else if(eventY< this.getPaddingTop() || eventY > (this.getMeasuredHeight() - layoutHeight)){
-                x = this.getPaddingLeft();
-                y = childTop;
+            if(eventX < parentLeftPadding || eventX > (parentWeight - parentRightPadding)){
+                x = parentLeftPadding;
+                y = parentTopPadding;
+            }
+            if(eventY < parentTopPadding || eventY > (parentHeight - parentBottomPadding)){
+                x = parentLeftPadding;
+                y = parentTopPadding;
             }
 
            else{
