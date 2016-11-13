@@ -7,7 +7,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.github.dilyar85.violetdroid.R;
 
@@ -30,7 +29,7 @@ public class CustomCanvasLayout extends ViewGroup {
 
     private Context mContext;
 
-    private float downX, downY, distanceX, distanceY;
+    private float lastX, lastY, deltaX, deltaY;
 
 
 
@@ -193,29 +192,27 @@ public class CustomCanvasLayout extends ViewGroup {
         float eventX = event.getX();
         float eventY = event.getY();
 
+
         switch (event.getAction()) {
 
             case MotionEvent.ACTION_DOWN:
-                if (selectedChild == null) selectedChild = getChildFrom(eventX, eventY);
+                selectChild(eventX, eventY);
                 break;
 
             case MotionEvent.ACTION_MOVE:
                 if (selectedChild != null) {
-                    distanceX = eventX - downX;
-                    distanceY = eventY - downY;
-                    selectedChild.setX(selectedChild.getX() + distanceX);
-                    selectedChild.setY(selectedChild.getY() + distanceY);
-                    downX = eventX;
-                    downY = eventY;
+                    deltaX = eventX - lastX;
+                    deltaY = eventY - lastY;
+                    selectedChild.setX(selectedChild.getX() + deltaX);
+                    selectedChild.setY(selectedChild.getY() + deltaY);
+                    lastX = eventX;
+                    lastY = eventY;
                 }
                 break;
 
             case MotionEvent.ACTION_UP:
-                //Clear border on selected child view and remove reference
-                if (selectedChild != null) {
-                    selectedChild.setBackgroundResource(0);
-                    selectedChild = null;
-                }
+                //Clear border on selected child view
+                if (selectedChild != null) selectedChild.setBackgroundResource(0);
                 break;
 
         }
@@ -227,28 +224,27 @@ public class CustomCanvasLayout extends ViewGroup {
 
 
     /**
-     * Return child based on eventX and eventY
+     * Return child based on given x and given y
      *
-     * @param eventX eventX
-     * @param eventY eventY
+     * @param eventX given x based on canvas layout
+     * @param eventY given y based on canvas layout
      * @return selected child if touches a view, otherwise return null
      */
-    private View getChildFrom(float eventX, float eventY) {
+    private void selectChild(float eventX, float eventY) {
 
-        View child = null;
         for (int i = getChildCount() - 1; i >= 0; i--) {
 
-            child = getChildAt(i);
+            View child = getChildAt(i);
             if (eventX > child.getX() && eventX < child.getX() + child.getWidth()
                     && eventY > child.getY() && eventY < child.getY() + child.getHeight()) {
 
-                downX = eventX;
-                downY = eventY;
                 child.setBackgroundResource(R.drawable.custom_border);
-                Toast.makeText(mContext, "Selected!", Toast.LENGTH_SHORT).show();
-                return child;
+                lastX = eventX;
+                lastY = eventY;
+                selectedChild = child;
+                return;
             }
         }
-        return child;
+        selectedChild = null;
     }
 }
