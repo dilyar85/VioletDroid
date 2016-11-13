@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
-import android.graphics.Canvas;
 
 import com.github.dilyar85.violetdroid.R;
 
@@ -31,8 +30,7 @@ public class CustomCanvasLayout extends ViewGroup {
 
     private Context mContext;
 
-    private float downX, downY, distanceX, distanceY;
-
+    private float downX, downY;
 
 
 
@@ -203,9 +201,7 @@ public class CustomCanvasLayout extends ViewGroup {
             case MotionEvent.ACTION_MOVE:
                 if (selectedChild != null) {
 
-
-
-                   moveChild(eventX,eventY);
+                    moveChild(eventX, eventY);
                 }
                 break;
 
@@ -226,8 +222,7 @@ public class CustomCanvasLayout extends ViewGroup {
 
 
     /**
-     * Return child based on eventX and eventY
-     *
+     * Helper method to get child based on eventX and eventY
      * @param eventX eventX
      * @param eventY eventY
      * @return selected child if touches a view, otherwise return null
@@ -251,38 +246,54 @@ public class CustomCanvasLayout extends ViewGroup {
         return child;
     }
 
+
+
     /**
-     * move child view when the touch event happened,
-     * if touch event exceed the bound of parent view, set the x, y-coordinates of child view
-     * to parentleftpadding, and parenttoppadding
+     * move child view when the touch event move happened
      * @param eventX eventX
      * @param eventY eventY
-     *
      */
-    private void moveChild(float eventX, float eventY){
-        // represents parent view size
-        float parentHeight = ((View) getParent()).getMeasuredHeight();
-        float parentWeight = ((View) getParent()).getMeasuredWidth();
-        float parentLeftPadding = ((View) getParent()).getPaddingLeft();
-        float parentTopPadding = ((View) getParent()).getPaddingTop();
-        float parentRightPadding = ((View) getParent()).getPaddingTop();
-        float parentBottomPadding = ((View) getParent()).getPaddingBottom();
+    private void moveChild(float eventX, float eventY) {
 
-            if(eventX < parentLeftPadding || eventX > (parentWeight - parentRightPadding)
-              ||eventY < parentTopPadding || eventY > (parentHeight - parentBottomPadding)){
-                selectedChild.setX(parentLeftPadding );
-                selectedChild.setY(parentTopPadding);
-            }
+        float distanceX = eventX - downX;
+        float distanceY = eventY - downY;
 
+        float[] validDistance = checkMoveDistance(distanceX, distanceY);
+        selectedChild.setX(validDistance[0]);
+        selectedChild.setY(validDistance[1]);
 
-           else{
-                distanceX = eventX - downX;
-                distanceY = eventY - downY;
-                selectedChild.setX(selectedChild.getX() + distanceX);
-                selectedChild.setY(selectedChild.getY() + distanceY);
-                downX = eventX;
-                downY = eventY;
-            }
-
+        downX = eventX;
+        downY = eventY;
     }
+
+    /**
+     * Helper method to check if moving distance exceeds the bound of canvas
+     * @param distanceX moved distance in x direction
+     * @param distanceY moved distance in y direction
+     * @return the valid x and y of selected view
+     */
+    private float[] checkMoveDistance(float distanceX, float distanceY) {
+
+        float paddingRight = getPaddingRight();
+        float paddingLeft = getPaddingLeft();
+        float paddingTop = getPaddingTop();
+        float paddingBottom = getPaddingBottom();
+        float canvasHeight = getHeight();
+        float canvasWidth = getWidth();
+
+        float newX = selectedChild.getX() + distanceX;
+        if (newX <= paddingLeft)
+            newX = paddingLeft;
+        else if (newX + selectedChild.getWidth() >= canvasWidth - paddingRight)
+            newX = canvasWidth - paddingRight - selectedChild.getWidth();
+
+        float newY = selectedChild.getY() + distanceY;
+        if (newY <= paddingTop)
+            newY = paddingTop;
+        else if (newY + selectedChild.getHeight() >= canvasHeight - paddingBottom)
+            newY = canvasHeight - paddingBottom - selectedChild.getHeight();
+
+        return new float[]{newX, newY};
+    }
+
 }
