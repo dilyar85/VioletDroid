@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
+import android.graphics.Canvas;
 
 import com.github.dilyar85.violetdroid.R;
 
@@ -31,6 +32,18 @@ public class CustomCanvasLayout extends ViewGroup {
     private Context mContext;
 
     private float downX, downY, distanceX, distanceY;
+
+    private float leftBound = this.getLeft();
+    private float rightBound = this.getRight();
+    private float topBound = this.getTop();
+    private float bottomBound = this.getBottom();
+
+    final int childLeft = this.getPaddingLeft();
+    final int childRight = this.getMeasuredWidth() - this.getPaddingRight();
+    final int layoutWidth = this.getMeasuredWidth() - this.getPaddingRight() - this.getPaddingLeft();
+    final int childBottom = this.getMeasuredHeight() - this.getPaddingBottom();
+    final int childTop = this.getPaddingTop();
+    final int layoutHeight = childBottom - childTop;
 
 
 
@@ -88,13 +101,7 @@ public class CustomCanvasLayout extends ViewGroup {
         int curWidth, curHeight, curLeft, curTop, maxHeight;
 
         //get the available size of child view
-        final int childLeft = this.getPaddingLeft();
 
-        final int childRight = this.getMeasuredWidth() - this.getPaddingRight();
-        final int layoutWidth = this.getMeasuredWidth() - this.getPaddingRight() - this.getPaddingLeft();
-        final int childBottom = this.getMeasuredHeight() - this.getPaddingBottom();
-        final int childTop = this.getPaddingTop();
-        final int layoutHeight = childBottom - childTop;
 
         maxHeight = 0;
         curLeft = childLeft;
@@ -201,12 +208,10 @@ public class CustomCanvasLayout extends ViewGroup {
 
             case MotionEvent.ACTION_MOVE:
                 if (selectedChild != null) {
-                    distanceX = eventX - downX;
-                    distanceY = eventY - downY;
-                    selectedChild.setX(selectedChild.getX() + distanceX);
-                    selectedChild.setY(selectedChild.getY() + distanceY);
-                    downX = eventX;
-                    downY = eventY;
+
+
+
+                   moveChild(eventX,eventY);
                 }
                 break;
 
@@ -250,5 +255,29 @@ public class CustomCanvasLayout extends ViewGroup {
             }
         }
         return child;
+    }
+
+    private void moveChild(float eventX, float eventY){
+        float x = selectedChild.getLeft();
+        float y = selectedChild.getTop();
+
+
+            if(eventX < this.getPaddingLeft() || eventX > (this.getMeasuredWidth() - layoutWidth)){
+                x = this.getPaddingLeft();
+                y = childTop;
+            } else if(eventY< this.getPaddingTop() || eventY > (this.getMeasuredHeight() - layoutHeight)){
+                x = this.getPaddingLeft();
+                y = childTop;
+            }
+
+           else{
+                distanceX = eventX - downX;
+                distanceY = eventY - downY;
+                selectedChild.setX(selectedChild.getX() + distanceX);
+                selectedChild.setY(selectedChild.getY() + distanceY);
+                downX = eventX;
+                downY = eventY;
+            }
+
     }
 }
