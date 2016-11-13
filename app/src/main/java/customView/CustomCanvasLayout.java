@@ -251,10 +251,16 @@ public class CustomCanvasLayout extends ViewGroup {
         return child;
     }
 
+    /**
+     * move child view when the touch event happened,
+     * if touch event exceed the bound of parent view, set the x, y-coordinates of child view
+     * to parentleftpadding, and parenttoppadding
+     * @param eventX eventX
+     * @param eventY eventY
+     *
+     */
     private void moveChild(float eventX, float eventY){
-        float x = selectedChild.getLeft();
-        float y = selectedChild.getTop();
-
+        // represents parent view size
         float parentHeight = ((View) getParent()).getMeasuredHeight();
         float parentWeight = ((View) getParent()).getMeasuredWidth();
         float parentLeftPadding = ((View) getParent()).getPaddingLeft();
@@ -262,14 +268,12 @@ public class CustomCanvasLayout extends ViewGroup {
         float parentRightPadding = ((View) getParent()).getPaddingTop();
         float parentBottomPadding = ((View) getParent()).getPaddingBottom();
 
-            if(eventX < parentLeftPadding || eventX > (parentWeight - parentRightPadding)){
-                x = parentLeftPadding;
-                y = parentTopPadding;
+            if(eventX < parentLeftPadding || eventX > (parentWeight - parentRightPadding)
+              ||eventY < parentTopPadding || eventY > (parentHeight - parentBottomPadding)){
+                selectedChild.setX(parentLeftPadding );
+                selectedChild.setY(parentTopPadding);
             }
-            if(eventY < parentTopPadding || eventY > (parentHeight - parentBottomPadding)){
-                x = parentLeftPadding;
-                y = parentTopPadding;
-            }
+
 
            else{
                 distanceX = eventX - downX;
