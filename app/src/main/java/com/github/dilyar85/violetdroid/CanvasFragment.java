@@ -51,6 +51,16 @@ public class CanvasFragment extends Fragment implements RecyclerAdapter.ElementV
 
         int tag = (int) view.getTag(R.id.view_resource_key);
 //        if (tag == R.drawable.rectangle) {
+//            ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(
+//                    ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+//
+//            BoxClassView boxClassView = new BoxClassView(getActivity());
+//            boxClassView.setLayoutParams(params);
+//
+//            boxClassView.setBackgroundResource(tag);
+//            boxClassView.setTag(R.id.view_resource_key, tag);
+//            mCustomCanvasLayout.addView(boxClassView);
+//            return;
 //
 //
 //        }
