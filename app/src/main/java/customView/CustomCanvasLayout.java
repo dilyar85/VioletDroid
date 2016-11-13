@@ -30,7 +30,7 @@ public class CustomCanvasLayout extends ViewGroup {
 
     private Context mContext;
 
-    private float downX, downY, distanceX, distanceY;
+    private float downX, downY;
 
 
 
@@ -89,7 +89,6 @@ public class CustomCanvasLayout extends ViewGroup {
 
         //get the available size of child view
         final int childLeft = this.getPaddingLeft();
-
         final int childRight = this.getMeasuredWidth() - this.getPaddingRight();
         final int layoutWidth = this.getMeasuredWidth() - this.getPaddingRight() - this.getPaddingLeft();
         final int childBottom = this.getMeasuredHeight() - this.getPaddingBottom();
@@ -201,12 +200,8 @@ public class CustomCanvasLayout extends ViewGroup {
 
             case MotionEvent.ACTION_MOVE:
                 if (selectedChild != null) {
-                    distanceX = eventX - downX;
-                    distanceY = eventY - downY;
-                    selectedChild.setX(selectedChild.getX() + distanceX);
-                    selectedChild.setY(selectedChild.getY() + distanceY);
-                    downX = eventX;
-                    downY = eventY;
+
+                    moveChild(eventX, eventY);
                 }
                 break;
 
@@ -227,8 +222,7 @@ public class CustomCanvasLayout extends ViewGroup {
 
 
     /**
-     * Return child based on eventX and eventY
-     *
+     * Helper method to get child based on eventX and eventY
      * @param eventX eventX
      * @param eventY eventY
      * @return selected child if touches a view, otherwise return null
@@ -251,4 +245,55 @@ public class CustomCanvasLayout extends ViewGroup {
         }
         return child;
     }
+
+
+
+    /**
+     * move child view when the touch event move happened
+     * @param eventX eventX
+     * @param eventY eventY
+     */
+    private void moveChild(float eventX, float eventY) {
+
+        float distanceX = eventX - downX;
+        float distanceY = eventY - downY;
+
+        float[] validDistance = checkMoveDistance(distanceX, distanceY);
+        selectedChild.setX(validDistance[0]);
+        selectedChild.setY(validDistance[1]);
+
+        downX = eventX;
+        downY = eventY;
+    }
+
+    /**
+     * Helper method to check if moving distance exceeds the bound of canvas
+     * @param distanceX moved distance in x direction
+     * @param distanceY moved distance in y direction
+     * @return the valid x and y of selected view
+     */
+    private float[] checkMoveDistance(float distanceX, float distanceY) {
+
+        float paddingRight = getPaddingRight();
+        float paddingLeft = getPaddingLeft();
+        float paddingTop = getPaddingTop();
+        float paddingBottom = getPaddingBottom();
+        float canvasHeight = getHeight();
+        float canvasWidth = getWidth();
+
+        float newX = selectedChild.getX() + distanceX;
+        if (newX <= paddingLeft)
+            newX = paddingLeft;
+        else if (newX + selectedChild.getWidth() >= canvasWidth - paddingRight)
+            newX = canvasWidth - paddingRight - selectedChild.getWidth();
+
+        float newY = selectedChild.getY() + distanceY;
+        if (newY <= paddingTop)
+            newY = paddingTop;
+        else if (newY + selectedChild.getHeight() >= canvasHeight - paddingBottom)
+            newY = canvasHeight - paddingBottom - selectedChild.getHeight();
+
+        return new float[]{newX, newY};
+    }
+
 }
