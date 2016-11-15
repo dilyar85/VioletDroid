@@ -23,6 +23,8 @@ public class CanvasFragment extends Fragment implements RecyclerAdapter.ElementV
     @BindView(R.id.canvas_layout)
     CanvasLayout mCanvasLayout;
 
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
@@ -65,16 +67,17 @@ public class CanvasFragment extends Fragment implements RecyclerAdapter.ElementV
 //
 //        }
 
-        ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+//        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(300, 300);
+//
+//        ImageView imageView = new ImageView(getActivity());
+//        imageView.setImageResource(tag);
+//        imageView.setTag(R.id.view_resource_key, tag);
 
-        ImageView imageView = new ImageView(getActivity());
-        imageView.setLayoutParams(params);
+        View testLayout = getActivity().getLayoutInflater().inflate(R.layout.test, mCanvasLayout, false);
+        ImageView targetView = (ImageView) testLayout.findViewById(R.id.image);
+        targetView.setImageResource(tag);
 
-        imageView.setImageResource(tag);
-        imageView.setTag(R.id.view_resource_key, tag);
-
-        mCanvasLayout.addView(imageView);
+        mCanvasLayout.addView(testLayout);
 
     }
 }
