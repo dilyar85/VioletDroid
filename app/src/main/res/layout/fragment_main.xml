@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<customView.CanvasLayout
+<com.github.dilyar85.violetdroid.customView.CanvasLayout
     android:id="@+id/canvas_layout"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -8,4 +8,4 @@
 
 
 
-</customView.CanvasLayout>
+</com.github.dilyar85.violetdroid.customView.CanvasLayout>

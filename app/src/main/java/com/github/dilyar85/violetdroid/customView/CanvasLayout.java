@@ -1,4 +1,4 @@
-package customView;
+package com.github.dilyar85.violetdroid.customView;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.GestureDetector;

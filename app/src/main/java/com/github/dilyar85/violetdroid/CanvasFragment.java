@@ -12,7 +12,7 @@ import com.github.dilyar85.violetdroid.adapter.RecyclerAdapter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import customView.CanvasLayout;
+import com.github.dilyar85.violetdroid.customView.CanvasLayout;
 
 /**
  * A canvas fragment from MainActivity to allow users to draw diagrams
@@ -52,7 +52,7 @@ public class CanvasFragment extends Fragment implements RecyclerAdapter.ElementV
     public void viewDoubleTapped(View view) {
 
         int tag = (int) view.getTag(R.id.view_resource_key);
-        View testLayout = getActivity().getLayoutInflater().inflate(R.layout.test, mCanvasLayout, false);
+        View testLayout = getActivity().getLayoutInflater().inflate(R.layout.indicator_layout, mCanvasLayout, false);
         ImageView targetView = (ImageView) testLayout.findViewById(R.id.center_image_view);
         targetView.setImageResource(tag);
 
