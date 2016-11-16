@@ -21,33 +21,37 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
     private static final String LOG_TAG = "RecyclerAdapter";
 
-    private Context mContext;
     private String[] elementDescription;
     private int[] elementImageIds;
-    private int elementSize = 6;
 
     private View selectedView;
     private long lastClickedTime = 0;
     private static final long DOUBLE_CLICK_TIME_DELTA = 500;//milliseconds
     private static ElementViewListener mElementViewListener;
 
+    /**
+     * A listener interface to detect if view is double tapped in RecyclerView
+     */
     public interface ElementViewListener {
-        void viewAdded(View view);
+        /**
+         * Method to notify the view is double tapped
+         * @param view the double tapped view
+         */
+        void viewDoubleTapped(View view);
     }
 
 
 
+    /**
+     * A helper method to set ElementViewListener
+     * @param elementViewListener could be any class who implements this interface
+     */
     public static void setElementViewListener(ElementViewListener elementViewListener) {
 
         mElementViewListener = elementViewListener;
     }
 
 
-
-
-    public View getSelectedView() {
-        return selectedView;
-    }
 
 
 
@@ -85,14 +89,13 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
      */
     public RecyclerAdapter(Context context) {
 
-        mContext = context;
 
-        elementDescription = new String[]{mContext.getString(R.string.class_rectangle),
-                mContext.getString(R.string.dependency_line),
-                mContext.getString(R.string.aggregation_line),
-                mContext.getString(R.string.inheritance_line),
-                mContext.getString(R.string.sequence_rectangle),
-                mContext.getString(R.string.sequence_line)};
+        elementDescription = new String[]{context.getString(R.string.class_rectangle),
+                context.getString(R.string.dependency_line),
+                context.getString(R.string.aggregation_line),
+                context.getString(R.string.inheritance_line),
+                context.getString(R.string.sequence_rectangle),
+                context.getString(R.string.sequence_line)};
         elementImageIds = new int[]{R.drawable.rectangle_old, R.drawable.dependency,
                 R.drawable.aggregation, R.drawable.inheritance, R.drawable.sequenc_rectangle_call, R.drawable.sequence_line};
     }
@@ -123,7 +126,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             @Override
             public void onClick(View v) {
 
-
                 addViewToCanvas(v);
                 addBorder(v);
 
@@ -141,9 +143,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
      */
     private void addViewToCanvas(View v) {
 
-        if (selectedView == v && System.currentTimeMillis() - lastClickedTime <= DOUBLE_CLICK_TIME_DELTA) {
+        if (selectedView == v &&
+                System.currentTimeMillis() - lastClickedTime <= DOUBLE_CLICK_TIME_DELTA) {
 
-            mElementViewListener.viewAdded(v);
+            mElementViewListener.viewDoubleTapped(v);
             lastClickedTime = 0;
         }
 
@@ -163,47 +166,13 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         selectedView = v;
         lastClickedTime = System.currentTimeMillis();
 
-//        String tag = (String) v.getTag();
-//        if (tag.equals(mContext.getString(R.string.view_not_selected_tag))) {
-//            v.setBackgroundResource(R.drawable.custom_border);
-//            v.setTag(mContext.getString(R.string.view_selected_tag));
-//        } else {
-//            v.setBackgroundResource(0);
-//            v.setTag(mContext.getString(R.string.view_not_selected_tag));
-//        }
-
-
-
     }
-
-
-//    private void addBoxComponent() {
-//
-//        RelativeLayout mRlayout = (RelativeLayout) ((AppCompatActivity) mContext).
-//                findViewById(R.id.canvas_layout);
-//
-//        RelativeLayout.LayoutParams mRparams = new RelativeLayout.LayoutParams(
-//                RelativeLayout.LayoutParams.WRAP_CONTENT,
-//                RelativeLayout.LayoutParams.WRAP_CONTENT);
-//
-//        ClassBoxView newBox = new ClassBoxView(mContext);
-//        newBox.setLayoutParams(mRparams);
-//        newBox.setGravity(Gravity.CENTER);
-//       // newBox.setEditable();
-//        newBox.setCursorVisible(true);
-//        newBox.setBackgroundResource(R.drawable.rectangle);
-//        mRlayout.addView(newBox);
-//    }
-
-
-
-
 
 
     @Override
     public int getItemCount() {
 
-        return elementSize;
+        return elementImageIds.length;
     }
 
 }

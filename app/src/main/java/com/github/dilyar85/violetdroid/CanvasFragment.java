@@ -15,7 +15,7 @@ import butterknife.ButterKnife;
 import customView.CanvasLayout;
 
 /**
- * A canvas fragment to allow user draw diagrams
+ * A canvas fragment from MainActivity to allow users to draw diagrams
  */
 
 public class CanvasFragment extends Fragment implements RecyclerAdapter.ElementViewListener {
@@ -49,32 +49,11 @@ public class CanvasFragment extends Fragment implements RecyclerAdapter.ElementV
 
 
     @Override
-    public void viewAdded(View view) {
+    public void viewDoubleTapped(View view) {
 
         int tag = (int) view.getTag(R.id.view_resource_key);
-//        if (tag == R.drawable.rectangle) {
-//            ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(
-//                    ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-//
-//            BoxClassView boxClassView = new BoxClassView(getActivity());
-//            boxClassView.setLayoutParams(params);
-//
-//            boxClassView.setBackgroundResource(tag);
-//            boxClassView.setTag(R.id.view_resource_key, tag);
-//            mCustomCanvasLayout.addView(boxClassView);
-//            return;
-//
-//
-//        }
-
-//        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(300, 300);
-//
-//        ImageView imageView = new ImageView(getActivity());
-//        imageView.setImageResource(tag);
-//        imageView.setTag(R.id.view_resource_key, tag);
-
         View testLayout = getActivity().getLayoutInflater().inflate(R.layout.test, mCanvasLayout, false);
-        ImageView targetView = (ImageView) testLayout.findViewById(R.id.image);
+        ImageView targetView = (ImageView) testLayout.findViewById(R.id.center_image_view);
         targetView.setImageResource(tag);
 
         mCanvasLayout.addView(testLayout);

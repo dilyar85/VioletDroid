@@ -1,23 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <customView.CanvasLayout
-    android:padding="12dp"
     android:id="@+id/canvas_layout"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/main_background">
 
-    <RelativeLayout
-        android:layout_width="100dp"
-        android:layout_height="100dp">
-
-        <ImageView
-            android:src="@drawable/aggregation"
-            android:layout_width="50dp"
-            android:layout_height="50dp"/>
-
-
-    </RelativeLayout>
 
 
 </customView.CanvasLayout>

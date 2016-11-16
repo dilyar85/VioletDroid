@@ -1,18 +1,18 @@
 package customView;
-import android.app.Activity;
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.DisplayMetrics;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.github.dilyar85.violetdroid.R;
 
-import java.util.ArrayList;
-import java.util.List;
+import static android.view.MotionEvent.ACTION_DOWN;
+import static android.view.MotionEvent.ACTION_MOVE;
 
 /**
  * A custom canvas layout who can have diagram elements inside
@@ -22,42 +22,19 @@ public class CanvasLayout extends RelativeLayout {
 
     final static String LOG_TAG = CanvasLayout.class.getSimpleName();
 
-    List<ImageView> imageViews;
-
-    int deviceWidth;
-
-    View selectedChild;
-
+    private View selectedChild;
 
     private GestureDetector mGestureDetector;
 
 
 
     /**
-     * Init CustomCanvasLayout by getting the deviceWidth
-     *
-     * @param context context
+     * Init CustomCanvasLayout
      */
-    private void init(Context context) {
+    private void init() {
 
         mGestureDetector = new GestureDetector(getContext(), new GestureTap());
 
-        DisplayMetrics displaymetrics = new DisplayMetrics();
-        ((Activity) context).getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
-        deviceWidth = displaymetrics.widthPixels;
-        imageViews = new ArrayList<>();
-        this.setOnLongClickListener(new OnLongClickListener() {
-
-            @Override
-            public boolean onLongClick(View v) {
-
-                if (selectedChild != null) {
-                    removeView(selectedChild);
-                    selectedChild = null;
-                }
-                return true;
-            }
-        });
     }
 
 
@@ -71,7 +48,7 @@ public class CanvasLayout extends RelativeLayout {
     public CanvasLayout(Context context) {
 
         super(context);
-        init(context);
+        init();
 
     }
 
@@ -86,16 +63,16 @@ public class CanvasLayout extends RelativeLayout {
     public CanvasLayout(Context context, AttributeSet attrs) {
 
         super(context, attrs);
-        init(context);
+        init();
 
     }
+
 
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
 
         mGestureDetector.onTouchEvent(event);
-
         return true;
 
     }
@@ -103,9 +80,17 @@ public class CanvasLayout extends RelativeLayout {
 
 
     /**
-     * A listener class to detect user's gesture and implement changes on canvas
+     * An inner class to detect user's gesture and implement changes on canvas
      */
-    class GestureTap implements GestureDetector.OnGestureListener {
+    private class GestureTap extends GestureDetector.SimpleOnGestureListener implements GestureDetector.OnGestureListener {
+
+        @Override
+        public boolean onDoubleTap(MotionEvent e) {
+
+            return super.onDoubleTap(e);
+        }
+
+
 
         @Override
         public boolean onDown(MotionEvent e) {
@@ -134,15 +119,13 @@ public class CanvasLayout extends RelativeLayout {
         public boolean onSingleTapUp(MotionEvent e) {
 
             if (selectedChild != null) showAdjustIndicator(true);
-            return false;
+            return true;
         }
 
 
 
         @Override
         public void onLongPress(MotionEvent e) {
-
-            removeView(null);
 
             if (selectedChild != null) removeView(selectedChild);
 
@@ -227,17 +210,86 @@ public class CanvasLayout extends RelativeLayout {
 
     /**
      * Add adjusting indicator on selectedView
+     *
      * @param show boolean value to imply whether to add indicator
      */
     private void showAdjustIndicator(boolean show) {
 
-        //Add border
-        View centerView = selectedChild.findViewById(R.id.image);
+        //Show or hide border
+        ImageView centerView = (ImageView) selectedChild.findViewById(R.id.center_image_view);
         centerView.setBackgroundResource(show ? R.drawable.custom_border : 0);
-        //Add indicator
+        //Show or hide indicator
         View indicatorView = selectedChild.findViewById(R.id.indicator);
         indicatorView.setVisibility(show ? VISIBLE : INVISIBLE);
+        //Add or remove indicator
+        addIndicatorListener(show);
 
     }
 
+
+
+    /**
+     * Unfinished method. Need to implement rotate feature
+     *
+     * @param add boolean value to tell if needs to add indicator
+     */
+    private void addIndicatorListener(boolean add) {
+
+        final Button resizeButton = (Button) selectedChild.findViewById(R.id.resize_button);
+
+        resizeButton.setOnTouchListener(!add ? null : new OnTouchListener() {
+
+            View centerView = selectedChild.findViewById(R.id.center_image_view);
+            ViewGroup.LayoutParams params = centerView.getLayoutParams();
+
+            float lastX, lastY;
+            //We have two indicator buttons, therefore the size of center view cannot be smaller
+            //than button's size * 2.
+            int minSize = 2 * Math.max(resizeButton.getHeight(), resizeButton.getWidth());
+
+
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                float eventX = event.getX();
+                float eventY = event.getY();
+
+                switch (event.getAction()) {
+                    case ACTION_DOWN:
+                        lastX = eventX;
+                        lastY = eventY;
+                        break;
+
+                    case ACTION_MOVE:
+                        //Resize button is now on left bottom corner
+                        float movedDistance = Math.max((lastX - eventX), eventY - lastY);
+
+                        int newWidth = params.width += movedDistance;
+                        int newHeight = params.height += movedDistance;
+
+                        params.width = newWidth > minSize ? newWidth : minSize;
+                        params.height = newHeight > minSize ? newHeight : minSize;
+
+                        centerView.requestLayout();
+
+                        lastX = eventX;
+                        lastY = eventY;
+
+                        break;
+
+                    default:
+                        break;
+
+                }
+
+                return true;
+
+            }
+        });
+    }
+
 }
+
+
+
