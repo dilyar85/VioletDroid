@@ -87,6 +87,7 @@ public class CanvasLayout extends RelativeLayout {
         @Override
         public boolean onDoubleTap(MotionEvent e) {
 
+            //TODO: Make rectangle diagram editable
             return super.onDoubleTap(e);
         }
 
