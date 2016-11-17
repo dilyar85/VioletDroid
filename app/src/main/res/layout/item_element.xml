@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="100dp"
               android:layout_height="match_parent"
-              android:id="@+id/element_layout"
               android:orientation="vertical">
 
     <ImageView
@@ -13,7 +13,8 @@
         android:layout_weight="2"
         android:layout_margin="12dp"
         android:tag="@string/view_not_selected_tag"
-        android:src="@drawable/aggregation"/>
+        android:src="@drawable/aggregation"
+        tools:ignore="ContentDescription"/>
 
     <TextView
 

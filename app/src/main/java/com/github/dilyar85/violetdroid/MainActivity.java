@@ -4,9 +4,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
 
 import com.github.dilyar85.violetdroid.adapter.RecyclerAdapter;
 
@@ -21,17 +18,11 @@ public class MainActivity extends AppCompatActivity {
 
     final static String LOG_TAG = MainActivity.class.getSimpleName();
 
-    //    @BindView(R.id.pager)
-//    ViewPager mViewPager;
     @BindView(R.id.element_recycler_view)
     RecyclerView mRecyclerView;
 
-    View selectedView;
-
-    //    ViewPagerAdapter mPagerAdapter;
     RecyclerAdapter mRecyclerAdapter;
 
-    private Button mButton;
 
 
 
@@ -41,8 +32,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        //getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-
         initView();
     }
 
