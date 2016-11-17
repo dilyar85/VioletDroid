@@ -95,9 +95,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                 context.getString(R.string.aggregation_line),
                 context.getString(R.string.inheritance_line),
                 context.getString(R.string.sequence_rectangle),
-                context.getString(R.string.sequence_line)};
+                context.getString(R.string.sequence_line),
+                context.getString(R.string.dash_bar),
+                context.getString(R.string.vertical_rectangle)};
         elementImageIds = new int[]{R.drawable.rectangle_old, R.drawable.dependency,
-                R.drawable.aggregation, R.drawable.inheritance, R.drawable.sequenc_rectangle_call, R.drawable.sequence_line};
+                R.drawable.aggregation, R.drawable.inheritance, R.drawable.sequenc_rectangle_call, R.drawable.sequence_line,
+        R.drawable.dashbar,R.drawable.verticalrectangle};
     }
 
 
