@@ -6,6 +6,8 @@
     <string name="inheritance_line">Inheritance</string>
     <string name="sequence_rectangle">Active Period</string>
     <string name="sequence_line">Method Line</string>
+    <string name="dash_bar">Dash_Bar</string>
+    <string name="vertical_rectangle">Active Rec</string>
     <string name="view_not_selected_tag">NotSelected</string>
     <item type="id" name="view_resource_key"></item>
 
