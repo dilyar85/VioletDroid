@@ -286,55 +286,36 @@ public class CanvasLayout extends RelativeLayout {
 
                 }
 
-                final float xc = selectedChild.getWidth() / 2;
-                final float yc = selectedChild.getHeight() / 2;
 
                 final float x = event.getX();
                 final float y = event.getY();
 
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN: {
-                        selectedChild.clearAnimation();
-                        mCurrAngle = Math.toDegrees(Math.atan2(x - xc, yc - y));
-                        break;
-                    }
-                    case MotionEvent.ACTION_MOVE: {
-                        mPrevAngle = mCurrAngle;
-                        mCurrAngle = Math.toDegrees(Math.atan2(x - xc, yc - y));
-                        animate(mPrevAngle, mCurrAngle, 0);
-                        System.out.println(mCurrAngle);
-                        break;
-                    }
-                    case MotionEvent.ACTION_UP : {
-                        mPrevAngle = mCurrAngle = 0;
-                        break;
-                    }
-                }
+                final float xc = selectedChild.getWidth()/2;
+                final float yc = selectedChild.getHeight()/2;
 
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        viewRotation = selectedChild.getRotation();
+                        fingerRotation = Math.toDegrees(Math.atan2(x - xc, yc - y));
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        newFingerRotation = Math.toDegrees(Math.atan2(x - xc, yc - y));
+                        selectedChild.setRotation((float)(viewRotation + newFingerRotation - fingerRotation));
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        fingerRotation = newFingerRotation = 0.0f;
+                        break;
+                }
                 return true;
 
             }
         });
+
+
     }
 
 
-
-
-            private void animate(double fromDegrees, double toDegrees, long durationMillis) {
-                final RotateAnimation rotate = new RotateAnimation((float) fromDegrees, (float) toDegrees,
-                        RotateAnimation.RELATIVE_TO_SELF, 0.5f,
-                        RotateAnimation.RELATIVE_TO_SELF, 0.5f);
-                rotate.setDuration(durationMillis);
-                rotate.setFillEnabled(true);
-                rotate.setFillAfter(true);
-                selectedChild.startAnimation(rotate);
-                System.out.println(mCurrAngle);
-
-        }
-
-
-
-
-    private double mCurrAngle = 0;
-    private double mPrevAngle = 0;
+    float viewRotation;
+    double fingerRotation;
+    double newFingerRotation;
 }
