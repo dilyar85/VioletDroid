@@ -306,11 +306,11 @@ public class CanvasLayout extends RelativeLayout {
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
                         viewRotation = selectedChild.getRotation();
-                        fingerRotation = Math.toDegrees(Math.atan2(x - xc, yc - y));
+                        fingerRotation = Math.toDegrees(Math.atan2(x - xc, y - yc));
                         break;
                     case MotionEvent.ACTION_MOVE:
                         //rotate button is now on left bottom corner
-                        newFingerRotation = Math.toDegrees(Math.atan2(x - xc, yc - y));
+                        newFingerRotation = Math.toDegrees(Math.atan2(x - xc, y - yc));
                         selectedChild.setRotation((float)(viewRotation + newFingerRotation - fingerRotation));
                         break;
                     case MotionEvent.ACTION_UP:
