@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.github.dilyar85.violetdroid.DrawClass;
 import com.github.dilyar85.violetdroid.R;
 
 import butterknife.BindView;
@@ -60,7 +61,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         ImageView imageView;
         @BindView(R.id.element_desc_textview)
          TextView textView;
-
+        @BindView(R.id.draw_class)
+        DrawClass drawView;
 
 
         /**
@@ -115,20 +117,16 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
         holder.imageView.setImageResource(elementImageIds[position]);
         holder.textView.setText(elementDescription[position]);
-
         holder.imageView.setTag(R.id.view_resource_key, elementImageIds[position]);
-
         holder.imageView.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
-
-
                 addViewToCanvas(v);
                 addBorder(v);
 
             }
         });
+
 
 
     }

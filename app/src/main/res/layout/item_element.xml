@@ -15,6 +15,13 @@
         android:tag="@string/view_not_selected_tag"
         android:src="@drawable/aggregation"/>
 
+    <com.github.dilyar85.violetdroid.DrawClass
+        android:id="@+id/draw_class"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:layout_gravity="center"/>
+
     <TextView
 
         android:id="@+id/element_desc_textview"
@@ -23,4 +30,5 @@
         android:layout_gravity="center"
         android:layout_weight="1"
         android:text="@string/aggregation_line"/>
+
 </LinearLayout>
