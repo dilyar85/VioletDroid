@@ -27,6 +27,10 @@ public class CanvasLayout extends RelativeLayout {
 
     private GestureDetector mGestureDetector;
 
+    private float viewRotation;
+    private double fingerRotation;
+    private double newFingerRotation;
+
 
 
     /**
@@ -232,7 +236,7 @@ public class CanvasLayout extends RelativeLayout {
 
 
     /**
-     * Unfinished method. Need to implement rotate feature
+     * implement rotate and resize feature for selectedChild.
      *
      * @param add boolean value to tell if needs to add indicator
      */
@@ -249,7 +253,6 @@ public class CanvasLayout extends RelativeLayout {
             //We have two indicator buttons, therefore the size of center view cannot be smaller
             //than button's size * 2.
             int minSize = 2 * Math.max(resizeButton.getHeight(), resizeButton.getWidth());
-
 
 
             @Override
@@ -285,8 +288,15 @@ public class CanvasLayout extends RelativeLayout {
                         break;
 
                 }
+                return true;
+            }
+        });
 
 
+        final Button rotatebutton = (Button) selectedChild.findViewById(R.id.rotate_button);
+        rotatebutton.setOnTouchListener(!add ? null : new OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent event) {
                 final float x = event.getX();
                 final float y = event.getY();
 
@@ -299,6 +309,7 @@ public class CanvasLayout extends RelativeLayout {
                         fingerRotation = Math.toDegrees(Math.atan2(x - xc, yc - y));
                         break;
                     case MotionEvent.ACTION_MOVE:
+                        //rotate button is now on left bottom corner
                         newFingerRotation = Math.toDegrees(Math.atan2(x - xc, yc - y));
                         selectedChild.setRotation((float)(viewRotation + newFingerRotation - fingerRotation));
                         break;
@@ -312,10 +323,9 @@ public class CanvasLayout extends RelativeLayout {
         });
 
 
+
     }
 
 
-    float viewRotation;
-    double fingerRotation;
-    double newFingerRotation;
+
 }

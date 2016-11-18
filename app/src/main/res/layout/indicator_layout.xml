@@ -40,7 +40,8 @@
             <Button
                 android:layout_width="25dp"
                 android:layout_height="match_parent"
-                android:background="@drawable/rotate_button"/>
+                android:background="@drawable/rotate_button"
+                android:id="@+id/rotate_button" />
         </LinearLayout>
 
     </LinearLayout>
