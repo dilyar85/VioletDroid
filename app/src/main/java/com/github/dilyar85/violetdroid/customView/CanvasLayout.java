@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.view.animation.RotateAnimation;
 
 import com.github.dilyar85.violetdroid.R;
 
@@ -194,6 +195,7 @@ public class CanvasLayout extends RelativeLayout {
 
         float newX = selectedChild.getX() + distanceX;
         if (newX <= paddingLeft)
+
             newX = paddingLeft;
         else if (newX + selectedChild.getWidth() >= canvasWidth - paddingRight)
             newX = canvasWidth - paddingRight - selectedChild.getWidth();
@@ -284,13 +286,55 @@ public class CanvasLayout extends RelativeLayout {
 
                 }
 
+                final float xc = selectedChild.getWidth() / 2;
+                final float yc = selectedChild.getHeight() / 2;
+
+                final float x = event.getX();
+                final float y = event.getY();
+
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN: {
+                        selectedChild.clearAnimation();
+                        mCurrAngle = Math.toDegrees(Math.atan2(x - xc, yc - y));
+                        break;
+                    }
+                    case MotionEvent.ACTION_MOVE: {
+                        mPrevAngle = mCurrAngle;
+                        mCurrAngle = Math.toDegrees(Math.atan2(x - xc, yc - y));
+                        animate(mPrevAngle, mCurrAngle, 0);
+                        System.out.println(mCurrAngle);
+                        break;
+                    }
+                    case MotionEvent.ACTION_UP : {
+                        mPrevAngle = mCurrAngle = 0;
+                        break;
+                    }
+                }
+
                 return true;
 
             }
         });
     }
 
+
+
+
+            private void animate(double fromDegrees, double toDegrees, long durationMillis) {
+                final RotateAnimation rotate = new RotateAnimation((float) fromDegrees, (float) toDegrees,
+                        RotateAnimation.RELATIVE_TO_SELF, 0.5f,
+                        RotateAnimation.RELATIVE_TO_SELF, 0.5f);
+                rotate.setDuration(durationMillis);
+                rotate.setFillEnabled(true);
+                rotate.setFillAfter(true);
+                selectedChild.startAnimation(rotate);
+                System.out.println(mCurrAngle);
+
+        }
+
+
+
+
+    private double mCurrAngle = 0;
+    private double mPrevAngle = 0;
 }
-
-
-
