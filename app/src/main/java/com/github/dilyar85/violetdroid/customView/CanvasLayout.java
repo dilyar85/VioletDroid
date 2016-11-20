@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.view.animation.RotateAnimation;
 
 import com.github.dilyar85.violetdroid.R;
 
@@ -22,14 +21,16 @@ import static android.view.MotionEvent.ACTION_MOVE;
 public class CanvasLayout extends RelativeLayout {
 
     final static String LOG_TAG = CanvasLayout.class.getSimpleName();
+    private float viewRotation;
+    private double fingerRotation;
+    private double newFingerRotation;
+
 
     private View selectedChild;
 
     private GestureDetector mGestureDetector;
 
-    private float viewRotation;
-    private double fingerRotation;
-    private double newFingerRotation;
+
 
 
 
@@ -292,25 +293,24 @@ public class CanvasLayout extends RelativeLayout {
             }
         });
 
-
         final Button rotatebutton = (Button) selectedChild.findViewById(R.id.rotate_button);
-        rotatebutton.setOnTouchListener(!add ? null : new OnTouchListener() {
+        rotatebutton.setOnTouchListener(new OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent event) {
                 final float x = event.getX();
                 final float y = event.getY();
 
-                final float xc = selectedChild.getWidth()/2;
-                final float yc = selectedChild.getHeight()/2;
+                final float xc = selectedChild.getPivotX()/2;
+                final float yc = selectedChild.getPivotY()/2;
 
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
                         viewRotation = selectedChild.getRotation();
-                        fingerRotation = Math.toDegrees(Math.atan2(x - xc, y - yc));
+                        fingerRotation = -Math.toDegrees(Math.atan2(x + xc, y + yc));
                         break;
                     case MotionEvent.ACTION_MOVE:
                         //rotate button is now on left bottom corner
-                        newFingerRotation = Math.toDegrees(Math.atan2(x - xc, y - yc));
+                        newFingerRotation = -Math.toDegrees(Math.atan2(x + xc , y + yc));
                         selectedChild.setRotation((float)(viewRotation + newFingerRotation - fingerRotation));
                         break;
                     case MotionEvent.ACTION_UP:
@@ -319,13 +319,10 @@ public class CanvasLayout extends RelativeLayout {
                 }
                 return true;
 
+
             }
         });
 
-
-
     }
-
-
 
 }
