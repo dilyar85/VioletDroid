@@ -7,22 +7,22 @@
     >
 
     <ImageView
-        android:padding="3dp"
         android:id="@+id/center_image_view"
         android:layout_width="100dp"
         android:layout_height="75dp"
-        android:scaleType="fitCenter"
         android:layout_gravity="center"
+        android:padding="3dp"
+        android:scaleType="fitCenter"
         android:src="@drawable/rectangle_old"
         tools:ignore="ContentDescription"/>
 
 
     <LinearLayout
-        android:visibility="invisible"
         android:id="@+id/indicator"
         android:layout_width="match_parent"
         android:layout_height="25dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="invisible">
 
         <Button
             android:id="@+id/resize_button"
@@ -38,10 +38,10 @@
             android:gravity="end">
 
             <Button
+                android:id="@+id/rotate_button"
                 android:layout_width="25dp"
                 android:layout_height="match_parent"
-                android:background="@drawable/rotate_button"
-                android:id="@+id/rotate_button" />
+                android:background="@drawable/rotate_button"/>
         </LinearLayout>
 
     </LinearLayout>

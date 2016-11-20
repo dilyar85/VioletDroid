@@ -4,15 +4,13 @@ import android.util.AttributeSet;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.github.dilyar85.violetdroid.R;
-
-import static android.view.MotionEvent.ACTION_DOWN;
-import static android.view.MotionEvent.ACTION_MOVE;
+import com.github.dilyar85.violetdroid.listener.ResizingOnTouchListener;
+import com.github.dilyar85.violetdroid.listener.RotatingOnTouchListener;
 
 /**
  * A custom canvas layout who can have diagram elements inside
@@ -29,10 +27,6 @@ public class CanvasLayout extends RelativeLayout {
     private View selectedChild;
 
     private GestureDetector mGestureDetector;
-
-
-
-
 
     /**
      * Init CustomCanvasLayout
@@ -237,91 +231,19 @@ public class CanvasLayout extends RelativeLayout {
 
 
     /**
-     * implement rotate and resize feature for selectedChild.
+     * Add listener for resizing and rotating buttons
      *
      * @param add boolean value to tell if needs to add indicator
      */
     private void addIndicatorListener(boolean add) {
 
-        final Button resizeButton = (Button) selectedChild.findViewById(R.id.resize_button);
+        Button resizeButton = (Button) selectedChild.findViewById(R.id.resize_button);
+        resizeButton.setOnTouchListener(!add ? null :
+                new ResizingOnTouchListener(selectedChild.findViewById(R.id.center_image_view)));
 
-        resizeButton.setOnTouchListener(!add ? null : new OnTouchListener() {
-
-            View centerView = selectedChild.findViewById(R.id.center_image_view);
-            ViewGroup.LayoutParams params = centerView.getLayoutParams();
-
-            float lastX, lastY;
-            //We have two indicator buttons, therefore the size of center view cannot be smaller
-            //than button's size * 2.
-            int minSize = 2 * Math.max(resizeButton.getHeight(), resizeButton.getWidth());
-
-
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-
-                float eventX = event.getX();
-                float eventY = event.getY();
-
-                switch (event.getAction()) {
-                    case ACTION_DOWN:
-                        lastX = eventX;
-                        lastY = eventY;
-                        break;
-
-                    case ACTION_MOVE:
-                        //Resize button is now on left bottom corner
-                        float movedDistance = Math.max((lastX - eventX), eventY - lastY);
-
-                        int newWidth = params.width += movedDistance;
-                        int newHeight = params.height += movedDistance;
-
-                        params.width = newWidth > minSize ? newWidth : minSize;
-                        params.height = newHeight > minSize ? newHeight : minSize;
-
-                        centerView.requestLayout();
-
-                        lastX = eventX;
-                        lastY = eventY;
-
-                        break;
-
-                    default:
-                        break;
-
-                }
-                return true;
-            }
-        });
-
-        final Button rotatebutton = (Button) selectedChild.findViewById(R.id.rotate_button);
-        rotatebutton.setOnTouchListener(new OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent event) {
-                final float x = event.getX();
-                final float y = event.getY();
-
-                final float xc = selectedChild.getPivotX()/2;
-                final float yc = selectedChild.getPivotY()/2;
-
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        viewRotation = selectedChild.getRotation();
-                        fingerRotation = -Math.toDegrees(Math.atan2(x + xc, y + yc));
-                        break;
-                    case MotionEvent.ACTION_MOVE:
-                        //rotate button is now on left bottom corner
-                        newFingerRotation = -Math.toDegrees(Math.atan2(x + xc , y + yc));
-                        selectedChild.setRotation((float)(viewRotation + newFingerRotation - fingerRotation));
-                        break;
-                    case MotionEvent.ACTION_UP:
-                        fingerRotation = newFingerRotation = 0.0f;
-                        break;
-                }
-                return true;
-
-
-            }
-        });
+        Button rotateButton = (Button) selectedChild.findViewById(R.id.rotate_button);
+        rotateButton.setOnTouchListener(!add ? null :
+                new RotatingOnTouchListener(selectedChild));
 
     }
 
