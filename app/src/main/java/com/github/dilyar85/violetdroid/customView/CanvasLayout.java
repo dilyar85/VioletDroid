@@ -1,6 +1,7 @@
 package com.github.dilyar85.violetdroid.customView;
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -25,6 +26,8 @@ public class CanvasLayout extends RelativeLayout {
     private View selectedChild;
 
     private GestureDetector mGestureDetector;
+
+    private float xc, yc;
 
 
 
@@ -194,6 +197,7 @@ public class CanvasLayout extends RelativeLayout {
 
         float newX = selectedChild.getX() + distanceX;
         if (newX <= paddingLeft)
+
             newX = paddingLeft;
         else if (newX + selectedChild.getWidth() >= canvasWidth - paddingRight)
             newX = canvasWidth - paddingRight - selectedChild.getWidth();
@@ -230,7 +234,7 @@ public class CanvasLayout extends RelativeLayout {
 
 
     /**
-     * Unfinished method. Need to implement rotate feature
+     * implement rotate and resize feature for selectedChild.
      *
      * @param add boolean value to tell if needs to add indicator
      */
@@ -283,14 +287,54 @@ public class CanvasLayout extends RelativeLayout {
                         break;
 
                 }
+                return true;
+            }
+        });
 
+        final Button rotateButton = (Button) selectedChild.findViewById(R.id.rotate_button);
+
+        int[] viewRaws = new int[2];
+        selectedChild.getLocationOnScreen(viewRaws);
+        final float xc = viewRaws[0] + selectedChild.getWidth() / 2;
+        final float yc = viewRaws[1] + selectedChild.getHeight() / 2;
+
+        rotateButton.setOnTouchListener(!add ? null : new OnTouchListener() {
+
+            float startX, startY;
+
+
+            @Override
+            public boolean onTouch(View view, MotionEvent event) {
+
+                float eventX = event.getRawX();
+                float eventY = event.getRawY();
+
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+
+                        startX = eventX;
+                        startY = eventY;
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        //rotate button is now on left bottom corner
+
+                        Log.e(LOG_TAG, "xc: " + xc);
+                        Log.e(LOG_TAG, "yc: " + yc);
+                        float curDegrees = (float) Math.toDegrees(Math.atan2((eventY - yc), eventX - xc));
+                        Log.e(LOG_TAG, "curDegrees: " + curDegrees);
+                        selectedChild.setRotation((-45 + curDegrees));
+                        break;
+                    case MotionEvent.ACTION_UP:
+
+                        selectedChild.setRotation(0);
+
+                        break;
+                }
                 return true;
 
             }
         });
+
     }
 
 }
-
-
-
