@@ -1,6 +1,7 @@
 package com.github.dilyar85.violetdroid.customView;
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -8,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.view.animation.RotateAnimation;
 
 import com.github.dilyar85.violetdroid.R;
 
@@ -27,9 +27,7 @@ public class CanvasLayout extends RelativeLayout {
 
     private GestureDetector mGestureDetector;
 
-    private float viewRotation;
-    private double fingerRotation;
-    private double newFingerRotation;
+    private float xc, yc;
 
 
 
@@ -255,6 +253,7 @@ public class CanvasLayout extends RelativeLayout {
             int minSize = 2 * Math.max(resizeButton.getHeight(), resizeButton.getWidth());
 
 
+
             @Override
             public boolean onTouch(View v, MotionEvent event) {
 
@@ -292,29 +291,43 @@ public class CanvasLayout extends RelativeLayout {
             }
         });
 
+        final Button rotateButton = (Button) selectedChild.findViewById(R.id.rotate_button);
 
-        final Button rotatebutton = (Button) selectedChild.findViewById(R.id.rotate_button);
-        rotatebutton.setOnTouchListener(!add ? null : new OnTouchListener() {
+        int[] viewRaws = new int[2];
+        selectedChild.getLocationOnScreen(viewRaws);
+        final float xc = viewRaws[0] + selectedChild.getWidth() / 2;
+        final float yc = viewRaws[1] + selectedChild.getHeight() / 2;
+
+        rotateButton.setOnTouchListener(!add ? null : new OnTouchListener() {
+
+            float startX, startY;
+
+
             @Override
             public boolean onTouch(View view, MotionEvent event) {
-                final float x = event.getX();
-                final float y = event.getY();
 
-                final float xc = selectedChild.getWidth()/2;
-                final float yc = selectedChild.getHeight()/2;
+                float eventX = event.getRawX();
+                float eventY = event.getRawY();
 
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
-                        viewRotation = selectedChild.getRotation();
-                        fingerRotation = Math.toDegrees(Math.atan2(x - xc, y - yc));
+
+                        startX = eventX;
+                        startY = eventY;
                         break;
                     case MotionEvent.ACTION_MOVE:
                         //rotate button is now on left bottom corner
-                        newFingerRotation = Math.toDegrees(Math.atan2(x - xc, y - yc));
-                        selectedChild.setRotation((float)(viewRotation + newFingerRotation - fingerRotation));
+
+                        Log.e(LOG_TAG, "xc: " + xc);
+                        Log.e(LOG_TAG, "yc: " + yc);
+                        float curDegrees = (float) Math.toDegrees(Math.atan2((eventY - yc), eventX - xc));
+                        Log.e(LOG_TAG, "curDegrees: " + curDegrees);
+                        selectedChild.setRotation((-45 + curDegrees));
                         break;
                     case MotionEvent.ACTION_UP:
-                        fingerRotation = newFingerRotation = 0.0f;
+
+                        selectedChild.setRotation(0);
+
                         break;
                 }
                 return true;
@@ -322,10 +335,6 @@ public class CanvasLayout extends RelativeLayout {
             }
         });
 
-
-
     }
-
-
 
 }
