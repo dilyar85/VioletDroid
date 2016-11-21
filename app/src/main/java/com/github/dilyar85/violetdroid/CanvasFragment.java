@@ -9,10 +9,10 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 
 import com.github.dilyar85.violetdroid.adapter.RecyclerAdapter;
+import com.github.dilyar85.violetdroid.customView.CanvasLayout;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import com.github.dilyar85.violetdroid.customView.CanvasLayout;
 
 /**
  * A canvas fragment from MainActivity to allow users to draw diagrams
@@ -31,6 +31,9 @@ public class CanvasFragment extends Fragment implements RecyclerAdapter.ElementV
         super.onCreate(savedInstanceState);
         RecyclerAdapter.setElementViewListener(this);
     }
+
+
+
 
 
 

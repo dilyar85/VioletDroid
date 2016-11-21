@@ -15,6 +15,7 @@ public class RotatingOnTouchListener implements View.OnTouchListener {
 
     /**
      * Construct the listener by given selectedChild view
+     *
      * @param selectedChild view to be rotated
      */
     public RotatingOnTouchListener(View selectedChild) {
@@ -37,7 +38,6 @@ public class RotatingOnTouchListener implements View.OnTouchListener {
 
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-
                 break;
             case MotionEvent.ACTION_MOVE:
                 //rotate button is now on left bottom corner

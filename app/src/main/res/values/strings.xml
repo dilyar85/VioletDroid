@@ -9,7 +9,9 @@
     <string name="dash_bar">Dash_Bar</string>
     <string name="vertical_rectangle">Active Rec</string>
     <string name="view_not_selected_tag">NotSelected</string>
+    <string name="menu_share">Share</string>
     <item type="id" name="view_resource_key"></item>
+    <string name="toast_something_goes_wrong">Oops, something goes wrong.</string>
 
 
 </resources>
