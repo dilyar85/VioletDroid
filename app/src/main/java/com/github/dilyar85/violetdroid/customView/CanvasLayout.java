@@ -2,9 +2,11 @@ package com.github.dilyar85.violetdroid.customView;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -96,20 +98,42 @@ public class CanvasLayout extends RelativeLayout {
         private void setEditable() {
 
             if ((int) selectedChild.getTag() == R.drawable.rectangle_old) {
+
                 EditText editText = (EditText) selectedChild.findViewById(R.id.element_edittext);
-                editText.setCursorVisible(true);
+                if (editText == null) return;
+
+                editText.setEnabled(false);
+                editText.setEnabled(true);
                 editText.setVisibility(VISIBLE);
-                editText.setFocusableInTouchMode(true);
+                editText.setCursorVisible(true);
+
                 editText.setFocusable(true);
-                editText.setSelectAllOnFocus(true);
+                editText.setFocusableInTouchMode(true||true);
+                editText.requestFocus();
+                editText.requestFocusFromTouch();
+
+
+                if (editText.isFocused()) {
+                    Log.i(LOG_TAG, "EditText is focused");
+                    showSoftKeyboard(editText);
+                }
             }
         }
 
         private void cancelEditable() {
             EditText editText = (EditText) selectedChild.findViewById(R.id.element_edittext);
+            if (editText == null) return;
             editText.setCursorVisible(false);
             editText.setFocusableInTouchMode(false);
             editText.setFocusable(false);
+        }
+
+        public void showSoftKeyboard(View view) {
+            if (view.requestFocus()) {
+                InputMethodManager imm = (InputMethodManager)
+                        getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT);
+            }
         }
 
         @Override
@@ -125,7 +149,7 @@ public class CanvasLayout extends RelativeLayout {
         public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
 
             if (selectedChild != null) {
-               // cancelEditable();
+                //cancelEditable();
                 float[] validLocation = getValidLocations(-distanceX, -distanceY);
                 selectedChild.setX(validLocation[0]);
                 selectedChild.setY(validLocation[1]);
