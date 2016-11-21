@@ -101,6 +101,7 @@ public class CanvasLayout extends RelativeLayout {
                 editText.setVisibility(VISIBLE);
                 editText.setFocusableInTouchMode(true);
                 editText.setFocusable(true);
+                editText.setSelectAllOnFocus(true);
             }
         }
 
