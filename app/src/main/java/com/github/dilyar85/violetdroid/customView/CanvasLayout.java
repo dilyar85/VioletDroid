@@ -124,7 +124,7 @@ public class CanvasLayout extends RelativeLayout {
         public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
 
             if (selectedChild != null) {
-                cancelEditable();
+               // cancelEditable();
                 float[] validLocation = getValidLocations(-distanceX, -distanceY);
                 selectedChild.setX(validLocation[0]);
                 selectedChild.setY(validLocation[1]);
@@ -138,7 +138,7 @@ public class CanvasLayout extends RelativeLayout {
         public boolean onSingleTapUp(MotionEvent e) {
 
             if (selectedChild != null) {
-                cancelEditable();
+               // cancelEditable();
                 showAdjustIndicator(true);
             }
 
@@ -240,7 +240,6 @@ public class CanvasLayout extends RelativeLayout {
 
         //Show or hide border
         ImageView centerView = (ImageView) selectedChild.findViewById(R.id.center_image_view);
-       // FrameLayout centerView = (FrameLayout) selectedChild.findViewById(R.id.element_frame);
         centerView.setBackgroundResource(show ? R.drawable.custom_border : 0);
         //Show or hide indicator
         View indicatorView = selectedChild.findViewById(R.id.indicator);
