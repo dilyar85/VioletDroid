@@ -1,6 +1,7 @@
 package com.github.dilyar85.violetdroid;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -111,11 +112,13 @@ public class MainActivity extends AppCompatActivity {
             intent.setAction(Intent.ACTION_SEND);
             intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
             intent.setType("image/*");
-            startActivity(intent);
+            PackageManager pm = getPackageManager();
+            if(intent.resolveActivity(pm) != null) startActivity(intent);
+            else Toast.makeText(this, getString(R.string.toast_no_intent_applications),Toast.LENGTH_LONG).show();
 
         } catch (Exception e) {
             Log.e(LOG_TAG, e.getMessage());
-            Toast.makeText(this, getString(R.string.toast_something_goes_wrong), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.toast_no_available_space), Toast.LENGTH_LONG).show();
         }
 
     }

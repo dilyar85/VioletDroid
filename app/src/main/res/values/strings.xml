@@ -11,7 +11,8 @@
     <string name="view_not_selected_tag">NotSelected</string>
     <string name="menu_share">Share</string>
     <item type="id" name="view_resource_key"></item>
-    <string name="toast_something_goes_wrong">Oops, something goes wrong.</string>
+    <string name="toast_no_available_space">Sorry, there is no available space to hold the diagram.</string>
+    <string name="toast_no_intent_applications">Sorry, there is no avaialble applications to share this diagram.</string>
 
 
 </resources>
