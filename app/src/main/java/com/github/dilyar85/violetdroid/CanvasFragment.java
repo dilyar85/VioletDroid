@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.github.dilyar85.violetdroid.adapter.RecyclerAdapter;
@@ -55,6 +56,7 @@ public class CanvasFragment extends Fragment implements RecyclerAdapter.ElementV
         View testLayout = getActivity().getLayoutInflater().inflate(R.layout.indicator_layout, mCanvasLayout, false);
         ImageView targetView = (ImageView) testLayout.findViewById(R.id.center_image_view);
         targetView.setImageResource(tag);
+        testLayout.setTag(view.getTag(R.id.view_resource_key));
 
         mCanvasLayout.addView(testLayout);
 

@@ -1,10 +1,12 @@
 package com.github.dilyar85.violetdroid.customView;
+
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
@@ -86,10 +88,28 @@ public class CanvasLayout extends RelativeLayout {
         public boolean onDoubleTap(MotionEvent e) {
 
             //TODO: Make rectangle diagram editable
+
+            setEditable();
             return super.onDoubleTap(e);
         }
 
+        private void setEditable() {
 
+            if ((int) selectedChild.getTag() == R.drawable.rectangle_old) {
+                EditText editText = (EditText) selectedChild.findViewById(R.id.element_edittext);
+                editText.setCursorVisible(true);
+                editText.setVisibility(VISIBLE);
+                editText.setFocusableInTouchMode(true);
+                editText.setFocusable(true);
+            }
+        }
+
+        private void cancelEditable() {
+            EditText editText = (EditText) selectedChild.findViewById(R.id.element_edittext);
+            editText.setCursorVisible(false);
+            editText.setFocusableInTouchMode(false);
+            editText.setFocusable(false);
+        }
 
         @Override
         public boolean onDown(MotionEvent e) {
@@ -104,6 +124,7 @@ public class CanvasLayout extends RelativeLayout {
         public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
 
             if (selectedChild != null) {
+                cancelEditable();
                 float[] validLocation = getValidLocations(-distanceX, -distanceY);
                 selectedChild.setX(validLocation[0]);
                 selectedChild.setY(validLocation[1]);
@@ -113,11 +134,14 @@ public class CanvasLayout extends RelativeLayout {
         }
 
 
-
         @Override
         public boolean onSingleTapUp(MotionEvent e) {
 
-            if (selectedChild != null) showAdjustIndicator(true);
+            if (selectedChild != null) {
+                cancelEditable();
+                showAdjustIndicator(true);
+            }
+
             return true;
         }
 
@@ -169,7 +193,6 @@ public class CanvasLayout extends RelativeLayout {
         }
 
         selectedChild = null;
-
     }
 
 
@@ -217,6 +240,7 @@ public class CanvasLayout extends RelativeLayout {
 
         //Show or hide border
         ImageView centerView = (ImageView) selectedChild.findViewById(R.id.center_image_view);
+       // FrameLayout centerView = (FrameLayout) selectedChild.findViewById(R.id.element_frame);
         centerView.setBackgroundResource(show ? R.drawable.custom_border : 0);
         //Show or hide indicator
         View indicatorView = selectedChild.findViewById(R.id.indicator);
