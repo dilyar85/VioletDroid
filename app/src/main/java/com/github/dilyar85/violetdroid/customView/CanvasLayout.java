@@ -124,8 +124,8 @@ public class CanvasLayout extends RelativeLayout {
             EditText editText = (EditText) selectedChild.findViewById(R.id.element_edittext);
             if (editText == null) return;
             editText.setCursorVisible(false);
-            editText.setFocusableInTouchMode(false);
-            editText.setFocusable(false);
+//            editText.setFocusableInTouchMode(false);
+//            editText.setFocusable(false);
         }
 
         public void showSoftKeyboard(View view) {
@@ -149,7 +149,7 @@ public class CanvasLayout extends RelativeLayout {
         public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
 
             if (selectedChild != null) {
-                //cancelEditable();
+                cancelEditable();
                 float[] validLocation = getValidLocations(-distanceX, -distanceY);
                 selectedChild.setX(validLocation[0]);
                 selectedChild.setY(validLocation[1]);
@@ -163,7 +163,7 @@ public class CanvasLayout extends RelativeLayout {
         public boolean onSingleTapUp(MotionEvent e) {
 
             if (selectedChild != null) {
-               // cancelEditable();
+                cancelEditable();
                 showAdjustIndicator(true);
             }
 
