@@ -128,12 +128,8 @@ public class CanvasLayout extends RelativeLayout {
                     public boolean onTouch(View view, MotionEvent motionEvent) {
                         return gestureDetector.onTouchEvent(motionEvent);
                     }
-
                 });
-
             }
-
-
         }
 
 
