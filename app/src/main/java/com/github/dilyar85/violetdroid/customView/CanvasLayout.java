@@ -11,8 +11,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import com.github.dilyar85.violetdroid.MyApplication;
 import com.github.dilyar85.violetdroid.R;
+import com.github.dilyar85.violetdroid.application.MyApplication;
 import com.github.dilyar85.violetdroid.listener.ResizingOnTouchListener;
 import com.github.dilyar85.violetdroid.listener.RotatingOnTouchListener;
 

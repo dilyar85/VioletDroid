@@ -8,12 +8,22 @@ import com.avos.avoscloud.AVOSCloud;
  */
 
 public class MyApplication extends Application {
+
+    private static MyApplication sInstance;
+
+
+    public static Application getInstance() {
+        return sInstance;
+    }
+
     @Override
     public void onCreate() {
 
         super.onCreate();
         //Initialize LeanCloud service, please do not modify this line.
+        sInstance = this;
         AVOSCloud.initialize(this,"Tmir9DjTPi8gcE83mSclCKAb-MdYXbMMI","sntOwsBRtiBAkBoW3yOWVf7B");
         AVOSCloud.useAVCloudUS();
+
     }
 }
