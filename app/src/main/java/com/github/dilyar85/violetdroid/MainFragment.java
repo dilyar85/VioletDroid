@@ -2,6 +2,7 @@ package com.github.dilyar85.violetdroid;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -54,6 +55,7 @@ public class MainFragment extends Fragment implements RecyclerAdapter.ElementVie
 
     RecyclerAdapter mRecyclerAdapter;
 
+    private ProgressDialog mProgressDialog;
 
 
     @Override
@@ -81,7 +83,7 @@ public class MainFragment extends Fragment implements RecyclerAdapter.ElementVie
         int id = item.getItemId();
         if (id == R.id.menu_share) shareCurrentDiagram();
         else if (id == R.id.menu_save) saveDiagram();
-        else if(id == R.id.menu_diagram_collections) displayDiagrams();
+        else if(id == R.id.menu_diagram_collections) displayDiagramCollections();
         return true;
     }
 
@@ -101,6 +103,9 @@ public class MainFragment extends Fragment implements RecyclerAdapter.ElementVie
 
 
 
+    /**
+     * Init recycler view (the tool bar showing diagram element)
+     */
     private void initView() {
         LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
@@ -111,7 +116,7 @@ public class MainFragment extends Fragment implements RecyclerAdapter.ElementVie
 
 
     @Override
-    public void viewDoubleTapped(View view) {
+    public void toolElementDoubleTapped(View view) {
 
         int tag = (int) view.getTag(R.id.view_resource_key);
         View testLayout = getActivity().getLayoutInflater().inflate(R.layout.indicator_layout, mCanvasLayout, false);
@@ -122,7 +127,11 @@ public class MainFragment extends Fragment implements RecyclerAdapter.ElementVie
     }
 
 
-    private void displayDiagrams() {
+
+    /**
+     * Display the diagram collections of  user
+     */
+    private void displayDiagramCollections() {
         Fragment diagramCollectionsFragment = new DiagramCollectionsFragment();
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container, diagramCollectionsFragment);
@@ -132,6 +141,9 @@ public class MainFragment extends Fragment implements RecyclerAdapter.ElementVie
 
 
 
+    /**
+     * Save current diagram into backend service
+     */
     private void saveDiagram() {
 
         AVUser currentUser = AVUser.getCurrentUser();
@@ -140,7 +152,9 @@ public class MainFragment extends Fragment implements RecyclerAdapter.ElementVie
             return;
         }
 
-        String diagramPth = getCurrentDiagram();
+        mProgressDialog = ProgressDialog.show(getActivity(), null, "Saving now...");
+
+        String diagramPth = getCurrentDiagramAsPicture();
         if (diagramPth != null)
             try {
                 AVFile file = AVFile.withAbsoluteLocalPath("LeanCloud.png", diagramPth);
@@ -152,6 +166,7 @@ public class MainFragment extends Fragment implements RecyclerAdapter.ElementVie
                     @Override
                     public void done(AVException e) {
 
+                        mProgressDialog.dismiss();
                         Toast.makeText(getActivity(), "Saved successfully", Toast.LENGTH_SHORT).show();
                         Log.e(LOG_TAG, "Done!");
                     }
@@ -164,7 +179,11 @@ public class MainFragment extends Fragment implements RecyclerAdapter.ElementVie
 
 
 
-    private String getCurrentDiagram() {
+    /**
+     * Helper method to get the current diagram as picture
+     * @return diagram picture in png format
+     */
+    private String getCurrentDiagramAsPicture() {
 
 
         mCanvasLayout.setDrawingCacheEnabled(true);
@@ -195,7 +214,7 @@ public class MainFragment extends Fragment implements RecyclerAdapter.ElementVie
      */
     private void shareCurrentDiagram() {
 
-        String diagramPath = getCurrentDiagram();
+        String diagramPath = getCurrentDiagramAsPicture();
         if (diagramPath == null) return;
 
         //Create a sharing intent and start it.

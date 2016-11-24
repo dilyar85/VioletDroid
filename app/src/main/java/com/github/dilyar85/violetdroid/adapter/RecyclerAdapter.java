@@ -37,7 +37,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
          * Method to notify the view is double tapped
          * @param view the double tapped view
          */
-        void viewDoubleTapped(View view);
+        void toolElementDoubleTapped(View view);
     }
 
 
@@ -149,7 +149,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         if (selectedView == v &&
                 System.currentTimeMillis() - lastClickedTime <= DOUBLE_CLICK_TIME_DELTA) {
 
-            mElementViewListener.viewDoubleTapped(v);
+            mElementViewListener.toolElementDoubleTapped(v);
             lastClickedTime = 0;
         }
 

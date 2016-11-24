@@ -29,7 +29,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * A fragment to display all saved diagrams of user in backend service
+ * A fragment class to display all saved diagrams of user in backend service
  */
 public class DiagramCollectionsFragment extends Fragment {
 
@@ -74,9 +74,12 @@ public class DiagramCollectionsFragment extends Fragment {
 
 
 
+    /**
+     * Download all diagrams saved by current user
+     */
     private void initData() {
 
-        mProgressDialog = ProgressDialog.show(getActivity(), null, "Saving");
+        mProgressDialog = ProgressDialog.show(getActivity(), null, "Loading");
 
         AVQuery<AVObject> query = new AVQuery<>("Diagrams");
         query.whereEqualTo("user", AVUser.getCurrentUser().getUsername());
@@ -100,6 +103,9 @@ public class DiagramCollectionsFragment extends Fragment {
 
 
 
+    /**
+     * Display selected diagram in diagram collections
+     */
     private void setGridViewClickEvent() {
 
         mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -143,6 +149,9 @@ public class DiagramCollectionsFragment extends Fragment {
 
 
 
+    /**
+     * Pass the diagram's information to grid view
+     */
     private void passDataToView() {
 
         if (mDiagramFiles == null) {

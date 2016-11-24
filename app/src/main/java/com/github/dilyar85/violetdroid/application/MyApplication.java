@@ -4,7 +4,7 @@ import android.app.Application;
 import com.avos.avoscloud.AVOSCloud;
 
 /**
- * Application class
+ * Application class for the project, to initialize LeanCloud backend service
  */
 
 public class MyApplication extends Application {

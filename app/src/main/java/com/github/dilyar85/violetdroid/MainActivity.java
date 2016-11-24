@@ -11,7 +11,7 @@ import com.avos.avoscloud.SignUpCallback;
 import butterknife.ButterKnife;
 
 /**
- * MainActivity class
+ * First launched activity class
  */
 
 public class MainActivity extends AppCompatActivity {
@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
     private void createDummyUser() {
 
         AVUser user = new AVUser();
-        user.setUsername("Dummy3");
+        user.setUsername("Dummy100");
         user.setPassword("123");
         user.signUpInBackground(new SignUpCallback() {
 
@@ -56,9 +56,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
     /**
-     * Init views
+     * Add Main Fragment to this activity
      */
     private void addMainFragment() {
 

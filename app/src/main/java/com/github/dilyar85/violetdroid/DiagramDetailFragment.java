@@ -13,7 +13,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * Created by Dilyar on 11/23/16.
+ * A fragment class to display selected diagram's detail
  */
 public class DiagramDetailFragment extends Fragment {
 
@@ -44,6 +44,9 @@ public class DiagramDetailFragment extends Fragment {
 
 
 
+    /**
+     * Init data of the fragment
+     */
     private void initData() {
         Bundle bundle = this.getArguments();
         String diagramUrl = bundle.getString(DiagramCollectionsFragment.KEY_DIAGRAM_URL);
@@ -51,6 +54,11 @@ public class DiagramDetailFragment extends Fragment {
 
     }
 
+
+
+    /**
+     * Click method for the button, just return to the previous fragment
+     */
     @OnClick(R.id.confirm_button)
     public void clickButton() {
         getActivity().getFragmentManager().popBackStack();
