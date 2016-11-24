@@ -51,8 +51,7 @@ public class CanvasFragment extends Fragment implements RecyclerAdapter.ElementV
 
 
     @Override
-    public void viewDoubleTapped(View view) {
-
+    public void toolElementDoubleTapped(View view) {
         int tag = (int) view.getTag(R.id.view_resource_key);
         View testLayout = getActivity().getLayoutInflater().inflate(R.layout.indicator_layout, mCanvasLayout, false);
         ImageView targetView = (ImageView) testLayout.findViewById(R.id.center_image_view);
@@ -60,6 +59,7 @@ public class CanvasFragment extends Fragment implements RecyclerAdapter.ElementV
         testLayout.setTag(view.getTag(R.id.view_resource_key));
 
         mCanvasLayout.addView(testLayout);
-
     }
+
+
 }

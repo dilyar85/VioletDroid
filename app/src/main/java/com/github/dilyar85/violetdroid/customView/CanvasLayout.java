@@ -11,10 +11,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import com.github.dilyar85.violetdroid.MyApplication;
 import com.github.dilyar85.violetdroid.R;
 import com.github.dilyar85.violetdroid.listener.ResizingOnTouchListener;
 import com.github.dilyar85.violetdroid.listener.RotatingOnTouchListener;
+import com.github.dilyar85.violetdroid.application.MyApplication;
 
 /**
  * A custom canvas layout who can have diagram elements inside
@@ -23,12 +23,14 @@ import com.github.dilyar85.violetdroid.listener.RotatingOnTouchListener;
 public class CanvasLayout extends RelativeLayout {
 
     final static String LOG_TAG = CanvasLayout.class.getSimpleName();
+    private float viewRotation;
+    private double fingerRotation;
+    private double newFingerRotation;
+
 
     private View selectedChild;
 
     private GestureDetector mGestureDetector;
-
-
 
     /**
      * Init CustomCanvasLayout
@@ -297,7 +299,7 @@ public class CanvasLayout extends RelativeLayout {
 
 
     /**
-     * Add listener for resizing and rotating buttons
+     * Add listener for resizing and rotating buttonsgi
      *
      * @param add boolean value to tell if needs to add indicator
      */
