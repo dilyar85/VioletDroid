@@ -19,7 +19,6 @@ public class MainActivity extends AppCompatActivity {
     final static String LOG_TAG = MainActivity.class.getSimpleName();
 
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
@@ -29,7 +28,6 @@ public class MainActivity extends AppCompatActivity {
         addMainFragment();
         if (AVUser.getCurrentUser() == null) createDummyUser();
     }
-
 
 
     /**

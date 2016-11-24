@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -23,6 +24,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
     private String[] elementDescription;
     private int[] elementImageIds;
+    private Context context;
 
     private View selectedView;
     private long lastClickedTime = 0;
@@ -53,8 +55,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
 
 
-
-
     /**
      * An inner ViewHolder class for adapter
      */
@@ -64,7 +64,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         ImageView imageView;
         @BindView(R.id.element_desc_textview)
          TextView textView;
-
+        @BindView(R.id.element_edittext)
+        EditText editText;
 
 
         /**
@@ -77,9 +78,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
-
     }
-
 
 
     /**
@@ -89,6 +88,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
      */
     public RecyclerAdapter(Context context) {
 
+        this.context = context;
 
         elementDescription = new String[]{context.getString(R.string.class_rectangle),
                 context.getString(R.string.dependency_line),
@@ -102,7 +102,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                 R.drawable.aggregation, R.drawable.inheritance, R.drawable.sequenc_rectangle_call, R.drawable.sequence_line,
         R.drawable.dashbar,R.drawable.verticalrectangle};
     }
-
 
 
     @Override
@@ -120,9 +119,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     public void onBindViewHolder(ViewHolder holder, final int position) {
 
         holder.imageView.setImageResource(elementImageIds[position]);
+        holder.imageView.bringToFront();
         holder.textView.setText(elementDescription[position]);
-
         holder.imageView.setTag(R.id.view_resource_key, elementImageIds[position]);
+        holder.editText.setTag(R.id.element_edittext);
 
         holder.imageView.setOnClickListener(new View.OnClickListener() {
 
@@ -135,9 +135,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             }
         });
 
-
     }
-
 
 
     /**
@@ -156,7 +154,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     }
 
 
-
     /**
      * Add border or remove it on the element image view
      *
@@ -168,13 +165,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         v.setBackgroundResource(R.drawable.custom_border);
         selectedView = v;
         lastClickedTime = System.currentTimeMillis();
-
     }
 
 
     @Override
     public int getItemCount() {
-
         return elementImageIds.length;
     }
 
