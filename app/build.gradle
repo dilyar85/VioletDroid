@@ -46,4 +46,14 @@ dependencies {
     //ButterKnife
     compile 'com.jakewharton:butterknife:8.4.0'
     apt 'com.jakewharton:butterknife-compiler:8.4.0'
+
+    //LeanCloud basic package
+    compile ('cn.leancloud.android:avoscloud-sdk:v3.+')
+
+    //Custom progress bar
+    compile 'com.daimajia.numberprogressbar:library:1.2@aar'
+
+    //ImageLoader
+    compile 'com.github.dilyar85:imageloader:0.1.1'
+
 }
