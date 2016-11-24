@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:xliff="http://schemas.android.com/tools">
     <string name="app_name">VioletDroid</string>
     <string name="class_rectangle">Class</string>
     <string name="dependency_line">Dependency</string>
@@ -14,6 +14,21 @@
     <string name="toast_no_available_space">Sorry, there is no available space to hold the diagram.</string>
     <string name="toast_no_intent_applications">Sorry, there is no avaialble applications to share this diagram.</string>
     <string name="save">Save</string>
+    <string name="save_with_the_background">Save with the background?</string>
+    <string name="enter_diagram_name">Please enter your diagram\'s name</string>
+    <string name="save_dialog">Save</string>
+    <string name="cancel_dialog">Cancel</string>
+    <string name="toast_diagram_not_saved">Diagram not saved</string>
+    <string name="toast_prompt_sign_in">Please sign in to save the diagram</string>
+    <string name="progress_dialog_saving_now">Saving now...</string>
+    <string name="default_diagram_name">No name</string>
+    <string name="toast_saved_diagram_successfully">Saved successfully</string>
+    <string name="progress_dialog_loading">Loading</string>
+    <string name="toast_no_saved_diagram">There is no any saved diagram</string>
 
+    <string name="saved_diagrams_count_total">total</string>
+    <string name="collections_default_count">0 total</string>
+    <string name="default_collections_user_diagram">User\'s diagrams</string>
+    <string name="detail_fragment_ok_button">OK</string>
 
 </resources>

@@ -32,7 +32,7 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:paddingLeft="10dp"
-            android:text="User's diagrams"
+            android:text="@string/default_collections_user_diagram"
             android:textColor="@color/colorWhite"/>
 
 
@@ -43,7 +43,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:paddingRight="10dp"
-            android:text="100 total"
+            android:text="@string/collections_default_count"
             android:textColor="@color/colorWhite"/>
 
 
