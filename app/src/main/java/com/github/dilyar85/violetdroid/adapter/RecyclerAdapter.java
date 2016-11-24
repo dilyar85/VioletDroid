@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -53,8 +54,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
 
 
-
-
     /**
      * An inner ViewHolder class for adapter
      */
@@ -64,7 +63,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         ImageView imageView;
         @BindView(R.id.element_desc_textview)
          TextView textView;
-
+        @BindView(R.id.element_edittext)
+        EditText editText;
 
 
         /**
@@ -104,7 +104,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     }
 
 
-
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
@@ -120,9 +119,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     public void onBindViewHolder(ViewHolder holder, final int position) {
 
         holder.imageView.setImageResource(elementImageIds[position]);
+        holder.imageView.bringToFront();
         holder.textView.setText(elementDescription[position]);
-
         holder.imageView.setTag(R.id.view_resource_key, elementImageIds[position]);
+        holder.editText.setTag(R.id.element_edittext);
 
         holder.imageView.setOnClickListener(new View.OnClickListener() {
 
@@ -134,10 +134,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
             }
         });
-
-
     }
-
 
 
     /**
@@ -154,7 +151,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         }
 
     }
-
 
 
     /**
@@ -174,7 +170,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
     @Override
     public int getItemCount() {
-
         return elementImageIds.length;
     }
 

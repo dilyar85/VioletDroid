@@ -42,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
     RecyclerAdapter mRecyclerAdapter;
 
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
@@ -51,7 +50,6 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         initView();
     }
-
 
 
     /**
