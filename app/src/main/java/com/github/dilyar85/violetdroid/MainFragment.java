@@ -60,6 +60,15 @@ public class MainFragment extends Fragment implements RecyclerAdapter.ElementVie
 
     private ProgressDialog mProgressDialog;
 
+    /**
+     * Constants for backend database key names.
+     */
+    public class LeanCloudConstant{
+        public static final String CLASS_DIAGRAM = "Diagrams";
+        public static final String DIAGRAM_OBJECT_KEY_FILE = "file";
+        public static final String DIAGRAM_OBJECT_KEY_USERNAME = "user";
+    }
+
 
 
     @Override
@@ -120,7 +129,7 @@ public class MainFragment extends Fragment implements RecyclerAdapter.ElementVie
 
 
     @Override
-    public void toolElementDoubleTapped(View view) {
+    public void elementToolDoubleTapped(View view) {
 
         int tag = (int) view.getTag(R.id.view_resource_key);
         View testLayout = getActivity().getLayoutInflater().inflate(R.layout.indicator_layout, mCanvasLayout, false);
@@ -132,50 +141,6 @@ public class MainFragment extends Fragment implements RecyclerAdapter.ElementVie
 
 
 
-    /**
-     * Display the diagram collections of  user
-     */
-    private void displayDiagramCollections() {
-
-        Fragment diagramCollectionsFragment = new DiagramCollectionsFragment();
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container, diagramCollectionsFragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
-    }
-
-
-
-    /**
-     * Save current diagram into backend service
-     */
-    private void saveDiagramInLeanCloud(String userName, String diagramName, boolean hasBackground) {
-
-        mProgressDialog = ProgressDialog.show(getActivity(), null, "Saving now...");
-        String diagramPth = getCurrentDiagramAsPicture(hasBackground);
-        if (diagramPth != null)
-            try {
-                String fileName = diagramName == null ? "No name" : diagramName;
-                AVFile file = AVFile.withAbsoluteLocalPath(fileName, diagramPth);
-                AVObject diagramObject = new AVObject("Diagrams");
-                diagramObject.put("file", file);
-                diagramObject.put("user", userName);
-                diagramObject.saveInBackground(new SaveCallback() {
-
-                    @Override
-                    public void done(AVException e) {
-                        mProgressDialog.dismiss();
-                        Toast.makeText(getActivity(), "Saved successfully", Toast.LENGTH_SHORT).show();
-                        Log.e(LOG_TAG, "Done!");
-                    }
-                });
-            } catch (FileNotFoundException e) {
-                Log.e(LOG_TAG, e.getMessage());
-            }
-
-    }
-
-
 
     /**
      * An alert dialog to help user confirm to save the current diagram
@@ -184,7 +149,7 @@ public class MainFragment extends Fragment implements RecyclerAdapter.ElementVie
 
         AVUser currentUser = AVUser.getCurrentUser();
         if (currentUser == null) {
-            Toast.makeText(getActivity(), "Please sign in to save the diagram", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.toast_prompt_sign_in, Toast.LENGTH_SHORT).show();
             return;
         }
         final String userName = currentUser.getUsername();
@@ -195,25 +160,59 @@ public class MainFragment extends Fragment implements RecyclerAdapter.ElementVie
         final EditText editText = (EditText) view.findViewById(R.id.save_diagram_name_edittext);
         final CheckBox checkBox = (CheckBox) view.findViewById(R.id.save_background_checkbox);
 
-        alert.setPositiveButton("Save", new DialogInterface.OnClickListener() {
+        alert.setPositiveButton(R.string.save_dialog, new DialogInterface.OnClickListener() {
 
             public void onClick(DialogInterface dialog, int whichButton) {
 
                 String savedDiagramName = editText.getText().toString();
                 boolean savedWithBackground = checkBox.isChecked();
-                saveDiagramInLeanCloud(userName,savedDiagramName,savedWithBackground);
+                saveDiagramInLeanCloud(userName, savedDiagramName, savedWithBackground);
             }
         });
 
-        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        alert.setNegativeButton(R.string.cancel_dialog, new DialogInterface.OnClickListener() {
 
             public void onClick(DialogInterface dialog, int whichButton) {
-                Toast.makeText(getActivity(), "Diagram not saved", Toast.LENGTH_SHORT).show();
+
+                Toast.makeText(getActivity(), R.string.toast_diagram_not_saved, Toast.LENGTH_SHORT).show();
             }
         });
 
         alert.show();
 
+    }
+
+
+
+    /**
+     * Share the current diagram with any appropriate applications in the device
+     */
+    private void shareCurrentDiagram() {
+
+        String diagramPath = getCurrentDiagramAsPicture(true);
+        if (diagramPath == null) return;
+        //Create a sharing intent and start it.
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_SEND);
+        intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(diagramPath)));
+        intent.setType("image/*");
+        PackageManager pm = getActivity().getPackageManager();
+        if (intent.resolveActivity(pm) != null) startActivity(intent);
+        else
+            Toast.makeText(getActivity(), getString(R.string.toast_no_intent_applications), Toast.LENGTH_LONG).show();
+
+    }
+
+    /**
+     * Display the diagram collections of  user
+     */
+    private void displayDiagramCollections() {
+
+        Fragment diagramCollectionsFragment = new DiagramCollectionsFragment();
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container, diagramCollectionsFragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 
 
@@ -251,21 +250,33 @@ public class MainFragment extends Fragment implements RecyclerAdapter.ElementVie
 
 
     /**
-     * Share the current diagram with any appropriate applications in the device
+     * Save current diagram into backend service
      */
-    private void shareCurrentDiagram() {
+    private void saveDiagramInLeanCloud(String userName, String diagramName, boolean hasBackground) {
 
-        String diagramPath = getCurrentDiagramAsPicture(true);
-        if (diagramPath == null) return;
-        //Create a sharing intent and start it.
-        Intent intent = new Intent();
-        intent.setAction(Intent.ACTION_SEND);
-        intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(diagramPath)));
-        intent.setType("image/*");
-        PackageManager pm = getActivity().getPackageManager();
-        if (intent.resolveActivity(pm) != null) startActivity(intent);
-        else
-            Toast.makeText(getActivity(), getString(R.string.toast_no_intent_applications), Toast.LENGTH_LONG).show();
+        mProgressDialog = ProgressDialog.show(getActivity(), null, getString(R.string.progress_dialog_saving_now));
+        String diagramPth = getCurrentDiagramAsPicture(hasBackground);
+        if (diagramPth != null)
+            try {
+                String fileName = diagramName == null ? getString(R.string.default_diagram_name) : diagramName;
+                fileName += ".png";
+                AVFile file = AVFile.withAbsoluteLocalPath(fileName, diagramPth);
+                AVObject diagramObject = new AVObject(LeanCloudConstant.CLASS_DIAGRAM);
+                diagramObject.put(LeanCloudConstant.DIAGRAM_OBJECT_KEY_FILE, file);
+                diagramObject.put(LeanCloudConstant.DIAGRAM_OBJECT_KEY_USERNAME, userName);
+                diagramObject.saveInBackground(new SaveCallback() {
+
+                    @Override
+                    public void done(AVException e) {
+
+                        mProgressDialog.dismiss();
+                        Toast.makeText(getActivity(), R.string.toast_saved_diagram_successfully, Toast.LENGTH_SHORT).show();
+                        Log.e(LOG_TAG, "Done!");
+                    }
+                });
+            } catch (FileNotFoundException e) {
+                Log.e(LOG_TAG, e.getMessage());
+            }
 
     }
 
