@@ -108,7 +108,6 @@ public class CanvasLayout extends RelativeLayout {
                 editText.setCursorVisible(true);
 
                 editText.setFocusable(true);
-                editText.setFocusableInTouchMode(true||true);
                 editText.requestFocus();
                 editText.requestFocusFromTouch();
 
