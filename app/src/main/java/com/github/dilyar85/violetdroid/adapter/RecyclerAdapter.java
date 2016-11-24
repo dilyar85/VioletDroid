@@ -24,6 +24,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
     private String[] elementDescription;
     private int[] elementImageIds;
+    private Context context;
 
     private View selectedView;
     private long lastClickedTime = 0;
@@ -64,7 +65,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         @BindView(R.id.element_desc_textview)
          TextView textView;
         @BindView(R.id.element_edittext)
-        EditText editText;
+         EditText editText;
 
 
         /**
@@ -77,9 +78,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
-
     }
-
 
 
     /**
@@ -89,6 +88,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
      */
     public RecyclerAdapter(Context context) {
 
+        this.context = context;
 
         elementDescription = new String[]{context.getString(R.string.class_rectangle),
                 context.getString(R.string.dependency_line),
@@ -134,7 +134,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
             }
         });
+
     }
+
 
 
     /**
@@ -164,7 +166,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         v.setBackgroundResource(R.drawable.custom_border);
         selectedView = v;
         lastClickedTime = System.currentTimeMillis();
-
     }
 
 

@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import com.github.dilyar85.violetdroid.MyApplication;
 import com.github.dilyar85.violetdroid.R;
 import com.github.dilyar85.violetdroid.listener.ResizingOnTouchListener;
 import com.github.dilyar85.violetdroid.listener.RotatingOnTouchListener;
@@ -40,7 +41,6 @@ public class CanvasLayout extends RelativeLayout {
     }
 
 
-
     /**
      * Construct a CustomCanvasLayout by given context
      *
@@ -53,7 +53,6 @@ public class CanvasLayout extends RelativeLayout {
         init();
 
     }
-
 
 
     /**
@@ -89,51 +88,74 @@ public class CanvasLayout extends RelativeLayout {
         @Override
         public boolean onDoubleTap(MotionEvent e) {
 
-            //TODO: Make rectangle diagram editable
-
             setEditable();
-            return super.onDoubleTap(e);
+            return true;
         }
 
         private void setEditable() {
 
-            if ((int) selectedChild.getTag() == R.drawable.rectangle_old) {
+            final EditText editText = (EditText) selectedChild.findViewById(R.id.center_edittext);
+            if (editText == null) return;
 
-                EditText editText = (EditText) selectedChild.findViewById(R.id.element_edittext);
-                if (editText == null) return;
-
-                editText.setEnabled(false);
-                editText.setEnabled(true);
+            if (editText.getVisibility()!=VISIBLE) {
                 editText.setVisibility(VISIBLE);
-                editText.setCursorVisible(true);
 
-                editText.setFocusable(true);
-                editText.requestFocus();
-                editText.requestFocusFromTouch();
+                final GestureDetector gestureDetector = new GestureDetector(new GestureDetector.SimpleOnGestureListener() {
+                    public boolean onDoubleTap(MotionEvent e) {
+                        editText.setFocusable(true);
+                        editText.setCursorVisible(true);
+                        editText.requestFocus();
+                        editText.requestFocusFromTouch();
+                        editText.setSelectAllOnFocus(true);
+                        showKeyBoard(editText);
+                        return true;
+                    }
 
+                    @Override
+                    public boolean onSingleTapUp(MotionEvent e) {
+                        return false;
+                    }
 
-                if (editText.isFocused()) {
-                    Log.i(LOG_TAG, "EditText is focused");
-                    showSoftKeyboard(editText);
-                }
+                    @Override
+                    public void onLongPress(MotionEvent e) {
+
+                    }
+                });
+
+                editText.setOnTouchListener(new View.OnTouchListener() {
+                    @Override
+                    public boolean onTouch(View view, MotionEvent motionEvent) {
+                        return gestureDetector.onTouchEvent(motionEvent);
+                    }
+
+                });
+
             }
+
+
         }
+
+        private void showKeyBoard(View view) {
+        InputMethodManager imm = (InputMethodManager) MyApplication.getInstance().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT);
+        }
+
 
         private void cancelEditable() {
-            EditText editText = (EditText) selectedChild.findViewById(R.id.element_edittext);
-            if (editText == null) return;
+            EditText editText = (EditText) selectedChild.findViewById(R.id.center_edittext);
+        if (editText == null) return;
+            closeKeyBoard(editText);
+            editText.setFocusable(false);
+            editText.setFocusableInTouchMode(false);
             editText.setCursorVisible(false);
-//            editText.setFocusableInTouchMode(false);
-//            editText.setFocusable(false);
         }
 
-        public void showSoftKeyboard(View view) {
-            if (view.requestFocus()) {
-                InputMethodManager imm = (InputMethodManager)
-                        getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT);
-            }
+
+        private void closeKeyBoard(View view) {
+        InputMethodManager inputMethodManager = (InputMethodManager) MyApplication.getInstance().getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
         }
+
 
         @Override
         public boolean onDown(MotionEvent e) {
@@ -141,8 +163,6 @@ public class CanvasLayout extends RelativeLayout {
             selectChild(e.getX(), e.getY());
             return false;
         }
-
-
 
         @Override
         public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
