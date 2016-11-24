@@ -4,6 +4,10 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorBoxed">#3498DB</color>
+    <color name="colorWhite">#ffffff</color>
+    <color name="colorSlateGray">#708090</color>
+
+
 
 
 </resources>
