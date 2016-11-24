@@ -28,6 +28,7 @@
             android:focusable="false"
             android:visibility="gone"
             android:focusableInTouchMode="false"
+            android:selectAllOnFocus="true"
             />
     </FrameLayout>
 

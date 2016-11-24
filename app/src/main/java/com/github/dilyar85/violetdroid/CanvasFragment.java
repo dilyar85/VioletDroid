@@ -50,7 +50,6 @@ public class CanvasFragment extends Fragment implements RecyclerAdapter.ElementV
     }
 
 
-
     @Override
     public void viewDoubleTapped(View view) {
 

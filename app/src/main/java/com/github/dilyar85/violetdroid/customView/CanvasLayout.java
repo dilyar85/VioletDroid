@@ -130,8 +130,10 @@ public class CanvasLayout extends RelativeLayout {
                 });
 
             }
-            
+
+
         }
+
 
         private void showKeyBoard(View view) {
             InputMethodManager imm = (InputMethodManager) MyApplication.getInstance().getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -139,9 +141,14 @@ public class CanvasLayout extends RelativeLayout {
         }
 
 
+        private void closeKeyBoard(View view) {
+            InputMethodManager inputMethodManager = (InputMethodManager) MyApplication.getInstance().getSystemService(Context.INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        }
+
         private void cancelEditable() {
             EditText editText = (EditText) selectedChild.findViewById(R.id.center_edittext);
-            if (editText == null) return;
+        if (editText == null) return;
             closeKeyBoard(editText);
             editText.setFocusable(false);
             editText.setFocusableInTouchMode(false);
@@ -149,10 +156,6 @@ public class CanvasLayout extends RelativeLayout {
         }
 
 
-        private void closeKeyBoard(View view) {
-            InputMethodManager inputMethodManager = (InputMethodManager) MyApplication.getInstance().getSystemService(Context.INPUT_METHOD_SERVICE);
-            inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-        }
 
 
         @Override
