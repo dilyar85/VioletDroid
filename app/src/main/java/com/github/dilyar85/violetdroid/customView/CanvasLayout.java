@@ -19,12 +19,14 @@ import com.github.dilyar85.violetdroid.listener.RotatingOnTouchListener;
 public class CanvasLayout extends RelativeLayout {
 
     final static String LOG_TAG = CanvasLayout.class.getSimpleName();
+    private float viewRotation;
+    private double fingerRotation;
+    private double newFingerRotation;
+
 
     private View selectedChild;
 
     private GestureDetector mGestureDetector;
-
-
 
     /**
      * Init CustomCanvasLayout
@@ -229,7 +231,7 @@ public class CanvasLayout extends RelativeLayout {
 
 
     /**
-     * Add listener for resizing and rotating buttons
+     * Add listener for resizing and rotating buttonsgi
      *
      * @param add boolean value to tell if needs to add indicator
      */
@@ -246,5 +248,3 @@ public class CanvasLayout extends RelativeLayout {
     }
 
 }
-
-
