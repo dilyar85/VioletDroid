@@ -231,7 +231,7 @@ public class CanvasLayout extends RelativeLayout {
 
 
     /**
-     * Add listener for resizing and rotating buttons
+     * Add listener for resizing and rotating buttonsgi
      *
      * @param add boolean value to tell if needs to add indicator
      */
