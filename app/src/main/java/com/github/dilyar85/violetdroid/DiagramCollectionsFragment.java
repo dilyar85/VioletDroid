@@ -41,7 +41,7 @@ public class DiagramCollectionsFragment extends Fragment {
     private ProgressDialog mProgressDialog;
     private List<AVFile> mDiagramFiles;
 
-    @BindView(R.id.show_all_image_gridView)
+    @BindView(R.id.diagram_collections_gridView)
     GridView mGridView;
     @BindView(R.id.diagram_count_textView)
     TextView mCountTextView;

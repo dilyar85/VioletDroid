@@ -197,6 +197,7 @@ public class MainFragment extends Fragment implements RecyclerAdapter.ElementVie
         intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(diagramPath)));
         intent.setType("image/*");
         PackageManager pm = getActivity().getPackageManager();
+
         if (intent.resolveActivity(pm) != null) startActivity(intent);
         else
             Toast.makeText(getActivity(), getString(R.string.toast_no_intent_applications), Toast.LENGTH_LONG).show();

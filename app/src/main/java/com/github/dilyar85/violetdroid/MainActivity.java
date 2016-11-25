@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
     private void createDummyUser() {
 
         AVUser user = new AVUser();
-        user.setUsername("Dummy100");
+        user.setUsername("Dummy101");
         user.setPassword("123");
         user.signUpInBackground(new SignUpCallback() {
 

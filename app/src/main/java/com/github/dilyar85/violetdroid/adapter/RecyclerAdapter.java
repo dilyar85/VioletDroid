@@ -110,7 +110,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
         // create a new view
         View view = LayoutInflater.from(parent.getContext()).
-                inflate(R.layout.item_element, parent, false);
+                inflate(R.layout.item_diagram_element, parent, false);
         return new ViewHolder(view);
     }
 

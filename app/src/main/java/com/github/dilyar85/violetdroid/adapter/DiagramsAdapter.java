@@ -79,12 +79,13 @@ public class DiagramsAdapter extends BaseAdapter {
         }
 
         //Reset status
-        diagramHolder.mImageView.setImageResource(R.drawable.empty_image);
+        diagramHolder.mImageView.setImageResource(R.drawable.diagram_default);
 
-        //Load image using ImageLoader, displaying thumbnail here
+        //Load image using ImageLoader.
         AVFile diagramFile = mDiagramFiles.get(i);
         if (diagramFile != null)
             ImageLoader.getInstance().loadImageWithUrl(diagramFile.getUrl(), diagramHolder.mImageView);
+
         diagramHolder.mTextView.setText(mDiagramFiles.get(i).getName());
 
         return view;
