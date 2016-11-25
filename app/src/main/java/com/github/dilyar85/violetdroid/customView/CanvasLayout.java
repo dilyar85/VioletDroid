@@ -1,14 +1,18 @@
 package com.github.dilyar85.violetdroid.customView;
+
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.github.dilyar85.violetdroid.R;
+import com.github.dilyar85.violetdroid.application.MyApplication;
 import com.github.dilyar85.violetdroid.listener.ResizingOnTouchListener;
 import com.github.dilyar85.violetdroid.listener.RotatingOnTouchListener;
 
@@ -36,7 +40,6 @@ public class CanvasLayout extends RelativeLayout {
     }
 
 
-
     /**
      * Construct a CustomCanvasLayout by given context
      *
@@ -49,7 +52,6 @@ public class CanvasLayout extends RelativeLayout {
         init();
 
     }
-
 
 
     /**
@@ -85,10 +87,72 @@ public class CanvasLayout extends RelativeLayout {
         @Override
         public boolean onDoubleTap(MotionEvent e) {
 
-            //TODO: Make rectangle diagram editable
-            return super.onDoubleTap(e);
+            setEditable();
+            return true;
         }
 
+        private void setEditable() {
+
+            final EditText editText = (EditText) selectedChild.findViewById(R.id.center_edittext);
+            if (editText == null) return;
+
+            if (editText.getVisibility()!=VISIBLE) {
+                editText.setVisibility(VISIBLE);
+
+                final GestureDetector gestureDetector = new GestureDetector(new GestureDetector.SimpleOnGestureListener() {
+                    public boolean onDoubleTap(MotionEvent e) {
+                        editText.setFocusable(true);
+                        editText.setCursorVisible(true);
+                        editText.requestFocus();
+                        editText.requestFocusFromTouch();
+                        editText.setSelectAllOnFocus(true);
+                        showKeyBoard(editText);
+                        return true;
+                    }
+
+                    @Override
+                    public boolean onSingleTapUp(MotionEvent e) {
+                        return false;
+                    }
+
+                    @Override
+                    public void onLongPress(MotionEvent e) {
+
+                    }
+                });
+
+                editText.setOnTouchListener(new View.OnTouchListener() {
+                    @Override
+                    public boolean onTouch(View view, MotionEvent motionEvent) {
+                        return gestureDetector.onTouchEvent(motionEvent);
+                    }
+
+                });
+
+            }
+
+        }
+
+        private void showKeyBoard(View view) {
+            InputMethodManager imm = (InputMethodManager) MyApplication.getInstance().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT);
+        }
+
+
+        private void cancelEditable() {
+            EditText editText = (EditText) selectedChild.findViewById(R.id.center_edittext);
+            if (editText == null) return;
+            closeKeyBoard(editText);
+            editText.setFocusable(false);
+            editText.setFocusableInTouchMode(false);
+            editText.setCursorVisible(false);
+        }
+
+
+        private void closeKeyBoard(View view) {
+            InputMethodManager inputMethodManager = (InputMethodManager) MyApplication.getInstance().getSystemService(Context.INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        }
 
 
         @Override
@@ -98,12 +162,11 @@ public class CanvasLayout extends RelativeLayout {
             return false;
         }
 
-
-
         @Override
         public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
 
             if (selectedChild != null) {
+                cancelEditable();
                 float[] validLocation = getValidLocations(-distanceX, -distanceY);
                 selectedChild.setX(validLocation[0]);
                 selectedChild.setY(validLocation[1]);
@@ -113,11 +176,14 @@ public class CanvasLayout extends RelativeLayout {
         }
 
 
-
         @Override
         public boolean onSingleTapUp(MotionEvent e) {
 
-            if (selectedChild != null) showAdjustIndicator(true);
+            if (selectedChild != null) {
+                cancelEditable();
+                showAdjustIndicator(true);
+            }
+
             return true;
         }
 
@@ -169,7 +235,6 @@ public class CanvasLayout extends RelativeLayout {
         }
 
         selectedChild = null;
-
     }
 
 
@@ -246,5 +311,3 @@ public class CanvasLayout extends RelativeLayout {
     }
 
 }
-
-
