@@ -1,21 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:id="@+id/indicator_layout"
     >
 
-    <ImageView
-        android:id="@+id/center_image_view"
-        android:layout_width="100dp"
-        android:layout_height="75dp"
-        android:layout_gravity="center"
-        android:padding="3dp"
-        android:scaleType="fitCenter"
-        android:src="@drawable/rectangle_old"
-        tools:ignore="ContentDescription"/>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/center_image_view"
+            android:layout_width="100dp"
+            android:layout_height="75dp"
+            android:layout_gravity="center"
+            android:padding="3dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/rectangle_old"
+            tools:ignore="ContentDescription"/>
 
+        <EditText
+            android:id="@+id/center_edittext"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:focusable="false"
+            android:visibility="gone"
+            android:focusableInTouchMode="false"
+            />
+    </FrameLayout>
 
     <LinearLayout
         android:id="@+id/indicator"
