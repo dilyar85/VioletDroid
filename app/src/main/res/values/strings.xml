@@ -51,5 +51,6 @@
     <string name="toast_signup_successfully">Sign up successfully!</string>
     <string name="menu_collections">My Diagrams</string>
     <string name="menu_signout">Sign Out</string>
+    <string name="app_logo">App Logo</string>
 
 </resources>
