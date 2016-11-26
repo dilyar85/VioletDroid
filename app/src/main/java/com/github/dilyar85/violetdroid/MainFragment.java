@@ -97,7 +97,20 @@ public class MainFragment extends Fragment implements RecyclerAdapter.ElementVie
         if (id == R.id.menu_share) shareCurrentDiagram();
         else if (id == R.id.menu_save) showSavingDiagramAlert();
         else if (id == R.id.menu_diagram_collections) displayDiagramCollections();
+        else if(id == R.id.menu_sign_out) signOut();
         return true;
+    }
+
+
+
+    /**
+     * Sign out and go back to log in activity
+     */
+    private void signOut() {
+
+        AVUser.logOut();
+        Intent loginActivity = new Intent(getActivity(), LoginActivity.class);
+        startActivity(loginActivity);
     }
 
 

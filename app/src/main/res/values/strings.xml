@@ -40,7 +40,7 @@
     <string name="toast_login_successfully">Login Successfully!</string>
     <string name="content_login_logo">Login Logo</string>
     <string name="email">Email</string>
-    <string name="confirm_password">Confim Password</string>
+    <string name="confirm_password">Confirm Password</string>
     <string name="sign_up_button">Sign Up</string>
     <string name="have_account">Have account already?</string>
     <string name="return_and_login">Login now!</string>
@@ -49,5 +49,7 @@
     <string name="type_password_hint">Please enter you password</string>
     <string name="no_match_password_hint">Your two passwords do not match!</string>
     <string name="toast_signup_successfully">Sign up successfully!</string>
+    <string name="menu_collections">My Diagrams</string>
+    <string name="menu_signout">Sign Out</string>
 
 </resources>

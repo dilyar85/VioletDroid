@@ -21,6 +21,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static android.R.id.message;
+
 /**
  * An activity class to allow user sign up a new account
  */
@@ -92,13 +94,15 @@ public class SignUpActivity extends Activity {
                             }
                         };
                         Timer timer = new Timer();
-                        timer.schedule(task, 2500);
+                        timer.schedule(task, 1000);
 
                     } else {
                         verifiedResultDialog.dismiss();
-                        String message = e.getMessage();
-                        Log.d(LOG_TAG, "Failed to create account. Message: " + message);
-                        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+                        String originalMessage = e.getMessage();
+                        int startIndexOfError = originalMessage.lastIndexOf("error") + 7;
+                        String errorMessage = originalMessage.substring(startIndexOfError, originalMessage.length() - 1);
+                        Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_SHORT).show();
+                        Log.e(LOG_TAG, "Failed to create account. Message: " + message);
                     }
                 }
             });
