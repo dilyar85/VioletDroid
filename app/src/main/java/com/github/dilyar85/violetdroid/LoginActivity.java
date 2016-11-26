@@ -86,7 +86,7 @@ public class LoginActivity extends Activity {
     @OnClick(R.id.log_in_sign_up_textView)
     public void clickSignUpTextView() {
 
-//        startActivity(new Intent(this, SignUpActivity.class));
+        startActivity(new Intent(this, SignUpActivity.class));
     }
 
 
