@@ -101,6 +101,7 @@ public class CanvasLayout extends RelativeLayout {
                 final GestureDetector gestureDetector = new GestureDetector(new GestureDetector.SimpleOnGestureListener() {
 
                     public boolean onDoubleTap(MotionEvent e) {
+                        showAdjustIndicator(false);
                         editText.setFocusable(true);
                         editText.setCursorVisible(true);
                         editText.requestFocus();
