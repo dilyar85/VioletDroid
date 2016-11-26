@@ -2,6 +2,7 @@ package com.github.dilyar85.violetdroid.customView;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -83,7 +84,7 @@ public class CanvasLayout extends RelativeLayout {
 
         @Override
         public boolean onDoubleTap(MotionEvent e) {
-            showAdjustIndicator(false);
+            //showAdjustIndicator(false);
             setEditable();
             return true;
         }
@@ -112,7 +113,10 @@ public class CanvasLayout extends RelativeLayout {
 
                     @Override
                     public boolean onSingleTapUp(MotionEvent e) {
-                        showAdjustIndicator(true);
+                        if (selectedChild != null) {
+                            Log.i(LOG_TAG, "single tap in rectangle");
+                            showAdjustIndicator(true);
+                        }
                         return true;
                     }
 
@@ -296,10 +300,12 @@ public class CanvasLayout extends RelativeLayout {
 
         //Show or hide border
         ImageView centerView = (ImageView) selectedChild.findViewById(R.id.center_image_view);
-        centerView.setBackgroundResource(show ? R.drawable.custom_border : 0);
+        if (centerView != null)
+            centerView.setBackgroundResource(show ? R.drawable.custom_border : 0);
         //Show or hide indicator
         View indicatorView = selectedChild.findViewById(R.id.indicator);
-        indicatorView.setVisibility(show ? VISIBLE : INVISIBLE);
+        if (indicatorView != null)
+            indicatorView.setVisibility(show ? VISIBLE : INVISIBLE);
         //Add or remove indicator
         addIndicatorListener(show);
 
