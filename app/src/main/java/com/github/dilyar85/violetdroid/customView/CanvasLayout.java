@@ -2,6 +2,7 @@ package com.github.dilyar85.violetdroid.customView;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -67,8 +68,6 @@ public class CanvasLayout extends RelativeLayout {
 
     }
 
-
-
     @Override
     public boolean onTouchEvent(MotionEvent event) {
 
@@ -76,7 +75,6 @@ public class CanvasLayout extends RelativeLayout {
         return true;
 
     }
-
 
 
     /**
@@ -91,6 +89,9 @@ public class CanvasLayout extends RelativeLayout {
             return true;
         }
 
+        /**
+         *  set the rectangle text editable
+         */
         private void setEditable() {
 
             final EditText editText = (EditText) selectedChild.findViewById(R.id.center_edittext);
@@ -101,6 +102,7 @@ public class CanvasLayout extends RelativeLayout {
 
                 final GestureDetector gestureDetector = new GestureDetector(new GestureDetector.SimpleOnGestureListener() {
                     public boolean onDoubleTap(MotionEvent e) {
+                        Log.i(LOG_TAG, "double Tap clicked");
                         editText.setFocusable(true);
                         editText.setCursorVisible(true);
                         editText.requestFocus();
@@ -112,12 +114,18 @@ public class CanvasLayout extends RelativeLayout {
 
                     @Override
                     public boolean onSingleTapUp(MotionEvent e) {
+                        Log.i(LOG_TAG, "single Tap clicked");
                         return false;
                     }
 
                     @Override
                     public void onLongPress(MotionEvent e) {
 
+                    }
+
+                    @Override
+                    public boolean onDown(MotionEvent e) {
+                        return false;
                     }
                 });
 
@@ -133,12 +141,18 @@ public class CanvasLayout extends RelativeLayout {
 
         }
 
+        /**
+         * show soft key board
+         * @param view view triggering soft key board attached
+         */
         private void showKeyBoard(View view) {
             InputMethodManager imm = (InputMethodManager) MyApplication.getInstance().getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT);
         }
 
-
+        /**
+         * cancel rectangle text editable
+         */
         private void cancelEditable() {
             EditText editText = (EditText) selectedChild.findViewById(R.id.center_edittext);
             if (editText == null) return;
@@ -149,6 +163,10 @@ public class CanvasLayout extends RelativeLayout {
         }
 
 
+        /**
+         * hide soft input keyborad
+         * @param view view triggering soft key board attached
+         */
         private void closeKeyBoard(View view) {
             InputMethodManager inputMethodManager = (InputMethodManager) MyApplication.getInstance().getSystemService(Context.INPUT_METHOD_SERVICE);
             inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
@@ -179,6 +197,7 @@ public class CanvasLayout extends RelativeLayout {
         @Override
         public boolean onSingleTapUp(MotionEvent e) {
 
+            Log.i(LOG_TAG, "I am in selectedChild onSingleTapUp");
             if (selectedChild != null) {
                 cancelEditable();
                 showAdjustIndicator(true);
