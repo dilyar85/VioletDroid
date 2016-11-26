@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,6 +55,10 @@ public class DiagramCollectionsFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+        downloadDiagramsFromLeanCloud();
+
+        Log.e(LOG_TAG, "onCreate");
+
     }
 
 
@@ -64,9 +69,8 @@ public class DiagramCollectionsFragment extends Fragment {
 
         final View rootView = inflater.inflate(R.layout.fragment_diagram_collections, container, false);
         ButterKnife.bind(this, rootView);
-
-        fetchDiagramsFromLeanCloud();
         setGridViewClickEvent();
+        Log.e(LOG_TAG, "onCreateView");
         return rootView;
     }
 
@@ -75,7 +79,7 @@ public class DiagramCollectionsFragment extends Fragment {
     /**
      * Download all diagrams saved by current user
      */
-    private void fetchDiagramsFromLeanCloud() {
+    private void downloadDiagramsFromLeanCloud() {
 
         mProgressDialog = ProgressDialog.show(getActivity(), null, getString(R.string.progress_dialog_loading));
 

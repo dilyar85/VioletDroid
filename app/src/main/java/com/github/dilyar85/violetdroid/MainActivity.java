@@ -2,11 +2,6 @@ package com.github.dilyar85.violetdroid;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-
-import com.avos.avoscloud.AVException;
-import com.avos.avoscloud.AVUser;
-import com.avos.avoscloud.SignUpCallback;
 
 import butterknife.ButterKnife;
 
@@ -27,32 +22,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         addMainFragment();
-        if (AVUser.getCurrentUser() == null) createDummyUser();
-    }
-
-
-
-    /**
-     * A method to create a user, will be optimized in sign up activity.
-     */
-    private void createDummyUser() {
-
-        AVUser user = new AVUser();
-        user.setUsername("Dummy101");
-        user.setPassword("123");
-        user.signUpInBackground(new SignUpCallback() {
-
-            @Override
-            public void done(AVException e) {
-
-                if (e == null) {
-                    Log.e(LOG_TAG, "Created a dummy user");
-                } else {
-                    Log.e(LOG_TAG, "Failed to create a dummy user");
-                }
-            }
-        });
-
     }
 
 

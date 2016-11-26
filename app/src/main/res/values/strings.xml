@@ -12,7 +12,7 @@
     <string name="menu_share">Share</string>
     <item type="id" name="view_resource_key"></item>
     <string name="toast_no_available_space">Sorry, there is no available space to hold the diagram.</string>
-    <string name="toast_no_intent_applications">Sorry, there is no avaialble applications to share this diagram.</string>
+    <string name="toast_no_intent_applications">Sorry, there is no available applications to share this diagram.</string>
     <string name="save">Save</string>
     <string name="save_with_the_background">Save with the background?</string>
     <string name="enter_diagram_name">Please enter your diagram\'s name</string>
@@ -20,15 +20,24 @@
     <string name="cancel_dialog">Cancel</string>
     <string name="toast_diagram_not_saved">Diagram not saved</string>
     <string name="toast_prompt_sign_in">Please sign in to save the diagram</string>
-    <string name="progress_dialog_saving_now">Saving now...</string>
+    <string name="progress_dialog_saving_now">Saving…</string>
     <string name="default_diagram_name">No name</string>
     <string name="toast_saved_diagram_successfully">Saved successfully</string>
-    <string name="progress_dialog_loading">Loading</string>
+    <string name="progress_dialog_loading">Loading…</string>
     <string name="toast_no_saved_diagram">There is no any saved diagram</string>
 
     <string name="saved_diagrams_count_total">total</string>
     <string name="collections_default_count">0 total</string>
     <string name="default_collections_user_diagram">User\'s diagrams</string>
     <string name="detail_fragment_ok_button">OK</string>
+    <string name="user_name">Username</string>
+    <string name="password">Password</string>
+    <string name="log_in_button">Login</string>
+    <string name="does_not_have_account">No account yet?</string>
+    <string name="sign_up_now">Sign Up Now!</string>
+    <string name="toast_username_blank">Please enter you user name.</string>
+    <string name="toast_password_blank">Please enter your password.</string>
+    <string name="toast_login_successfully">Login Successfully!</string>
+    <string name="content_login_logo">Login Logo</string>
 
 </resources>

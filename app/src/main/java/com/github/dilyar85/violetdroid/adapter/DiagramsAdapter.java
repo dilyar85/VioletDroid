@@ -22,6 +22,7 @@ import butterknife.ButterKnife;
 
 public class DiagramsAdapter extends BaseAdapter {
 
+    final static String LOG_TAG = DiagramsAdapter.class.getSimpleName();
     private List<AVFile> mDiagramFiles;
     private LayoutInflater mInflater;
 
@@ -83,6 +84,7 @@ public class DiagramsAdapter extends BaseAdapter {
 
         //Load image using ImageLoader.
         AVFile diagramFile = mDiagramFiles.get(i);
+
         if (diagramFile != null)
             ImageLoader.getInstance().loadImageWithUrl(diagramFile.getUrl(), diagramHolder.mImageView);
 
