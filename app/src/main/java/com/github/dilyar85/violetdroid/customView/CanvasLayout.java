@@ -115,20 +115,23 @@ public class CanvasLayout extends RelativeLayout {
                     public boolean onSingleTapUp(MotionEvent e) {
                         if (selectedChild != null) {
                             Log.i(LOG_TAG, "single tap in rectangle");
+                            cancelEditable();
                             showAdjustIndicator(true);
                         }
-                        return true;
+                        return false;
                     }
 
                     @Override
                     public void onLongPress(MotionEvent e) {
-
+                        if (selectedChild != null) removeView(selectedChild);
                     }
 
                     @Override
                     public boolean onDown(MotionEvent e) {
                         return false;
                     }
+
+
                 });
 
                 editText.setOnTouchListener(new View.OnTouchListener() {
@@ -162,6 +165,7 @@ public class CanvasLayout extends RelativeLayout {
             editText.setFocusable(false);
             editText.setFocusableInTouchMode(false);
             editText.setCursorVisible(false);
+            editText.setTextIsSelectable(false);
         }
 
 
