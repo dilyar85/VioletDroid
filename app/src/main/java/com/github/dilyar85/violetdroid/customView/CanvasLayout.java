@@ -2,7 +2,6 @@ package com.github.dilyar85.violetdroid.customView;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -84,7 +83,7 @@ public class CanvasLayout extends RelativeLayout {
 
         @Override
         public boolean onDoubleTap(MotionEvent e) {
-
+            showAdjustIndicator(false);
             setEditable();
             return true;
         }
@@ -102,7 +101,6 @@ public class CanvasLayout extends RelativeLayout {
 
                 final GestureDetector gestureDetector = new GestureDetector(new GestureDetector.SimpleOnGestureListener() {
                     public boolean onDoubleTap(MotionEvent e) {
-                        Log.i(LOG_TAG, "double Tap clicked");
                         editText.setFocusable(true);
                         editText.setCursorVisible(true);
                         editText.requestFocus();
@@ -114,8 +112,8 @@ public class CanvasLayout extends RelativeLayout {
 
                     @Override
                     public boolean onSingleTapUp(MotionEvent e) {
-                        Log.i(LOG_TAG, "single Tap clicked");
-                        return false;
+                        showAdjustIndicator(true);
+                        return true;
                     }
 
                     @Override
@@ -175,7 +173,6 @@ public class CanvasLayout extends RelativeLayout {
 
         @Override
         public boolean onDown(MotionEvent e) {
-
             selectChild(e.getX(), e.getY());
             return false;
         }
@@ -196,8 +193,6 @@ public class CanvasLayout extends RelativeLayout {
 
         @Override
         public boolean onSingleTapUp(MotionEvent e) {
-
-            Log.i(LOG_TAG, "I am in selectedChild onSingleTapUp");
             if (selectedChild != null) {
                 cancelEditable();
                 showAdjustIndicator(true);
