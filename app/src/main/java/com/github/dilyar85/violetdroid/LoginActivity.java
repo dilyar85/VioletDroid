@@ -28,10 +28,6 @@ public class LoginActivity extends Activity {
 
     static final  String LOG_TAG = LoginActivity.class.getSimpleName();
 
-    public static final String EXTRA_USER_NAME = "userName";
-    public static final String EXTRA_USER_PASSWORD = "userPassword";
-
-
     @BindView(R.id.log_in_username_editText)
     EditText mUserNameEditText;
     @BindView(R.id.log_in_password_editText)
@@ -53,6 +49,9 @@ public class LoginActivity extends Activity {
 
     }
 
+    /**
+     * Check user's input info and try to log in.
+     */
     @OnClick(R.id.log_in_button)
     public void clickLogInButton() {
 
@@ -65,17 +64,21 @@ public class LoginActivity extends Activity {
 
 
 
+    /**
+     * Helper method to check if user's input is blank
+     * @return true if there is no blank, otherwise return false
+     */
     private boolean checkEditTextBlank() {
 
         inputUserName = mUserNameEditText.getText().toString();
         inputPassword = mPasswordEditText.getText().toString();
 
         if (inputUserName.length() <=0) {
-            showToastShort(R.string.toast_username_blank);
+            showShortToast(R.string.toast_username_blank);
             return false;
         }
         if (inputPassword.length()<=0) {
-            showToastShort(R.string.toast_password_blank);
+            showShortToast(R.string.toast_password_blank);
             return false;
         }
         return true;
@@ -83,17 +86,21 @@ public class LoginActivity extends Activity {
 
 
 
+    /**
+     * Start the sign up activity
+     */
     @OnClick(R.id.log_in_sign_up_textView)
     public void clickSignUpTextView() {
 
-        startActivity(new Intent(this, SignUpActivity.class));
+        Intent intent = new Intent(this, SignUpActivity.class);
+        startActivity(intent);
     }
 
 
 
-
-
-
+    /**
+     * Helper method to verify user input account info
+     */
     private void verifyAccount() {
 
         AVUser.logInInBackground(inputUserName, inputPassword, new LogInCallback<AVUser>() {
@@ -102,7 +109,7 @@ public class LoginActivity extends Activity {
             public void done(AVUser avUser, AVException e) {
                 verifiedResultDialog.dismiss();
                 if (e == null) {
-                    showToastShort(R.string.toast_login_successfully);
+                    showShortToast(R.string.toast_login_successfully);
                     TimerTask task = new TimerTask() {
 
                         @Override
@@ -130,6 +137,9 @@ public class LoginActivity extends Activity {
 
 
 
+    /**
+     * A helper method to show loading dialog
+     */
     private void showLoadingDialog() {
 
         verifiedResultDialog = new AlertDialog.Builder(this).create();
@@ -148,10 +158,16 @@ public class LoginActivity extends Activity {
 
 
 
-    private void showToastShort(int stringResource) {
-        Toast.makeText(this, getString(stringResource), Toast.LENGTH_SHORT).show();
-    }
+    /**
+     * Helper method to show the toast
+     *
+     * @param stringResource the id of string resource
+     */
+    private void showShortToast(int stringResource) {
 
+        Toast toast = Toast.makeText(this, getString(stringResource), Toast.LENGTH_SHORT);
+        toast.show();
+    }
 
 
 }

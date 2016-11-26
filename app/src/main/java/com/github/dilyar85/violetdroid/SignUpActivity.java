@@ -57,8 +57,9 @@ public class SignUpActivity extends Activity {
 
 
 
-
-
+    /**
+     * Sign up a new account for user
+     */
     @OnClick(R.id.sign_up_button)
     public void signUpNewAccount() {
 
@@ -80,7 +81,7 @@ public class SignUpActivity extends Activity {
                     if (e == null) {
 
                         verifiedResultDialog.dismiss();
-                        showToast(R.string.toast_signup_successfully);
+                        showShortToast(R.string.toast_signup_successfully);
                         TimerTask task = new TimerTask() {
 
                             @Override
@@ -97,7 +98,7 @@ public class SignUpActivity extends Activity {
                         verifiedResultDialog.dismiss();
                         String message = e.getMessage();
                         Log.d(LOG_TAG, "Failed to create account. Message: " + message);
-                        Toast.makeText(getApplicationContext(),message,Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
                     }
                 }
             });
@@ -107,14 +108,21 @@ public class SignUpActivity extends Activity {
 
 
 
+    /**
+     * Go back to LoginActivity
+     */
     @OnClick(R.id.sign_up_return_textView)
     public void returnLogInActivity() {
+
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
     }
 
 
 
+    /**
+     * A helper method to show loading dialog
+     */
     private void showLoadingDialog() {
 
         verifiedResultDialog = new AlertDialog.Builder(this).create();
@@ -133,7 +141,12 @@ public class SignUpActivity extends Activity {
 
 
 
-    private void showToast(int stringResource) {
+    /**
+     * Helper method to show the toast
+     *
+     * @param stringResource the id of string resource
+     */
+    private void showShortToast(int stringResource) {
 
         Toast toast = Toast.makeText(this, getString(stringResource), Toast.LENGTH_SHORT);
         toast.show();
@@ -141,23 +154,27 @@ public class SignUpActivity extends Activity {
 
 
 
+    /**
+     * A helper method to check if user has correct inputs
+     *
+     * @return true if user input correctly, otherwise return false
+     */
     public boolean isCorrectInput() {
 
         if (inputUsername.isEmpty()) {
-            showToast(R.string.type_username_hint);
+            showShortToast(R.string.type_username_hint);
             return false;
         } else if (inputEmail.isEmpty()) {
-            showToast(R.string.type_email_hint);
+            showShortToast(R.string.type_email_hint);
             return false;
         } else if (inputPassword.isEmpty()) {
-            showToast(R.string.type_password_hint);
+            showShortToast(R.string.type_password_hint);
             return false;
         } else if (inputConfirmedPassword.isEmpty() || !inputConfirmedPassword.equals(inputPassword)) {
-            showToast(R.string.no_match_password_hint);
+            showShortToast(R.string.no_match_password_hint);
             return false;
         }
         return true;
     }
-
 
 }
