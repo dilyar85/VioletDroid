@@ -2,7 +2,6 @@ package com.github.dilyar85.violetdroid.customView;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -31,6 +30,8 @@ public class CanvasLayout extends RelativeLayout {
 
 
 
+
+
     /**
      * Init CustomCanvasLayout
      */
@@ -48,7 +49,6 @@ public class CanvasLayout extends RelativeLayout {
      */
 
     public CanvasLayout(Context context) {
-
         super(context);
         init();
 
@@ -62,7 +62,6 @@ public class CanvasLayout extends RelativeLayout {
      * @param attrs   attrs set in xml
      */
     public CanvasLayout(Context context, AttributeSet attrs) {
-
         super(context, attrs);
         init();
 
@@ -70,7 +69,6 @@ public class CanvasLayout extends RelativeLayout {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-
         mGestureDetector.onTouchEvent(event);
         return true;
 
@@ -101,6 +99,7 @@ public class CanvasLayout extends RelativeLayout {
                 editText.setVisibility(VISIBLE);
 
                 final GestureDetector gestureDetector = new GestureDetector(new GestureDetector.SimpleOnGestureListener() {
+
                     public boolean onDoubleTap(MotionEvent e) {
                         editText.setFocusable(true);
                         editText.setCursorVisible(true);
@@ -113,12 +112,11 @@ public class CanvasLayout extends RelativeLayout {
 
                     @Override
                     public boolean onSingleTapUp(MotionEvent e) {
-                        if (selectedChild != null) {
-                            Log.i(LOG_TAG, "single tap in rectangle");
-                            cancelEditable();
-                            showAdjustIndicator(true);
+                        if (selectedChild == null) {
+                            selectedChild = editText.getRootView();
                         }
-                        return false;
+                        showAdjustIndicator(true);
+                        return true;
                     }
 
                     @Override
@@ -128,9 +126,8 @@ public class CanvasLayout extends RelativeLayout {
 
                     @Override
                     public boolean onDown(MotionEvent e) {
-                        return false;
+                            return false;
                     }
-
 
                 });
 
@@ -141,6 +138,7 @@ public class CanvasLayout extends RelativeLayout {
                     }
 
                 });
+
 
             }
 
@@ -244,6 +242,7 @@ public class CanvasLayout extends RelativeLayout {
      */
     private void selectChild(float eventX, float eventY) {
 
+
         if (selectedChild != null) showAdjustIndicator(false);
 
         for (int i = getChildCount() - 1; i >= 0; i--) {
@@ -258,6 +257,9 @@ public class CanvasLayout extends RelativeLayout {
 
         selectedChild = null;
     }
+
+
+
 
 
 
