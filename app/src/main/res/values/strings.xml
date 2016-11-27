@@ -16,8 +16,8 @@
     <string name="save">Save</string>
     <string name="save_with_the_background">Save with the background?</string>
     <string name="enter_diagram_name">Please enter your diagram\'s name</string>
-    <string name="save_dialog">Save</string>
-    <string name="cancel_dialog">Cancel</string>
+    <string name="dialog_save">Save</string>
+    <string name="dialog_cancel_button">Cancel</string>
     <string name="toast_diagram_not_saved">Diagram not saved</string>
     <string name="toast_prompt_sign_in">Please sign in to save the diagram</string>
     <string name="progress_dialog_saving_now">Saving…</string>
@@ -48,15 +48,18 @@
     <string name="type_email_hint">Please enter you email address</string>
     <string name="type_password_hint">Please enter you password</string>
     <string name="no_match_password_hint">Your two passwords do not match!</string>
-    <string name="toast_signup_successfully">Sign up successfully!</string>
+    <string name="toast_sign_up_successfully">Sign up successfully!</string>
     <string name="menu_collections">My Diagrams</string>
     <string name="menu_signout">Sign Out</string>
     <string name="app_logo">App Logo</string>
     <string name="search_diagram_failed">Cannot display any saved diagrams. Please make sure you have saved them or check your network connection.</string>
-    <string name="loading_empty_view">Loading...</string>
+    <string name="loading_empty_view">Loading…</string>
     <string name="delete">Delete</string>
     <string name="save_failed">Failed to save, please check your network connection and try again later</string>
     <string name="delete_failed">Cannot delete current diagram, please try again later</string>
     <string name="delete_successfully">Diagram has been deleted</string>
+    <string name="no_saved_diagram">You have no saved diagram in our service.</string>
+    <string name="dialog_delete_button">Delete</string>
+    <string name="dialog_title_delete_diagram">Delete the current diagram?</string>
 
 </resources>

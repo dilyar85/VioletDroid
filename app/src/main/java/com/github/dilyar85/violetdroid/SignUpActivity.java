@@ -83,7 +83,7 @@ public class SignUpActivity extends Activity {
                     if (e == null) {
 
                         verifiedResultDialog.dismiss();
-                        showShortToast(R.string.toast_signup_successfully);
+                        showShortToast(R.string.toast_sign_up_successfully);
                         TimerTask task = new TimerTask() {
 
                             @Override

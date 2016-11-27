@@ -1,8 +1,9 @@
 package com.github.dilyar85.violetdroid;
+import android.app.AlertDialog;
 import android.app.Fragment;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -33,8 +34,6 @@ public class DiagramDetailFragment extends Fragment {
     @BindView(R.id.selected_imageView)
     ImageView mImageView;
 
-    private String mDiagramUrl;
-
 
 
     @Override
@@ -61,7 +60,8 @@ public class DiagramDetailFragment extends Fragment {
 
         int id = item.getItemId();
         if (id == R.id.menu_share) shareDiagramFromDetailView();
-        else if (id == R.id.menu_delete_diagram) deleteDiagram();
+        else if (id == R.id.menu_delete_diagram) showConfirmDialog();
+
         return true;
     }
 
@@ -73,7 +73,6 @@ public class DiagramDetailFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_diagram_detail, container, false);
         ButterKnife.bind(this, view);
-
         initData();
         return view;
     }
@@ -86,9 +85,9 @@ public class DiagramDetailFragment extends Fragment {
     private void initData() {
 
         Bundle bundle = this.getArguments();
-        mDiagramUrl = bundle.getString(DiagramCollectionsFragment.KEY_DIAGRAM_URL);
-        if (mDiagramUrl != null)
-            ImageLoader.getInstance().loadImageWithPath(mDiagramUrl, mImageView);
+        String diagramUrl = bundle.getString(DiagramCollectionsFragment.BUNDLE_KEY_DIAGRAM_URL);
+        if (diagramUrl != null)
+            ImageLoader.getInstance().loadImageWithPath(diagramUrl, mImageView);
 
     }
 
@@ -115,31 +114,60 @@ public class DiagramDetailFragment extends Fragment {
 
 
     /**
+     * Show an alert dialog to confirm deleting
+     */
+    private void showConfirmDialog() {
+
+        AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
+        alert.setTitle(R.string.dialog_title_delete_diagram);
+        alert.setPositiveButton(R.string.dialog_delete_button, new DialogInterface.OnClickListener() {
+
+            public void onClick(DialogInterface dialog, int whichButton) {
+
+                deleteDiagram();
+            }
+        });
+
+        alert.setNegativeButton(R.string.dialog_cancel_button, new DialogInterface.OnClickListener() {
+
+            public void onClick(DialogInterface dialog, int whichButton) {
+
+            }
+        });
+
+        alert.show();
+
+    }
+
+
+
+    /**
      * Delete current diagram from LeanCloud and go back to DiagramCollectionsFragment
      */
     private void deleteDiagram() {
 
-        if (mDiagramUrl != null) {
-            AVQuery<AVObject> query = new AVQuery<>(MainFragment.LeanCloudConstant.CLASS_FILE);
-            query.whereEqualTo(MainFragment.LeanCloudConstant.FILE_OBJECT_KEY_URL, mDiagramUrl);
-            query.getFirstInBackground(new GetCallback<AVObject>() {
+        String objectId = getArguments().getString(DiagramCollectionsFragment.BUNDLE_KEY_DIAGRAM_OBJECT_ID);
 
-                @Override
-                public void done(AVObject avObject, AVException e) {
+        AVQuery<AVObject> query = new AVQuery<>(MainFragment.LeanCloudConstant.CLASS_DIAGRAM);
+        query.whereEqualTo(MainFragment.LeanCloudConstant.DIAGRAM_OBJECT_KEY_ID, objectId);
+        query.getFirstInBackground(new GetCallback<AVObject>() {
 
-                    if (avObject != null) {
-                        avObject.deleteInBackground();
-                        Toast.makeText(getActivity(), R.string.delete_successfully, Toast.LENGTH_SHORT).show();
-                        getFragmentManager().popBackStack();
-                    } else {
-                        Toast.makeText(getActivity(), R.string.delete_failed, Toast.LENGTH_SHORT).show();
-                        Log.e(LOG_TAG, e.getMessage());
-                    }
+            @Override
+            public void done(AVObject avObject, AVException e) {
+
+                if (avObject != null) {
+                    avObject.deleteInBackground();
+                    Toast.makeText(getActivity(), R.string.delete_successfully, Toast.LENGTH_SHORT).show();
+                    getFragmentManager().popBackStack();
+                } else {
+                    Toast.makeText(getActivity(), R.string.delete_failed, Toast.LENGTH_SHORT).show();
                 }
-            });
-
-        }
+            }
+        });
 
     }
 
 }
+
+
+

@@ -60,8 +60,8 @@ public class MainFragment extends Fragment implements RecyclerAdapter.ElementVie
         public static final String CLASS_DIAGRAM = "Diagrams";
         public static final String DIAGRAM_OBJECT_KEY_FILE = "file";
         public static final String DIAGRAM_OBJECT_KEY_USERNAME = "user";
-        public static final String CLASS_FILE = "_File";
-        public static final String FILE_OBJECT_KEY_URL = "url";
+        public static final String DIAGRAM_OBJECT_KEY_ID = "objectId";
+
     }
 
 
@@ -90,7 +90,7 @@ public class MainFragment extends Fragment implements RecyclerAdapter.ElementVie
 
         int id = item.getItemId();
         if (id == R.id.menu_share) shareDiagramFromCanvasLayout();
-        else if (id == R.id.menu_save) showSavingDiagramAlert();
+        else if (id == R.id.menu_save) showSavingDiagramDialog();
         else if (id == R.id.menu_diagram_collections) displayDiagramCollections();
         else if (id == R.id.menu_sign_out) signOut();
         return true;
@@ -152,7 +152,7 @@ public class MainFragment extends Fragment implements RecyclerAdapter.ElementVie
     /**
      * An alert dialog to help user confirm to save the current diagram
      */
-    public void showSavingDiagramAlert() {
+    public void showSavingDiagramDialog() {
 
         AVUser currentUser = AVUser.getCurrentUser();
         if (currentUser == null) {
@@ -167,7 +167,7 @@ public class MainFragment extends Fragment implements RecyclerAdapter.ElementVie
         final EditText editText = (EditText) view.findViewById(R.id.save_diagram_name_edittext);
         final CheckBox checkBox = (CheckBox) view.findViewById(R.id.save_background_checkbox);
 
-        alert.setPositiveButton(R.string.save_dialog, new DialogInterface.OnClickListener() {
+        alert.setPositiveButton(R.string.dialog_save, new DialogInterface.OnClickListener() {
 
             public void onClick(DialogInterface dialog, int whichButton) {
 
@@ -177,7 +177,7 @@ public class MainFragment extends Fragment implements RecyclerAdapter.ElementVie
             }
         });
 
-        alert.setNegativeButton(R.string.cancel_dialog, new DialogInterface.OnClickListener() {
+        alert.setNegativeButton(R.string.dialog_cancel_button, new DialogInterface.OnClickListener() {
 
             public void onClick(DialogInterface dialog, int whichButton) {
 

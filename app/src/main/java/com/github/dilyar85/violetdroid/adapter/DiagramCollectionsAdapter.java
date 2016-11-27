@@ -8,7 +8,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.avos.avoscloud.AVFile;
+import com.avos.avoscloud.AVObject;
 import com.github.dilyar85.imageloader.ImageLoader;
+import com.github.dilyar85.violetdroid.MainFragment;
 import com.github.dilyar85.violetdroid.R;
 
 import java.util.List;
@@ -23,7 +25,7 @@ import butterknife.ButterKnife;
 public class DiagramCollectionsAdapter extends BaseAdapter {
 
     final static String LOG_TAG = DiagramCollectionsAdapter.class.getSimpleName();
-    private List<AVFile> mDiagramFiles;
+    private List<AVObject> mDiagrams;
     private LayoutInflater mInflater;
 
 
@@ -32,11 +34,11 @@ public class DiagramCollectionsAdapter extends BaseAdapter {
      * Construct the adapter with given context and list of diagrams files (AVFile)
      *
      * @param context       given context
-     * @param mDiagramFiles given diagram files
+     * @param mDiagrams given diagram objects from LeanCloud
      */
-    public DiagramCollectionsAdapter(Context context, List<AVFile> mDiagramFiles) {
+    public DiagramCollectionsAdapter(Context context, List<AVObject> mDiagrams) {
 
-        this.mDiagramFiles = mDiagramFiles;
+        this.mDiagrams = mDiagrams;
         mInflater = LayoutInflater.from(context);
     }
 
@@ -45,7 +47,7 @@ public class DiagramCollectionsAdapter extends BaseAdapter {
     @Override
     public int getCount() {
 
-        return mDiagramFiles.size();
+        return mDiagrams.size();
     }
 
 
@@ -53,7 +55,7 @@ public class DiagramCollectionsAdapter extends BaseAdapter {
     @Override
     public Object getItem(int i) {
 
-        return mDiagramFiles.get(i);
+        return mDiagrams.get(i);
     }
 
 
@@ -83,12 +85,11 @@ public class DiagramCollectionsAdapter extends BaseAdapter {
         diagramHolder.mImageView.setImageResource(R.drawable.diagram_default);
 
         //Load image using ImageLoader.
-        AVFile diagramFile = mDiagramFiles.get(i);
+        AVFile diagramFile = mDiagrams.get(i).getAVFile(MainFragment.LeanCloudConstant.DIAGRAM_OBJECT_KEY_FILE);
 
         if (diagramFile != null) {
             ImageLoader.getInstance().loadImageWithUrl(diagramFile.getUrl(), diagramHolder.mImageView);
-
-            String originalName = mDiagramFiles.get(i).getOriginalName();
+            String originalName = diagramFile.getOriginalName();
             int index = originalName.lastIndexOf(".png");
             if (index > 0) originalName = originalName.substring(0, index);
             diagramHolder.mTextView.setText(originalName);

@@ -3,6 +3,7 @@ package com.github.dilyar85.violetdroid;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,9 +32,10 @@ public class DiagramCollectionsFragment extends Fragment {
 
     static final String LOG_TAG = DiagramCollectionsFragment.class.getSimpleName();
 
-    public static final String KEY_DIAGRAM_URL = "key_selected_diagram_url";
+     static final String BUNDLE_KEY_DIAGRAM_URL = "key_selected_diagram_url";
+     static final String BUNDLE_KEY_DIAGRAM_OBJECT_ID = "key_selected_diagram_object_id";
 
-    private List<AVFile> mDiagramFiles;
+    private List<AVObject> mDiagrams;
 
     @BindView(R.id.diagram_collections_gridView)
     GridView mGridView;
@@ -43,6 +45,7 @@ public class DiagramCollectionsFragment extends Fragment {
     TextView mUserNameTextView;
     @BindView(R.id.empty_view_in_gridview)
     TextView mEmptyTextView;
+
 
 
     @Override
@@ -76,8 +79,6 @@ public class DiagramCollectionsFragment extends Fragment {
 
 
 
-
-
     /**
      * Try to fetch diagrams saved by the current user
      */
@@ -90,15 +91,20 @@ public class DiagramCollectionsFragment extends Fragment {
             @Override
             public void done(List<AVObject> list, AVException e) {
 
-                if (list != null) {
-                    mDiagramFiles = new ArrayList<>();
+                if (e != null) {
+                    //Error happened from LeanCloud
+                    mEmptyTextView.setText(getString(R.string.search_diagram_failed));
+                    Log.e(LOG_TAG, e.getMessage());
+                } else if (list != null && list.size() != 0) {
+                    //No errors, and list is not empty
+                    mDiagrams = new ArrayList<>();
                     for (AVObject avObject : list)
-                        mDiagramFiles.add((AVFile) avObject.get(MainFragment.LeanCloudConstant.DIAGRAM_OBJECT_KEY_FILE));
+                        mDiagrams.add(avObject);
                     passDataToView();
                     setGridViewClickEvent();
                 } else {
-                    mEmptyTextView.setText(getString(R.string.search_diagram_failed));
-                    mGridView.setEmptyView(mEmptyTextView);
+                    //No errors, but list is empty
+                    mEmptyTextView.setText(getString(R.string.no_saved_diagram));
                 }
 
             }
@@ -107,15 +113,16 @@ public class DiagramCollectionsFragment extends Fragment {
     }
 
 
+
     /**
      * Pass the diagram's information to grid view
      */
     private void passDataToView() {
 
-        DiagramCollectionsAdapter mDiagramCollectionsAdapter = new DiagramCollectionsAdapter(getActivity(), mDiagramFiles);
+        DiagramCollectionsAdapter mDiagramCollectionsAdapter = new DiagramCollectionsAdapter(getActivity(), mDiagrams);
         mGridView.setAdapter(mDiagramCollectionsAdapter);
         mUserNameTextView.setText(AVUser.getCurrentUser().getUsername());
-        String countText = mDiagramFiles.size() + " " + getString(R.string.saved_diagrams_count_total);
+        String countText = mDiagrams.size() + " " + getString(R.string.saved_diagrams_count_total);
         mCountTextView.setText(countText);
 
     }
@@ -132,11 +139,15 @@ public class DiagramCollectionsFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                String diagramUrl = mDiagramFiles.get(position).getUrl();
+                AVFile diagramFile = mDiagrams.get(position).getAVFile(MainFragment.LeanCloudConstant.DIAGRAM_OBJECT_KEY_FILE);
+                String diagramUrl = diagramFile.getUrl();
+
+                String objectId = mDiagrams.get(position).getObjectId();
 
                 DiagramDetailFragment diagramDetailFragment = new DiagramDetailFragment();
                 Bundle bundle = new Bundle();
-                bundle.putString(KEY_DIAGRAM_URL, diagramUrl);
+                bundle.putString(BUNDLE_KEY_DIAGRAM_URL, diagramUrl);
+                bundle.putString(BUNDLE_KEY_DIAGRAM_OBJECT_ID, objectId);
                 diagramDetailFragment.setArguments(bundle);
 
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
