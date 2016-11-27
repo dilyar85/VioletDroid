@@ -272,7 +272,7 @@ public class MainFragment extends Fragment implements RecyclerAdapter.ElementVie
         String diagramPth = getCurrentDiagramAsPicture(hasBackground);
         if (diagramPth != null)
             try {
-                String fileName = diagramName == null ? getString(R.string.default_diagram_name) : diagramName;
+                String fileName = diagramName == null || diagramName.length() == 0  ? getString(R.string.default_diagram_name) : diagramName;
                 fileName += ".png";
                 AVFile file = AVFile.withAbsoluteLocalPath(fileName, diagramPth);
                 AVObject diagramObject = new AVObject(LeanCloudConstant.CLASS_DIAGRAM);

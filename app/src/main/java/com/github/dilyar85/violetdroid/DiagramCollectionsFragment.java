@@ -2,18 +2,13 @@ package com.github.dilyar85.violetdroid;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
-import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVFile;
@@ -21,7 +16,7 @@ import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.AVQuery;
 import com.avos.avoscloud.AVUser;
 import com.avos.avoscloud.FindCallback;
-import com.github.dilyar85.violetdroid.adapter.DiagramsAdapter;
+import com.github.dilyar85.violetdroid.adapter.DiagramCollectionsAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,10 +31,8 @@ public class DiagramCollectionsFragment extends Fragment {
 
     static final String LOG_TAG = DiagramCollectionsFragment.class.getSimpleName();
 
-    private static final int DOWNLOAD_DIAGRAMS_DONE = 0;
     public static final String KEY_DIAGRAM_URL = "key_selected_diagram_url";
 
-    private ProgressDialog mProgressDialog;
     private List<AVFile> mDiagramFiles;
 
     @BindView(R.id.diagram_collections_gridView)
@@ -48,16 +41,14 @@ public class DiagramCollectionsFragment extends Fragment {
     TextView mCountTextView;
     @BindView(R.id.user_name_textview)
     TextView mUserNameTextView;
-
+    @BindView(R.id.empty_view_in_gridview)
+    TextView mEmptyTextView;
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        downloadDiagramsFromLeanCloud();
-
-        Log.e(LOG_TAG, "onCreate");
 
     }
 
@@ -69,19 +60,28 @@ public class DiagramCollectionsFragment extends Fragment {
 
         final View rootView = inflater.inflate(R.layout.fragment_diagram_collections, container, false);
         ButterKnife.bind(this, rootView);
-        setGridViewClickEvent();
-        Log.e(LOG_TAG, "onCreateView");
+
+        mGridView.setEmptyView(mEmptyTextView);
         return rootView;
     }
 
 
 
-    /**
-     * Download all diagrams saved by current user
-     */
-    private void downloadDiagramsFromLeanCloud() {
+    @Override
+    public void onStart() {
 
-        mProgressDialog = ProgressDialog.show(getActivity(), null, getString(R.string.progress_dialog_loading));
+        super.onStart();
+        fetchDiagramsFromLeanCloud();
+    }
+
+
+
+
+
+    /**
+     * Try to fetch diagrams saved by the current user
+     */
+    private void fetchDiagramsFromLeanCloud() {
 
         AVQuery<AVObject> query = new AVQuery<>(MainFragment.LeanCloudConstant.CLASS_DIAGRAM);
         query.whereEqualTo(MainFragment.LeanCloudConstant.DIAGRAM_OBJECT_KEY_USERNAME, AVUser.getCurrentUser().getUsername());
@@ -90,12 +90,16 @@ public class DiagramCollectionsFragment extends Fragment {
             @Override
             public void done(List<AVObject> list, AVException e) {
 
-                if (list != null) {
+                if (e == null && list != null) {
                     mDiagramFiles = new ArrayList<>();
-                    for (AVObject avObject : list) mDiagramFiles.add((AVFile) avObject.get(MainFragment.LeanCloudConstant.DIAGRAM_OBJECT_KEY_FILE));
+                    for (AVObject avObject : list)
+                        mDiagramFiles.add((AVFile) avObject.get(MainFragment.LeanCloudConstant.DIAGRAM_OBJECT_KEY_FILE));
+                    passDataToView();
+                    setGridViewClickEvent();
+                } else {
+                    mEmptyTextView.setText(getString(R.string.search_diagram_failed));
+                    mGridView.setEmptyView(mEmptyTextView);
                 }
-
-                mHandler.sendEmptyMessage(DOWNLOAD_DIAGRAMS_DONE);
 
             }
         });
@@ -103,39 +107,19 @@ public class DiagramCollectionsFragment extends Fragment {
     }
 
 
-
-    /**
-     * A handler to handle when fetching all diagrams done
-     */
-    private Handler mHandler = new Handler() {
-
-        @Override
-        public void handleMessage(Message msg) {
-
-            if (msg.what == DOWNLOAD_DIAGRAMS_DONE) {
-                mProgressDialog.dismiss();
-                passDataToView();
-            }
-        }
-
-    };
-
     /**
      * Pass the diagram's information to grid view
      */
     private void passDataToView() {
 
-        if (mDiagramFiles == null) {
-            Toast.makeText(getActivity(), R.string.toast_no_saved_diagram, Toast.LENGTH_SHORT).show();
-        } else {
-            DiagramsAdapter mDiagramsAdapter = new DiagramsAdapter(getActivity(), mDiagramFiles);
-            mGridView.setAdapter(mDiagramsAdapter);
-            mUserNameTextView.setText(AVUser.getCurrentUser().getUsername());
-            String countText = mDiagramFiles.size() + " " + getString(R.string.saved_diagrams_count_total);
-            mCountTextView.setText(countText);
-        }
+        DiagramCollectionsAdapter mDiagramCollectionsAdapter = new DiagramCollectionsAdapter(getActivity(), mDiagramFiles);
+        mGridView.setAdapter(mDiagramCollectionsAdapter);
+        mUserNameTextView.setText(AVUser.getCurrentUser().getUsername());
+        String countText = mDiagramFiles.size() + " " + getString(R.string.saved_diagrams_count_total);
+        mCountTextView.setText(countText);
 
     }
+
 
 
     /**
@@ -165,14 +149,6 @@ public class DiagramCollectionsFragment extends Fragment {
         });
 
     }
-
-
-
-
-
-
-
-
 
 }
 

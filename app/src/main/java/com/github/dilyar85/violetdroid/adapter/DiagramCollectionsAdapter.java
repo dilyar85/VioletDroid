@@ -20,9 +20,9 @@ import butterknife.ButterKnife;
  * An Adapter class for gridview in DiagramCollectionsFragment
  */
 
-public class DiagramsAdapter extends BaseAdapter {
+public class DiagramCollectionsAdapter extends BaseAdapter {
 
-    final static String LOG_TAG = DiagramsAdapter.class.getSimpleName();
+    final static String LOG_TAG = DiagramCollectionsAdapter.class.getSimpleName();
     private List<AVFile> mDiagramFiles;
     private LayoutInflater mInflater;
 
@@ -34,7 +34,7 @@ public class DiagramsAdapter extends BaseAdapter {
      * @param context       given context
      * @param mDiagramFiles given diagram files
      */
-    public DiagramsAdapter(Context context, List<AVFile> mDiagramFiles) {
+    public DiagramCollectionsAdapter(Context context, List<AVFile> mDiagramFiles) {
 
         this.mDiagramFiles = mDiagramFiles;
         mInflater = LayoutInflater.from(context);
