@@ -55,5 +55,8 @@
     <string name="search_diagram_failed">Cannot display any saved diagrams. Please make sure you have saved them or check your network connection.</string>
     <string name="loading_empty_view">Loading...</string>
     <string name="delete">Delete</string>
+    <string name="save_failed">Failed to save, please check your network connection and try again later</string>
+    <string name="delete_failed">Cannot delete current diagram, please try again later</string>
+    <string name="delete_successfully">Diagram has been deleted</string>
 
 </resources>

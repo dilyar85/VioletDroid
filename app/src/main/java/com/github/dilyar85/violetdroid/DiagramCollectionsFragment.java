@@ -90,7 +90,7 @@ public class DiagramCollectionsFragment extends Fragment {
             @Override
             public void done(List<AVObject> list, AVException e) {
 
-                if (e == null && list != null) {
+                if (list != null) {
                     mDiagramFiles = new ArrayList<>();
                     for (AVObject avObject : list)
                         mDiagramFiles.add((AVFile) avObject.get(MainFragment.LeanCloudConstant.DIAGRAM_OBJECT_KEY_FILE));

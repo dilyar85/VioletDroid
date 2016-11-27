@@ -60,6 +60,8 @@ public class MainFragment extends Fragment implements RecyclerAdapter.ElementVie
         public static final String CLASS_DIAGRAM = "Diagrams";
         public static final String DIAGRAM_OBJECT_KEY_FILE = "file";
         public static final String DIAGRAM_OBJECT_KEY_USERNAME = "user";
+        public static final String CLASS_FILE = "_File";
+        public static final String FILE_OBJECT_KEY_URL = "url";
     }
 
 
@@ -232,7 +234,6 @@ public class MainFragment extends Fragment implements RecyclerAdapter.ElementVie
         mProgressDialog = ProgressDialog.show(getActivity(), null, getString(R.string.progress_dialog_saving_now));
 
         try {
-
             String diagramPth = Utility.getCurrentDiagramAsPicture(mCanvasLayout, hasBackground);
             String fileName = givenName == null || givenName.length() == 0 ? getString(R.string.default_diagram_name) : givenName;
             fileName += ".png";
@@ -246,8 +247,12 @@ public class MainFragment extends Fragment implements RecyclerAdapter.ElementVie
                 public void done(AVException e) {
 
                     mProgressDialog.dismiss();
-                    Toast.makeText(getActivity(), R.string.toast_saved_diagram_successfully, Toast.LENGTH_SHORT).show();
-                    Log.e(LOG_TAG, "Done!");
+                    if(e == null)
+                        Toast.makeText(getActivity(), R.string.toast_saved_diagram_successfully, Toast.LENGTH_SHORT).show();
+                    else {
+                        Toast.makeText(getActivity(), R.string.save_failed, Toast.LENGTH_LONG).show();
+                    }
+
                 }
             });
 
