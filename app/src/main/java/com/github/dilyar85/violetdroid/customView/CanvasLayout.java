@@ -30,6 +30,8 @@ public class CanvasLayout extends RelativeLayout {
 
 
 
+
+
     /**
      * Init CustomCanvasLayout
      */
@@ -47,7 +49,6 @@ public class CanvasLayout extends RelativeLayout {
      */
 
     public CanvasLayout(Context context) {
-
         super(context);
         init();
 
@@ -61,22 +62,17 @@ public class CanvasLayout extends RelativeLayout {
      * @param attrs   attrs set in xml
      */
     public CanvasLayout(Context context, AttributeSet attrs) {
-
         super(context, attrs);
         init();
 
     }
 
-
-
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-
         mGestureDetector.onTouchEvent(event);
         return true;
 
     }
-
 
 
     /**
@@ -86,11 +82,14 @@ public class CanvasLayout extends RelativeLayout {
 
         @Override
         public boolean onDoubleTap(MotionEvent e) {
-
+            //showAdjustIndicator(false);
             setEditable();
             return true;
         }
 
+        /**
+         *  set the rectangle text editable
+         */
         private void setEditable() {
 
             final EditText editText = (EditText) selectedChild.findViewById(R.id.center_edittext);
@@ -100,7 +99,9 @@ public class CanvasLayout extends RelativeLayout {
                 editText.setVisibility(VISIBLE);
 
                 final GestureDetector gestureDetector = new GestureDetector(new GestureDetector.SimpleOnGestureListener() {
+
                     public boolean onDoubleTap(MotionEvent e) {
+                        showAdjustIndicator(false);
                         editText.setFocusable(true);
                         editText.setCursorVisible(true);
                         editText.requestFocus();
@@ -112,13 +113,23 @@ public class CanvasLayout extends RelativeLayout {
 
                     @Override
                     public boolean onSingleTapUp(MotionEvent e) {
-                        return false;
+                        if (selectedChild == null) {
+                            selectedChild = editText.getRootView();
+                        }
+                        showAdjustIndicator(true);
+                        return true;
                     }
 
                     @Override
                     public void onLongPress(MotionEvent e) {
-
+                        if (selectedChild != null) removeView(selectedChild);
                     }
+
+                    @Override
+                    public boolean onDown(MotionEvent e) {
+                            return false;
+                    }
+
                 });
 
                 editText.setOnTouchListener(new View.OnTouchListener() {
@@ -129,16 +140,23 @@ public class CanvasLayout extends RelativeLayout {
 
                 });
 
+
             }
 
         }
 
+        /**
+         * show soft key board
+         * @param view view triggering soft key board attached
+         */
         private void showKeyBoard(View view) {
             InputMethodManager imm = (InputMethodManager) MyApplication.getInstance().getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT);
         }
 
-
+        /**
+         * cancel rectangle text editable
+         */
         private void cancelEditable() {
             EditText editText = (EditText) selectedChild.findViewById(R.id.center_edittext);
             if (editText == null) return;
@@ -146,9 +164,14 @@ public class CanvasLayout extends RelativeLayout {
             editText.setFocusable(false);
             editText.setFocusableInTouchMode(false);
             editText.setCursorVisible(false);
+            editText.setTextIsSelectable(false);
         }
 
 
+        /**
+         * hide soft input keyborad
+         * @param view view triggering soft key board attached
+         */
         private void closeKeyBoard(View view) {
             InputMethodManager inputMethodManager = (InputMethodManager) MyApplication.getInstance().getSystemService(Context.INPUT_METHOD_SERVICE);
             inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
@@ -157,7 +180,6 @@ public class CanvasLayout extends RelativeLayout {
 
         @Override
         public boolean onDown(MotionEvent e) {
-
             selectChild(e.getX(), e.getY());
             return false;
         }
@@ -178,7 +200,6 @@ public class CanvasLayout extends RelativeLayout {
 
         @Override
         public boolean onSingleTapUp(MotionEvent e) {
-
             if (selectedChild != null) {
                 cancelEditable();
                 showAdjustIndicator(true);
@@ -222,6 +243,7 @@ public class CanvasLayout extends RelativeLayout {
      */
     private void selectChild(float eventX, float eventY) {
 
+
         if (selectedChild != null) showAdjustIndicator(false);
 
         for (int i = getChildCount() - 1; i >= 0; i--) {
@@ -236,6 +258,9 @@ public class CanvasLayout extends RelativeLayout {
 
         selectedChild = null;
     }
+
+
+
 
 
 
@@ -282,10 +307,12 @@ public class CanvasLayout extends RelativeLayout {
 
         //Show or hide border
         ImageView centerView = (ImageView) selectedChild.findViewById(R.id.center_image_view);
-        centerView.setBackgroundResource(show ? R.drawable.custom_border : 0);
+        if (centerView != null)
+            centerView.setBackgroundResource(show ? R.drawable.custom_border : 0);
         //Show or hide indicator
         View indicatorView = selectedChild.findViewById(R.id.indicator);
-        indicatorView.setVisibility(show ? VISIBLE : INVISIBLE);
+        if (indicatorView != null)
+            indicatorView.setVisibility(show ? VISIBLE : INVISIBLE);
         //Add or remove indicator
         addIndicatorListener(show);
 
