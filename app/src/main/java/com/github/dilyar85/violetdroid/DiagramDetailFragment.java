@@ -52,7 +52,7 @@ public class DiagramDetailFragment extends Fragment {
     }
 
 
-
+//
 //    /**
 //     * Share the current diagram with any appropriate applications in the device
 //     */
