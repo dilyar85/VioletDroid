@@ -266,13 +266,13 @@ public class MainFragment extends Fragment implements RecyclerAdapter.ElementVie
     /**
      * Save current diagram into backend service
      */
-    private void saveDiagramInLeanCloud(String userName, String diagramName, boolean hasBackground) {
+    private void saveDiagramInLeanCloud(String userName, String givenName, boolean hasBackground) {
 
         mProgressDialog = ProgressDialog.show(getActivity(), null, getString(R.string.progress_dialog_saving_now));
         String diagramPth = getCurrentDiagramAsPicture(hasBackground);
         if (diagramPth != null)
             try {
-                String fileName = diagramName == null || diagramName.length() == 0  ? getString(R.string.default_diagram_name) : diagramName;
+                String fileName = givenName == null || givenName.length() == 0  ? getString(R.string.default_diagram_name) : givenName;
                 fileName += ".png";
                 AVFile file = AVFile.withAbsoluteLocalPath(fileName, diagramPth);
                 AVObject diagramObject = new AVObject(LeanCloudConstant.CLASS_DIAGRAM);

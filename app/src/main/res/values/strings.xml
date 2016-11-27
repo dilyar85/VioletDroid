@@ -21,14 +21,14 @@
     <string name="toast_diagram_not_saved">Diagram not saved</string>
     <string name="toast_prompt_sign_in">Please sign in to save the diagram</string>
     <string name="progress_dialog_saving_now">Saving…</string>
-    <string name="default_diagram_name">No name</string>
+    <string name="default_diagram_name">Default</string>
     <string name="toast_saved_diagram_successfully">Saved successfully</string>
     <string name="progress_dialog_loading">Loading…</string>
     <string name="toast_no_saved_diagram">There is no any saved diagram</string>
 
     <string name="saved_diagrams_count_total">total</string>
     <string name="collections_default_count">0 total</string>
-    <string name="default_collections_user_diagram">User\'s diagrams</string>
+    <string name="default_collections_user_diagram">Username</string>
     <string name="detail_fragment_ok_button">OK</string>
     <string name="user_name">Username</string>
     <string name="password">Password</string>

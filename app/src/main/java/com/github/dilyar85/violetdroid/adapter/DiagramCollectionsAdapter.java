@@ -85,10 +85,14 @@ public class DiagramCollectionsAdapter extends BaseAdapter {
         //Load image using ImageLoader.
         AVFile diagramFile = mDiagramFiles.get(i);
 
-        if (diagramFile != null)
+        if (diagramFile != null) {
             ImageLoader.getInstance().loadImageWithUrl(diagramFile.getUrl(), diagramHolder.mImageView);
 
-        diagramHolder.mTextView.setText(mDiagramFiles.get(i).getName());
+            String originalName = mDiagramFiles.get(i).getOriginalName();
+            int index = originalName.lastIndexOf(".png");
+            if (index > 0) originalName = originalName.substring(0, index);
+            diagramHolder.mTextView.setText(originalName);
+        }
 
         return view;
 
