@@ -84,8 +84,8 @@ public class MainFragment extends Fragment implements RecyclerAdapter.ElementVie
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 
-        inflater.inflate(R.menu.main, menu);
         super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.main_fragment, menu);
     }
 
 
@@ -94,7 +94,7 @@ public class MainFragment extends Fragment implements RecyclerAdapter.ElementVie
     public boolean onOptionsItemSelected(MenuItem item) {
 
         int id = item.getItemId();
-        if (id == R.id.menu_share) shareCurrentDiagram();
+        if (id == R.id.menu_share) shareDiagramFromView();
         else if (id == R.id.menu_save) showSavingDiagramAlert();
         else if (id == R.id.menu_diagram_collections) displayDiagramCollections();
         else if(id == R.id.menu_sign_out) signOut();
@@ -200,7 +200,7 @@ public class MainFragment extends Fragment implements RecyclerAdapter.ElementVie
     /**
      * Share the current diagram with any appropriate applications in the device
      */
-    private void shareCurrentDiagram() {
+    private void shareDiagramFromView() {
 
         String diagramPath = getCurrentDiagramAsPicture(true);
         if (diagramPath == null) return;

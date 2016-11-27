@@ -2,41 +2,24 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
 
+    android:gravity="center"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        app:elevation="8dp"
-        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/colorPrimaryDark"
-        >
-
-        <Button
-            android:id="@+id/confirm_button"
-            android:layout_width="80dp"
-            android:layout_height="40dp"
-            android:layout_gravity="end"
-            android:layout_marginRight="12dp"
-            android:background="@color/colorWhite"
-            android:fontFamily="sans-serif-light"
-            android:scaleType="center"
-            android:text="@string/detail_fragment_ok_button"
-            android:textColor="@color/colorBoxed"
-            android:textSize="16sp"
-            />
-
-    </android.support.v7.widget.Toolbar>
-
+    <TextView
+        android:textColor="@color/colorBoxed"
+        android:textSize="20sp"
+        android:layout_margin="12dp"
+        android:id="@+id/detail_diagram_name_textview"
+        android:text="@string/default_diagram_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
     <ImageView
+        android:src="@drawable/diagram_default"
         android:id="@+id/selected_imageView"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:scaleType="fitCenter"/>
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"/>
 
 </LinearLayout>

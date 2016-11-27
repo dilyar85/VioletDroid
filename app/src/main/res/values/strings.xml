@@ -54,5 +54,6 @@
     <string name="app_logo">App Logo</string>
     <string name="search_diagram_failed">Cannot display any saved diagrams. Please make sure you have saved them or check your network connection.</string>
     <string name="loading_empty_view">Loading...</string>
+    <string name="delete">Delete</string>
 
 </resources>
