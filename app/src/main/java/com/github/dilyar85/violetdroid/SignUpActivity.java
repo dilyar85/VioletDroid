@@ -22,6 +22,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static android.R.id.message;
+import static com.github.dilyar85.violetdroid.LoginActivity.EXTRA_KEY_TYPED_PASSWORD;
+import static com.github.dilyar85.violetdroid.LoginActivity.EXTRA_KEY_TYPED_USERNAME;
 
 /**
  * An activity class to allow user sign up a new account
@@ -54,6 +56,12 @@ public class SignUpActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
         ButterKnife.bind(this);
+
+        Intent intent = getIntent();
+        String typedUsername = intent.getStringExtra(EXTRA_KEY_TYPED_USERNAME);
+        if(typedUsername != null) mUsernameEditText.setText(typedUsername);
+        String typedPassword = intent.getStringExtra(EXTRA_KEY_TYPED_PASSWORD);
+        if(typedPassword != null) mPasswordEditText.setText(typedPassword);
 
     }
 
@@ -113,12 +121,14 @@ public class SignUpActivity extends Activity {
 
 
     /**
-     * Go back to LoginActivity
+     * Go back to LoginActivity, carrying username and password if typed
      */
     @OnClick(R.id.sign_up_return_textView)
     public void returnLogInActivity() {
 
         Intent intent = new Intent(this, LoginActivity.class);
+        intent.putExtra(EXTRA_KEY_TYPED_USERNAME, mUsernameEditText.getText().toString());
+        intent.putExtra(EXTRA_KEY_TYPED_PASSWORD, mConfirmPasswordEditText.getText().toString());
         startActivity(intent);
     }
 

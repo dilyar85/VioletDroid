@@ -20,7 +20,8 @@
             android:layout_centerHorizontal="true"
             android:contentDescription="@string/content_login_logo"
             android:scaleType="fitCenter"
-            android:src="@drawable/uml_logo"/>
+            android:src="@drawable/uml_logo"
+            />
 
         <EditText
             android:id="@+id/log_in_username_editText"
@@ -33,7 +34,8 @@
             android:hint="@string/user_name"
             android:inputType="textPersonName"
             android:textColor="@color/colorWhite"
-            android:textColorHint="@color/colorWhite"/>
+            android:textColorHint="@color/light_gray"
+            />
 
         <EditText
             android:id="@+id/log_in_password_editText"
@@ -47,7 +49,7 @@
             android:hint="@string/password"
             android:inputType="textWebPassword"
             android:textColor="@color/colorWhite"
-            android:textColorHint="@color/colorWhite"
+            android:textColorHint="@color/light_gray"
             />
 
         <Button

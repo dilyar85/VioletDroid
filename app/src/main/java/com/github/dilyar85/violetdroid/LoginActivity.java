@@ -29,14 +29,20 @@ public class LoginActivity extends Activity {
     static final  String LOG_TAG = LoginActivity.class.getSimpleName();
 
     @BindView(R.id.log_in_username_editText)
-    EditText mUserNameEditText;
+    EditText mUsernameEditText;
     @BindView(R.id.log_in_password_editText)
     EditText mPasswordEditText;
 
-    public String inputUserName;
-    public String inputPassword;
+    private String inputUserName;
+    private String inputPassword;
 
     private AlertDialog verifiedResultDialog;
+
+    static final String EXTRA_KEY_TYPED_USERNAME = "extra_key_typed_username";
+    static final String EXTRA_KEY_TYPED_PASSWORD = "extra_key_typed_password";
+
+
+
 
 
 
@@ -46,6 +52,18 @@ public class LoginActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+
+        super.onNewIntent(intent);
+
+        String typedUsername = intent.getStringExtra(EXTRA_KEY_TYPED_USERNAME);
+        if(typedUsername != null) mUsernameEditText.setText(typedUsername);
+        String typedPassword = intent.getStringExtra(EXTRA_KEY_TYPED_PASSWORD);
+        if(typedPassword != null) mPasswordEditText.setText(typedPassword);
 
     }
 
@@ -70,7 +88,7 @@ public class LoginActivity extends Activity {
      */
     private boolean checkEditTextBlank() {
 
-        inputUserName = mUserNameEditText.getText().toString();
+        inputUserName = mUsernameEditText.getText().toString();
         inputPassword = mPasswordEditText.getText().toString();
 
         if (inputUserName.length() <=0) {
@@ -87,12 +105,14 @@ public class LoginActivity extends Activity {
 
 
     /**
-     * Start the sign up activity
+     * Start the sign up activity, carrying username and password if typed
      */
     @OnClick(R.id.log_in_sign_up_textView)
     public void clickSignUpTextView() {
 
         Intent intent = new Intent(this, SignUpActivity.class);
+        intent.putExtra(EXTRA_KEY_TYPED_USERNAME, mUsernameEditText.getText().toString());
+        intent.putExtra(EXTRA_KEY_TYPED_PASSWORD, mPasswordEditText.getText().toString());
         startActivity(intent);
     }
 
