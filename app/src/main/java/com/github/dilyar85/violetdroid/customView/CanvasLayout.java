@@ -2,12 +2,15 @@ package com.github.dilyar85.violetdroid.customView;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.GestureDetector;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
@@ -82,9 +85,19 @@ public class CanvasLayout extends RelativeLayout {
 
         @Override
         public boolean onDoubleTap(MotionEvent e) {
-            //showAdjustIndicator(false);
             setEditable();
             return true;
+        }
+
+
+        private void doubleTapAction(EditText editText) {
+            showAdjustIndicator(false);
+            editText.setFocusable(true);
+            editText.setCursorVisible(true);
+            editText.requestFocus();
+            editText.requestFocusFromTouch();
+            editText.setSelectAllOnFocus(true);
+            showKeyBoard(editText);
         }
 
         /**
@@ -94,20 +107,17 @@ public class CanvasLayout extends RelativeLayout {
 
             final EditText editText = (EditText) selectedChild.findViewById(R.id.center_edittext);
             if (editText == null) return;
+            editText.setGravity(Gravity.RIGHT);
 
             if (editText.getVisibility()!=VISIBLE) {
                 editText.setVisibility(VISIBLE);
+                adjustGravity(editText);
+
 
                 final GestureDetector gestureDetector = new GestureDetector(new GestureDetector.SimpleOnGestureListener() {
 
                     public boolean onDoubleTap(MotionEvent e) {
-                        showAdjustIndicator(false);
-                        editText.setFocusable(true);
-                        editText.setCursorVisible(true);
-                        editText.requestFocus();
-                        editText.requestFocusFromTouch();
-                        editText.setSelectAllOnFocus(true);
-                        showKeyBoard(editText);
+                        doubleTapAction(editText);
                         return true;
                     }
 
@@ -121,14 +131,24 @@ public class CanvasLayout extends RelativeLayout {
                     }
 
                     @Override
+                    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+                        Log.i(LOG_TAG, "I am scrolling");
+                        if (selectedChild != null) {
+                            Log.i(LOG_TAG, "I am scrolling ohhhhh");
+                            cancelEditable();
+                            float[] validLocation = getValidLocations(-distanceX, -distanceY);
+                            selectedChild.setX(validLocation[0]);
+                            selectedChild.setY(validLocation[1]);
+                        }
+
+                        return true;
+                    }
+
+                    @Override
                     public void onLongPress(MotionEvent e) {
                         if (selectedChild != null) removeView(selectedChild);
                     }
 
-                    @Override
-                    public boolean onDown(MotionEvent e) {
-                            return false;
-                    }
 
                 });
 
@@ -140,9 +160,46 @@ public class CanvasLayout extends RelativeLayout {
 
                 });
 
+                doubleTapAction(editText);
 
             }
 
+        }
+
+        private void adjustGravity(EditText editText) {
+
+            /*
+            elementImageIds = new int[]{R.drawable.rectangle_old, R.drawable.dependency,
+                R.drawable.sequenc_rectangle_call, R.drawable.sequence_line,
+        R.drawable.dashbar,R.drawable.verticalrectangle};
+             */
+
+            if (selectedChild != null) {
+
+                FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) editText.getLayoutParams();
+
+
+                ImageView imageView = (ImageView) selectedChild.findViewById(R.id.center_image_view);
+
+                switch ((int) imageView.getTag()) {
+                    case R.drawable.rectangle_old:
+                        params.gravity = Gravity.CENTER;
+                        break;
+                    case R.drawable.dependency:
+                    case R.drawable.aggregation:
+                    case R.drawable.sequence_line:
+                    case R.drawable.inheritance:
+                        params.gravity = Gravity.TOP | Gravity.CENTER_HORIZONTAL;
+                        break;
+                    case R.drawable.sequenc_rectangle_call:
+                    case R.drawable.verticalrectangle:
+                    case R.drawable.dashbar:
+                        params.gravity = Gravity.CENTER_VERTICAL | Gravity.RIGHT;
+                        break;
+                }
+
+                editText.setLayoutParams(params);
+            }
         }
 
         /**
