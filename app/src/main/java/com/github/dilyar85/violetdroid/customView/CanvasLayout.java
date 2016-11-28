@@ -89,7 +89,6 @@ public class CanvasLayout extends RelativeLayout {
             return true;
         }
 
-
         private void doubleTapAction(EditText editText) {
             showAdjustIndicator(false);
             editText.setFocusable(true);
@@ -166,19 +165,14 @@ public class CanvasLayout extends RelativeLayout {
 
         }
 
+        /**
+         * A method to adjust text location to the image components
+         * @param editText the text input
+         */
         private void adjustGravity(EditText editText) {
 
-            /*
-            elementImageIds = new int[]{R.drawable.rectangle_old, R.drawable.dependency,
-                R.drawable.sequenc_rectangle_call, R.drawable.sequence_line,
-        R.drawable.dashbar,R.drawable.verticalrectangle};
-             */
-
             if (selectedChild != null) {
-
                 FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) editText.getLayoutParams();
-
-
                 ImageView imageView = (ImageView) selectedChild.findViewById(R.id.center_image_view);
 
                 switch ((int) imageView.getTag()) {
