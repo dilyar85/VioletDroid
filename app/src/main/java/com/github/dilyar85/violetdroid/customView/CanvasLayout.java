@@ -145,7 +145,7 @@ public class CanvasLayout extends RelativeLayout {
                             selectedChild.setX(validLocation[0]);
                             selectedChild.setY(validLocation[1]);
                         }
-                       return true;
+                        return true;
 
                     }
 
