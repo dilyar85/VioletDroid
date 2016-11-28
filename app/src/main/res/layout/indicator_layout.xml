@@ -27,7 +27,6 @@
             android:focusable="false"
             android:visibility="gone"
             android:gravity="center"
-            android:background="@null"
             android:focusableInTouchMode="false"
             />
     </FrameLayout>

@@ -2,7 +2,6 @@ package com.github.dilyar85.violetdroid.customView;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.GestureDetector;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -30,6 +29,7 @@ public class CanvasLayout extends RelativeLayout {
     private View selectedChild;
 
     private GestureDetector mGestureDetector;
+
 
 
 
@@ -90,6 +90,10 @@ public class CanvasLayout extends RelativeLayout {
         }
 
 
+        /**
+         * action after double Tap of the text area
+         * @param editText
+         */
         private void doubleTapAction(EditText editText) {
             showAdjustIndicator(false);
             editText.setFocusable(true);
@@ -97,7 +101,7 @@ public class CanvasLayout extends RelativeLayout {
             editText.requestFocus();
             editText.requestFocusFromTouch();
             editText.setSelectAllOnFocus(true);
-            showKeyBoard(editText);
+            if (editText.isFocused()) showKeyBoard(editText);
         }
 
         /**
@@ -114,6 +118,9 @@ public class CanvasLayout extends RelativeLayout {
                 adjustGravity(editText);
 
 
+                /**
+                 * inner class for edittext gesture recognition
+                 */
                 final GestureDetector gestureDetector = new GestureDetector(new GestureDetector.SimpleOnGestureListener() {
 
                     public boolean onDoubleTap(MotionEvent e) {
@@ -132,23 +139,22 @@ public class CanvasLayout extends RelativeLayout {
 
                     @Override
                     public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-                        Log.i(LOG_TAG, "I am scrolling");
                         if (selectedChild != null) {
-                            Log.i(LOG_TAG, "I am scrolling ohhhhh");
                             cancelEditable();
                             float[] validLocation = getValidLocations(-distanceX, -distanceY);
                             selectedChild.setX(validLocation[0]);
                             selectedChild.setY(validLocation[1]);
                         }
+                       return true;
 
-                        return true;
                     }
 
                     @Override
                     public void onLongPress(MotionEvent e) {
-                        if (selectedChild != null) removeView(selectedChild);
+                        if (selectedChild == null)
+                            selectedChild = editText.getRootView();
+                        removeView(selectedChild);
                     }
-
 
                 });
 
@@ -166,19 +172,15 @@ public class CanvasLayout extends RelativeLayout {
 
         }
 
+        /**
+         * adjust the text location for uml components
+         * @param editText text input
+         */
         private void adjustGravity(EditText editText) {
 
-            /*
-            elementImageIds = new int[]{R.drawable.rectangle_old, R.drawable.dependency,
-                R.drawable.sequenc_rectangle_call, R.drawable.sequence_line,
-        R.drawable.dashbar,R.drawable.verticalrectangle};
-             */
 
             if (selectedChild != null) {
-
                 FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) editText.getLayoutParams();
-
-
                 ImageView imageView = (ImageView) selectedChild.findViewById(R.id.center_image_view);
 
                 switch ((int) imageView.getTag()) {
