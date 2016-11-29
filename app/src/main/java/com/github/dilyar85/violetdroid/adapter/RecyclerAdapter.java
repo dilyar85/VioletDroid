@@ -121,9 +121,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
         holder.imageView.setImageResource(elementImageIds[position]);
         holder.textView.setText(elementDescription[position]);
-
         holder.imageView.setTag(R.id.view_resource_key, elementImageIds[position]);
-
         holder.imageView.setOnClickListener(new View.OnClickListener() {
 
             @Override
