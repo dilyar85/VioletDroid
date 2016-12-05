@@ -1,4 +1,4 @@
-package com.github.dilyar85.violetdroid;
+package com.github.dilyar85.violetdroid.activity;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVUser;
 import com.avos.avoscloud.SignUpCallback;
+import com.github.dilyar85.violetdroid.R;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -22,8 +23,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static android.R.id.message;
-import static com.github.dilyar85.violetdroid.LoginActivity.EXTRA_KEY_TYPED_PASSWORD;
-import static com.github.dilyar85.violetdroid.LoginActivity.EXTRA_KEY_TYPED_USERNAME;
+import static com.github.dilyar85.violetdroid.activity.LoginActivity.EXTRA_KEY_TYPED_PASSWORD;
+import static com.github.dilyar85.violetdroid.activity.LoginActivity.EXTRA_KEY_TYPED_USERNAME;
 
 /**
  * An activity class to allow user sign up a new account

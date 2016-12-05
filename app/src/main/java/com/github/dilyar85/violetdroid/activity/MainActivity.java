@@ -1,7 +1,10 @@
-package com.github.dilyar85.violetdroid;
+package com.github.dilyar85.violetdroid.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+
+import com.github.dilyar85.violetdroid.R;
+import com.github.dilyar85.violetdroid.fragment.MainFragment;
 
 import butterknife.ButterKnife;
 

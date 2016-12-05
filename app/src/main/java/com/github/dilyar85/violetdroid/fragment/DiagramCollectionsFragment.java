@@ -1,4 +1,4 @@
-package com.github.dilyar85.violetdroid;
+package com.github.dilyar85.violetdroid.fragment;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
@@ -17,6 +17,7 @@ import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.AVQuery;
 import com.avos.avoscloud.AVUser;
 import com.avos.avoscloud.FindCallback;
+import com.github.dilyar85.violetdroid.R;
 import com.github.dilyar85.violetdroid.adapter.DiagramCollectionsAdapter;
 
 import java.util.ArrayList;

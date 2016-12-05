@@ -35,6 +35,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     public interface ElementViewListener {
         /**
          * Method to notify the view is double tapped
+         *
          * @param view the double tapped view
          */
         void elementToolDoubleTapped(View view);
@@ -44,14 +45,13 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
     /**
      * A helper method to set ElementViewListener
+     *
      * @param elementViewListener could be any class who implements this interface
      */
     public static void setElementViewListener(ElementViewListener elementViewListener) {
 
         mElementViewListener = elementViewListener;
     }
-
-
 
 
 
@@ -63,7 +63,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         @BindView(R.id.element_imageview)
         ImageView imageView;
         @BindView(R.id.element_desc_textview)
-         TextView textView;
+        TextView textView;
 
 
 
@@ -89,18 +89,18 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
      */
     public RecyclerAdapter(Context context) {
 
-
         elementDescription = new String[]{context.getString(R.string.class_rectangle),
                 context.getString(R.string.dependency_line),
                 context.getString(R.string.aggregation_line),
                 context.getString(R.string.inheritance_line),
-                context.getString(R.string.sequence_rectangle),
-                context.getString(R.string.sequence_line),
                 context.getString(R.string.dash_bar),
-                context.getString(R.string.vertical_rectangle)};
+                context.getString(R.string.method_line),
+                context.getString(R.string.vertical_rectangle),
+                context.getString(R.string.self_call_sequence)};
+
         elementImageIds = new int[]{R.drawable.rectangle_old, R.drawable.dependency,
-                R.drawable.aggregation, R.drawable.inheritance, R.drawable.sequenc_rectangle_call, R.drawable.sequence_line,
-        R.drawable.dashbar,R.drawable.verticalrectangle};
+                R.drawable.aggregation, R.drawable.inheritance, R.drawable.dashbar, R.drawable.sequence_line,
+                R.drawable.verticalrectangle, R.drawable.sequenc_rectangle_call};
     }
 
 
@@ -133,13 +133,13 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             }
         });
 
-
     }
 
 
 
     /**
      * Add view to canvas if it is double tapped
+     *
      * @param v tapped view
      */
     private void addViewToCanvas(View v) {
@@ -168,6 +168,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         lastClickedTime = System.currentTimeMillis();
 
     }
+
 
 
     @Override

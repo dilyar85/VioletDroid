@@ -10,7 +10,7 @@ import android.widget.TextView;
 import com.avos.avoscloud.AVFile;
 import com.avos.avoscloud.AVObject;
 import com.github.dilyar85.imageloader.ImageLoader;
-import com.github.dilyar85.violetdroid.MainFragment;
+import com.github.dilyar85.violetdroid.fragment.MainFragment;
 import com.github.dilyar85.violetdroid.R;
 
 import java.util.List;

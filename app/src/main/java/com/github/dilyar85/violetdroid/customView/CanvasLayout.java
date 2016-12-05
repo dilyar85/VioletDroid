@@ -33,8 +33,6 @@ public class CanvasLayout extends RelativeLayout {
 
 
 
-
-
     /**
      * Init CustomCanvasLayout
      */

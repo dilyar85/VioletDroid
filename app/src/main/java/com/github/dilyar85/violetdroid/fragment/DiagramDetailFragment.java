@@ -1,4 +1,4 @@
-package com.github.dilyar85.violetdroid;
+package com.github.dilyar85.violetdroid.fragment;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.DialogInterface;
@@ -18,6 +18,7 @@ import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.AVQuery;
 import com.avos.avoscloud.GetCallback;
 import com.github.dilyar85.imageloader.ImageLoader;
+import com.github.dilyar85.violetdroid.R;
 import com.github.dilyar85.violetdroid.utility.Utility;
 
 import java.io.IOException;

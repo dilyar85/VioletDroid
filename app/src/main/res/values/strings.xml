@@ -5,9 +5,9 @@
     <string name="aggregation_line">Aggregation</string>
     <string name="inheritance_line">Inheritance</string>
     <string name="sequence_rectangle">Active Period</string>
-    <string name="sequence_line">Method Line</string>
+    <string name="method_line">Method Line</string>
     <string name="dash_bar">Dash_Bar</string>
-    <string name="vertical_rectangle">Active Rec</string>
+    <string name="vertical_rectangle">Active Period</string>
     <string name="view_not_selected_tag">NotSelected</string>
     <string name="menu_share">Share</string>
     <item type="id" name="view_resource_key"></item>
@@ -61,5 +61,6 @@
     <string name="no_saved_diagram">You have no saved diagram in our service.</string>
     <string name="dialog_delete_button">Delete</string>
     <string name="dialog_title_delete_diagram">Delete the current diagram?</string>
+    <string name="self_call_sequence">Self_Call</string>
 
 </resources>

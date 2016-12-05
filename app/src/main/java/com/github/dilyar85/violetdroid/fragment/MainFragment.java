@@ -1,4 +1,4 @@
-package com.github.dilyar85.violetdroid;
+package com.github.dilyar85.violetdroid.fragment;
 
 import android.app.AlertDialog;
 import android.app.Fragment;
@@ -26,6 +26,8 @@ import com.avos.avoscloud.AVFile;
 import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.AVUser;
 import com.avos.avoscloud.SaveCallback;
+import com.github.dilyar85.violetdroid.activity.LoginActivity;
+import com.github.dilyar85.violetdroid.R;
 import com.github.dilyar85.violetdroid.adapter.RecyclerAdapter;
 import com.github.dilyar85.violetdroid.customView.CanvasLayout;
 import com.github.dilyar85.violetdroid.utility.Utility;

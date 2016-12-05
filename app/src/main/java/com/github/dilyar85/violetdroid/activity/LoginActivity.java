@@ -1,4 +1,4 @@
-package com.github.dilyar85.violetdroid;
+package com.github.dilyar85.violetdroid.activity;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVUser;
 import com.avos.avoscloud.LogInCallback;
+import com.github.dilyar85.violetdroid.R;
 
 import java.util.Timer;
 import java.util.TimerTask;
