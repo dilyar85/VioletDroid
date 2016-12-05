@@ -22,39 +22,41 @@
       <h3>
 <a id="introduction" class="anchor" href="#introduction" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Introduction</h3>
 
-<p>VioletDroid is an Android app that allows users to draw UML diagrams on their phones and tablets.
-<img src="url" alt="code package image"></p>
+<p>VioletDroid is an Android app that allows users to draw UML diagrams on their phones and tablets.</p>
+
+<ul>
+<li>Implemented with <strong>2017</strong> lines of java codes, including <strong>279</strong> lines of java doc. 
+<img src="https://github.com/dilyar85/VioletDroid/blob/master/screenshots/current_screenshot.png" alt="code package image">
+</li>
+</ul>
 
 <h3>
 <a id="android-framework" class="anchor" href="#android-framework" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Android Framework</h3>
 
 <ul>
-<li>VioletDroid uses Activity - Fragment template to accomplish its major feature. 
-<img src="url" alt="code package image">
-</li>
-<li>RecyclerView with corresponding adapter displays the elements needed in UML diagrams.
-<img src="url" alt="code package image">
-</li>
-<li>Static methods in the Utility class to help implement its feature and avoid duplicated codes.
-<img src="url" alt="code package image">
-</li>
+<li><p>VioletDroid uses Activity - Fragment template to accomplish its major feature. 
+<img src="https://github.com/dilyar85/VioletDroid/blob/master/screenshots/activity_fragment.png" alt="code package image">  </p></li>
+<li><p>RecyclerView with corresponding adapter displays the elements needed in UML diagrams.
+<img src="https://github.com/dilyar85/VioletDroid/blob/master/screenshots/adapter_pkg.png" alt="code package image">  </p></li>
+<li><p>Custom View class to display and modify current diagrams.
+<img src="https://github.com/dilyar85/VioletDroid/blob/master/screenshots/custom_canvas_layout.png" alt="code package image"></p></li>
 </ul>
 
 <h3>
 <a id="design-patterns" class="anchor" href="#design-patterns" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Design Patterns</h3>
 
-<p>VioletDroid uses two major design patterns: Decorator Pattern, Composite Pattern, and Observer Pattern.</p>
+<p>VioletDroid uses three major design patterns: Decorator Pattern, Composite Pattern, and Observer Pattern.</p>
 
 <ul>
 <li><p><strong>Decorator Pattern</strong>：<br>
-RecyclerAdapter class extends Android’s native RecyclerView.Adapter to display the icons in the toolbar menu as a scrolling dataset of images.  This is an example of the decorator pattern used in the Android API—RecyclerView essentially decorates an Android ViewGroup to provide the additional scrolling functionality and link to a dataset of assets for the view.  The following table represents this pattern:
-![decorator pattern image] url</p></li>
+RecyclerAdapter class extends Android’s native RecyclerView.Adapter to display the icons in the toolbar menu as a scrolling dataset of images.  This is an example of the decorator pattern used in the Android API—RecyclerView essentially decorates an Android ViewGroup to provide the additional scrolling functionality and link to a dataset of assets for the view.  The following table represents this pattern:<br>
+<img src="https://github.com/dilyar85/VioletDroid/blob/master/screenshots/dec_pattern.png" alt="decorator pattern image"></p></li>
 <li><p><strong>Composite Pattern</strong>：<br>
-The composite pattern is used in the VioletDroid CanvasLayout class which extends Android’s native RelativeLayout class, which extends the ViewGroup abstract class which extends View.  So CanvasLayout is a ViewGroup, which is a View that can contain other Views.  The following table represents this pattern in our project:
-![composite pattern image] url</p></li>
+The composite pattern is used in the VioletDroid CanvasLayout class which extends Android’s native RelativeLayout class, which extends the ViewGroup abstract class which extends View.  So CanvasLayout is a ViewGroup, which is a View that can contain other Views.  The following table represents this pattern in our project:<br>
+<img src="https://github.com/dilyar85/VioletDroid/blob/master/screenshots/composite_pattern.png" alt="composite pattern image"></p></li>
 <li><p><strong>Observer Pattern</strong>：<br>
-The observer pattern is another very common occurrence in User Interface design, particularly with Graphical User Interfaces, since the signal for the application to do something comes from the user’s interaction with elements on-screen, those elements must somehow notify the application what has happened - hence the listeners involved in an observer pattern:
-![observer pattern image] url</p></li>
+The observer pattern is another very common occurrence in User Interface design, particularly with Graphical User Interfaces, since the signal for the application to do something comes from the user’s interaction with elements on-screen, those elements must somehow notify the application what has happened - hence the listeners involved in an observer pattern:<br>
+<img src="https://github.com/dilyar85/VioletDroid/blob/master/screenshots/observer_pattern.png" alt="observer pattern image"></p></li>
 </ul>
 
 <h3>
@@ -62,21 +64,26 @@ The observer pattern is another very common occurrence in User Interface design,
 
 <p>We utilized a cloud service framework in our project to facilitate user account maintenance and saving of diagrams.   We mention it here because it provides our project with a huge suite of services that we didn’t actually have to code ourselves, but merely 
 import com.avos.avoscloud.AVOSCloud; 
-and add 3 lines of initialization for the framework at app startup.</p>
+and add 3 lines of initialization for the framework at app startup.<br>
+<img src="https://github.com/dilyar85/VioletDroid/blob/master/screenshots/leancloud_icon.png" alt="leancloud icon image"></p>
 
 <h3>
 <a id="run-demo" class="anchor" href="#run-demo" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Run Demo</h3>
 
 <ol>
-<li>Start your emulator.</li>
-<li>Via bash, navigate to the VioletDroid project folder.</li>
-<li>Execute:~&gt; ./exec.sh</li>
+<li>Start your emulator (highly recommend Genymotion)</li>
+<li>Via bash, navigate to the VioletDroid project folder.<br>
+<code>~ $ cd the_path_to_violetdroid_in_your_laptop/</code>
+</li>
+<li>Execute just one line in your terminal:<br>
+<code>~ $ ./exec.sh</code>
+</li>
 </ol>
 
 <h3>
 <a id="downloads" class="anchor" href="#downloads" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Downloads</h3>
 
-<p>![available on Google Play] url</p>
+<p><a href="https://play.google.com/store/apps/details?id=com.dilyar.weather.app&amp;utm_source=global_co&amp;utm_medium=prtnr&amp;utm_content=Mar2515&amp;utm_campaign=PartBadge&amp;pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1"><img alt="Get it on Google Play" src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png"></a></p>
 
       <footer class="site-footer">
         <span class="site-footer-owner"><a href="https://github.com/dilyar85/VioletDroid">Violetdroid</a> is maintained by <a href="https://github.com/dilyar85">dilyar85</a>.</span>
