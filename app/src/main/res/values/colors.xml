@@ -3,11 +3,11 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="colorBoxed">#3498DB</color>
+    <color name="colorBoxed">#0080FF</color>
     <color name="colorWhite">#ffffff</color>
     <color name="colorSlateGray">#708090</color>
     <color name="sign_up_now_color">#038687</color>
-    <color name="light_gray">#646464</color>
+    <color name="light_gray">#3399ff</color>
 
 
 

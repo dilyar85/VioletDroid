@@ -21,6 +21,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
     private static final String LOG_TAG = "RecyclerAdapter";
 
+    private Context mContext;
     private String[] elementDescription;
     private int[] elementImageIds;
 
