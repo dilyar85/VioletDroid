@@ -76,6 +76,7 @@ public class DiagramCollectionsFragment extends Fragment {
     public void onStart() {
 
         super.onStart();
+        Log.e("Detail", "onStart()");
         fetchDiagramsFromLeanCloud();
     }
 
