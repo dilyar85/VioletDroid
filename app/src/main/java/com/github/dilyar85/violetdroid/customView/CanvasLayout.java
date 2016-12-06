@@ -2,6 +2,7 @@ package com.github.dilyar85.violetdroid.customView;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -32,7 +33,6 @@ public class CanvasLayout extends RelativeLayout {
 
 
 
-
     /**
      * Init CustomCanvasLayout
      */
@@ -43,6 +43,7 @@ public class CanvasLayout extends RelativeLayout {
     }
 
 
+
     /**
      * Construct a CustomCanvasLayout by given context
      *
@@ -50,10 +51,12 @@ public class CanvasLayout extends RelativeLayout {
      */
 
     public CanvasLayout(Context context) {
+
         super(context);
         init();
 
     }
+
 
 
     /**
@@ -63,17 +66,22 @@ public class CanvasLayout extends RelativeLayout {
      * @param attrs   attrs set in xml
      */
     public CanvasLayout(Context context, AttributeSet attrs) {
+
         super(context, attrs);
         init();
 
     }
 
+
+
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+
         mGestureDetector.onTouchEvent(event);
         return true;
 
     }
+
 
 
     /**
@@ -83,99 +91,48 @@ public class CanvasLayout extends RelativeLayout {
 
         @Override
         public boolean onDoubleTap(MotionEvent e) {
-            setEditable();
+
+            selectChild(e.getX(), e.getY());
+            if(selectedChild != null) {
+                Log.e(LOG_TAG, "child selected");
+                EditText editText = (EditText) selectedChild.findViewById(R.id.center_edittext);
+                editText.setGravity(Gravity.RIGHT);
+                if (editText.getVisibility() != VISIBLE) {
+                    editText.setVisibility(VISIBLE);
+                    adjustGravity(editText);
+                }
+                doubleTapAction(editText);
+
+            }
+
             return true;
         }
 
 
+
         /**
          * action after double Tap of the text area
-         * @param editText
+         *
+         * @param editText selected editText
          */
         private void doubleTapAction(EditText editText) {
+
             showAdjustIndicator(false);
             editText.setFocusable(true);
             editText.setCursorVisible(true);
             editText.requestFocus();
             editText.requestFocusFromTouch();
             editText.setSelectAllOnFocus(true);
-            if (editText.isFocused()) showKeyBoard(editText);
+            showKeyBoard(editText);
         }
 
-        /**
-         *  set the rectangle text editable
-         */
-        private void setEditable() {
-
-            final EditText editText = (EditText) selectedChild.findViewById(R.id.center_edittext);
-            if (editText == null) return;
-            editText.setGravity(Gravity.RIGHT);
-
-            if (editText.getVisibility()!=VISIBLE) {
-                editText.setVisibility(VISIBLE);
-                adjustGravity(editText);
-
-
-                /**
-                 * inner class for edittext gesture recognition
-                 */
-                final GestureDetector gestureDetector = new GestureDetector(new GestureDetector.SimpleOnGestureListener() {
-
-                    public boolean onDoubleTap(MotionEvent e) {
-                        doubleTapAction(editText);
-                        return true;
-                    }
-
-                    @Override
-                    public boolean onSingleTapUp(MotionEvent e) {
-                        if (selectedChild == null) {
-                            selectedChild = editText.getRootView();
-                        }
-                        showAdjustIndicator(true);
-                        return true;
-                    }
-
-                    @Override
-                    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-                        if (selectedChild != null) {
-                            cancelEditable();
-                            float[] validLocation = getValidLocations(-distanceX, -distanceY);
-                            selectedChild.setX(validLocation[0]);
-                            selectedChild.setY(validLocation[1]);
-                        }
-                        return true;
-
-                    }
-
-                    @Override
-                    public void onLongPress(MotionEvent e) {
-                        if (selectedChild == null)
-                            selectedChild = editText.getRootView();
-                        removeView(selectedChild);
-                    }
-
-                });
-
-                editText.setOnTouchListener(new View.OnTouchListener() {
-                    @Override
-                    public boolean onTouch(View view, MotionEvent motionEvent) {
-                        return gestureDetector.onTouchEvent(motionEvent);
-                    }
-
-                });
-
-                doubleTapAction(editText);
-
-            }
-
-        }
 
         /**
          * adjust the text location for uml components
+         *
          * @param editText text input
          */
         private void adjustGravity(EditText editText) {
-
 
             if (selectedChild != null) {
                 FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) editText.getLayoutParams();
@@ -202,19 +159,26 @@ public class CanvasLayout extends RelativeLayout {
             }
         }
 
+
+
         /**
          * show soft key board
+         *
          * @param view view triggering soft key board attached
          */
         private void showKeyBoard(View view) {
+
             InputMethodManager imm = (InputMethodManager) MyApplication.getInstance().getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT);
         }
+
+
 
         /**
          * cancel rectangle text editable
          */
         private void cancelEditable() {
+
             EditText editText = (EditText) selectedChild.findViewById(R.id.center_edittext);
             if (editText == null) return;
             closeKeyBoard(editText);
@@ -225,21 +189,28 @@ public class CanvasLayout extends RelativeLayout {
         }
 
 
+
         /**
-         * hide soft input keyborad
+         * hide soft input keyboard
+         *
          * @param view view triggering soft key board attached
          */
         private void closeKeyBoard(View view) {
+
             InputMethodManager inputMethodManager = (InputMethodManager) MyApplication.getInstance().getSystemService(Context.INPUT_METHOD_SERVICE);
             inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
         }
 
 
+
         @Override
         public boolean onDown(MotionEvent e) {
+
             selectChild(e.getX(), e.getY());
             return false;
         }
+
+
 
         @Override
         public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
@@ -255,8 +226,10 @@ public class CanvasLayout extends RelativeLayout {
         }
 
 
+
         @Override
         public boolean onSingleTapUp(MotionEvent e) {
+
             if (selectedChild != null) {
                 cancelEditable();
                 showAdjustIndicator(true);
@@ -300,7 +273,6 @@ public class CanvasLayout extends RelativeLayout {
      */
     private void selectChild(float eventX, float eventY) {
 
-
         if (selectedChild != null) showAdjustIndicator(false);
 
         for (int i = getChildCount() - 1; i >= 0; i--) {
@@ -315,9 +287,6 @@ public class CanvasLayout extends RelativeLayout {
 
         selectedChild = null;
     }
-
-
-
 
 
 

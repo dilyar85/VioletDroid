@@ -142,11 +142,11 @@ public class MainFragment extends Fragment implements RecyclerAdapter.ElementVie
     public void elementToolDoubleTapped(View view) {
 
         int tag = (int) view.getTag(R.id.view_resource_key);
-        View testLayout = getActivity().getLayoutInflater().inflate(R.layout.indicator_layout, mCanvasLayout, false);
-        ImageView targetView = (ImageView) testLayout.findViewById(R.id.center_image_view);
+        View indicatorLayout = getActivity().getLayoutInflater().inflate(R.layout.indicator_layout, mCanvasLayout, false);
+        ImageView targetView = (ImageView) indicatorLayout.findViewById(R.id.center_image_view);
         targetView.setImageResource(tag);
         targetView.setTag(tag);
-        mCanvasLayout.addView(testLayout);
+        mCanvasLayout.addView(indicatorLayout);
 
     }
 
