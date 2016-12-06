@@ -33,6 +33,8 @@ public class CanvasLayout extends RelativeLayout {
 
 
 
+
+
     /**
      * Init CustomCanvasLayout
      */
@@ -126,6 +128,18 @@ public class CanvasLayout extends RelativeLayout {
                         return true;
                     }
 
+//                    @Override
+//                    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+//                        if (selectedChild != null) {
+//                            cancelEditable();
+//                            float[] validLocation = getValidLocations(-distanceX, -distanceY);
+//                            selectedChild.setX(validLocation[0]);
+//                            selectedChild.setY(validLocation[1]);
+//                        }
+//                        return false;
+//
+//                    }
+
                     @Override
                     public boolean onSingleTapUp(MotionEvent e) {
                         if (selectedChild == null) {
@@ -136,22 +150,13 @@ public class CanvasLayout extends RelativeLayout {
                     }
 
                     @Override
-                    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-                        if (selectedChild != null) {
-                            cancelEditable();
-                            float[] validLocation = getValidLocations(-distanceX, -distanceY);
-                            selectedChild.setX(validLocation[0]);
-                            selectedChild.setY(validLocation[1]);
-                        }
-                        return true;
-
+                    public void onLongPress(MotionEvent e) {
+                        if (selectedChild != null) removeView(selectedChild);
                     }
 
                     @Override
-                    public void onLongPress(MotionEvent e) {
-                        if (selectedChild == null)
-                            selectedChild = editText.getRootView();
-                        removeView(selectedChild);
+                    public boolean onDown(MotionEvent e) {
+                        return false;
                     }
 
                 });
