@@ -12,6 +12,11 @@ public class MyApplication extends Application {
     private static MyApplication sInstance;
 
 
+
+    /**
+     * Get application instance
+     * @return the application instance
+     */
     public static Application getInstance() {
         return sInstance;
     }

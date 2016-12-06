@@ -1,4 +1,4 @@
-package com.github.dilyar85.violetdroid.activity;
+package com.github.dilyar85.violetdroid;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,6 +6,8 @@ import android.os.Handler;
 
 import com.avos.avoscloud.AVUser;
 import com.github.dilyar85.violetdroid.R;
+import com.github.dilyar85.violetdroid.activity.LoginActivity;
+import com.github.dilyar85.violetdroid.activity.MainActivity;
 
 /**
  * Splash activity, for initializing data and preparing to open the app
