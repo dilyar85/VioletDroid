@@ -35,6 +35,7 @@ public class DiagramCollectionsFragment extends Fragment {
 
      static final String BUNDLE_KEY_DIAGRAM_URL = "key_selected_diagram_url";
      static final String BUNDLE_KEY_DIAGRAM_OBJECT_ID = "key_selected_diagram_object_id";
+    static final String BUNDLE_KEY_DIAGRAM_NAME = "key_diagram_name";
 
     private List<AVObject> mDiagrams;
 
@@ -135,6 +136,7 @@ public class DiagramCollectionsFragment extends Fragment {
      */
     private void setGridViewClickEvent() {
 
+
         mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
@@ -142,12 +144,13 @@ public class DiagramCollectionsFragment extends Fragment {
 
                 AVFile diagramFile = mDiagrams.get(position).getAVFile(MainFragment.LeanCloudConstant.DIAGRAM_OBJECT_KEY_FILE);
                 String diagramUrl = diagramFile.getUrl();
-
+                String diagramName = diagramFile.getOriginalName();
                 String objectId = mDiagrams.get(position).getObjectId();
 
                 DiagramDetailFragment diagramDetailFragment = new DiagramDetailFragment();
                 Bundle bundle = new Bundle();
                 bundle.putString(BUNDLE_KEY_DIAGRAM_URL, diagramUrl);
+                bundle.putString(BUNDLE_KEY_DIAGRAM_NAME, diagramName);
                 bundle.putString(BUNDLE_KEY_DIAGRAM_OBJECT_ID, objectId);
                 diagramDetailFragment.setArguments(bundle);
 

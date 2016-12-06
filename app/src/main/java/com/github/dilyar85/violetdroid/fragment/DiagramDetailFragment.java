@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.avos.avoscloud.AVException;
@@ -34,6 +35,8 @@ public class DiagramDetailFragment extends Fragment {
     private static final String LOG_TAG = DiagramDetailFragment.class.getSimpleName();
     @BindView(R.id.selected_imageView)
     ImageView mImageView;
+    @BindView(R.id.detail_diagram_name_textview)
+    TextView mTextView;
 
 
 
@@ -89,6 +92,10 @@ public class DiagramDetailFragment extends Fragment {
         String diagramUrl = bundle.getString(DiagramCollectionsFragment.BUNDLE_KEY_DIAGRAM_URL);
         if (diagramUrl != null)
             ImageLoader.getInstance().loadImageWithPath(diagramUrl, mImageView);
+        String diagramName = bundle.getString(DiagramCollectionsFragment.BUNDLE_KEY_DIAGRAM_NAME);
+        if (diagramName != null)
+            mTextView.setText(diagramName);
+
 
     }
 
