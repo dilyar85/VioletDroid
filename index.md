@@ -7,13 +7,10 @@ VioletDroid is an Android app that allows users to draw **UML** diagrams on thei
 
 # Android Framework
 * VioletDroid uses Activity - Fragment template to accomplish its major feature. 
-<img src="https://github.com/dilyar85/VioletDroid/blob/master/screenshots/activity_fragment_pkg.png" alt="activity_fragment_img" height="400"> 
 
 * RecyclerView with corresponding adapter displays the elements needed in UML diagrams.  
-<img src="https://raw.github.com/dilyar85/TwoThreeTree-Java/master/screenshots/adapter_pkg.png" alt="recycler_adapter_img" height="400" > 
 
-* Custom View class to display and modify current diagrams.  
-<img src="https://github.com/dilyar85/VioletDroid/blob/master/screenshots/view_pkg.png" alt="customview_img" height="400" > 
+* Custom View class to display and modify current diagrams.   
 
 
 # Design Patterns
