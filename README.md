@@ -1,4 +1,4 @@
-# Introduction 
+## Introduction 
 VioletDroid is a CS educational app for drawing UML diagrams on Android devices.  
 • Draws class & sequence diagrams to visualize the design of program   
 • Synchronizes diagrams in backend database using LeanCloud   
@@ -15,7 +15,7 @@ VioletDroid is a CS educational app for drawing UML diagrams on Android devices.
 <img src="https://github.com/dilyar85/VioletDroid/blob/master/screenshots/gif-11:16.gif" alt="current_screenshots_image" width="300">
 
 
-# Android Framework
+## Android Framework
 * VioletDroid uses Activity - Fragment template to accomplish its major feature. 
 
 * RecyclerView with corresponding adapter displays the elements needed in UML diagrams.  
@@ -23,7 +23,7 @@ VioletDroid is a CS educational app for drawing UML diagrams on Android devices.
 * Custom View class to display and modify current diagrams.   
 
 
-# Design Patterns
+## Design Patterns
 VioletDroid uses three major design patterns: Decorator Pattern, Composite Pattern, and Observer Pattern.
 
 * **Decorator Pattern**：  
@@ -38,15 +38,15 @@ The composite pattern is used in the VioletDroid CanvasLayout class which extend
 The observer pattern is another very common occurrence in User Interface design, particularly with Graphical User Interfaces, since the signal for the application to do something comes from the user’s interaction with elements on-screen, those elements must somehow notify the application what has happened - hence the listeners involved in an observer pattern:  
 <img src="https://github.com/dilyar85/VioletDroid/blob/master/screenshots/observer_pattern.png" alt="pattern_img" height="200">
 
-# Service Framework
+## Service Framework
 We utilized a cloud service framework called **LeanCloud** in our project to facilitate user account maintenance and saving of diagrams. It's based on AWS but it is much more convenient for developers:
 * No need to write codes for backend service and database.
 * Easy to implement, support importing through Gradle.
 * Free if there are under **1 million** requests per day.  
-<img src= "https://github.com/dilyar85/VioletDroid/blob/master/screenshots/leancloud_icon.png" alt="LeanCloud Logo" height="200">
+<img src= "https://github.com/dilyar85/VioletDroid/blob/master/screenshots/leancloud_icon.png" alt="LeanCloud Logo" height="80">
 
 
-# How to Run
+## How to Run
 1. Start your emulator (highly recommend Genymotion)
 2. Via bash, navigate to the VioletDroid project folder:  
 `~ $ cd the_path_to_violetdroid_in_your_laptop/`
