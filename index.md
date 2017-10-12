@@ -1,0 +1,52 @@
+# Introduction 
+
+VioletDroid is an Android app that allows users to draw **UML** diagrams on their phones and tablets.  
+
+<img src="https://raw.githubusercontent.com/dilyar85/TwoThreeTree-Java/master/screenshots/main_screen.png" height="500" >
+
+
+# Android Framework
+* VioletDroid uses Activity - Fragment template to accomplish its major feature. 
+<img src="https://raw.github.com/dilyar85/TwoThreeTree-Java/master/screenshots/activity_fragment_pkg.png" alt="activity_fragment_img" height="400"> 
+
+* RecyclerView with corresponding adapter displays the elements needed in UML diagrams.  
+<img src="https://raw.github.com/dilyar85/TwoThreeTree-Java/master/screenshots/adapter_pkg.png" alt="recycler_adapter_img" height="400" > 
+
+* Custom View class to display and modify current diagrams.  
+<img src="https://raw.github.com/dilyar85/TwoThreeTree-Java/master/screenshots/view_pkg.png" alt="customview_img" height="400" > 
+
+
+# Design Patterns
+VioletDroid uses three major design patterns: Decorator Pattern, Composite Pattern, and Observer Pattern.
+
+* **Decorator Pattern**：  
+RecyclerAdapter class extends Android’s native RecyclerView.Adapter to display the icons in the toolbar menu as a scrolling dataset of images.  This is an example of the decorator pattern used in the Android API—RecyclerView essentially decorates an Android ViewGroup to provide the additional scrolling functionality and link to a dataset of assets for the view.  The following table represents this pattern:  
+<img src="https://raw.github.com/dilyar85/TwoThreeTree-Java/master/screenshots/decorator_pattern.png" alt="pattern_img" height="200">
+
+* **Composite Pattern**：  
+The composite pattern is used in the VioletDroid CanvasLayout class which extends Android’s native RelativeLayout class, which extends the ViewGroup abstract class which extends View.  So CanvasLayout is a ViewGroup, which is a View that can contain other Views.  The following table represents this pattern in our project:  
+<img src="https://raw.github.com/dilyar85/TwoThreeTree-Java/master/screenshots/composite_pattern.png" alt="pattern_img" height="200">
+
+* **Observer Pattern**：  
+The observer pattern is another very common occurrence in User Interface design, particularly with Graphical User Interfaces, since the signal for the application to do something comes from the user’s interaction with elements on-screen, those elements must somehow notify the application what has happened - hence the listeners involved in an observer pattern:  
+<img src="https://raw.github.com/dilyar85/TwoThreeTree-Java/master/screenshots/observer_pattern.png" alt="pattern_img" height="200">
+
+# Service Framework
+We utilized a cloud service framework called **LeanCloud** in our project to facilitate user account maintenance and saving of diagrams. It's based on AWS but it is much more convenient for developers:
+* No need to write codes for backend service and database.
+* Easy to implement, support importing through Gradle.
+* Free if there are under **1 million** requests per day.  
+<a href= "https://leancloud.cn/"><img src="https://raw.github.com/dilyar85/TwoThreeTree-Java/master/screenshots/leancloud_icon.png" alt="service_img" height="200">
+
+
+# Run Demo
+1. Start your emulator (highly recommend Genymotion)
+2. Via bash, navigate to the VioletDroid project folder:  
+`~ $ cd the_path_to_violetdroid_in_your_laptop/`
+3. Execute just one line in your terminal:  
+`~ $ ./exec.sh`
+
+
+# Downloads  
+<a href='https://play.google.com/store/apps/details?id=com.dilyar.weather.app&utm_source=global_co&utm_medium=prtnr&utm_content=Mar2515&utm_campaign=PartBadge&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img height="150" alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png'/></a>
+
