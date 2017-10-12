@@ -1,6 +1,9 @@
 # Introduction 
 
-VioletDroid is an Android app that allows users to draw **UML** diagrams on their phones and tablets.  
+VioletDroid is a CS educational app for drawing UML diagrams on Android devices.  
+• Draws class & sequence diagrams to visualize the design of program   
+• Synchronizes diagrams in backend database using LeanCloud   
+• Enables sharing completed diagrams via email, Facebook, SMS, etc.   
 
 <img src="https://github.com/dilyar85/VioletDroid/blob/master/screenshots/main_screen.png" alt="Main Screenshot" height="500" >
 
