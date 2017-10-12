@@ -15,6 +15,14 @@ VioletDroid is a CS educational app for drawing UML diagrams on Android devices.
 
 * Custom View class to display and modify current diagrams.   
 
+# Demonstration
+- Swipe tool bar to view all available digrams there.  
+- Double tap to add one to the canvas below.   
+- Drag digram on cavans can make it moving with your finger.   
+- Single tap to show its indicator.   
+- Click the resizing button and scale the diagram as you want.   
+- Long press to remove the diagram on canvas.  
+<img src="https://github.com/dilyar85/VioletDroid/blob/master/screenshots/gif-11:16.gif" alt="current_screenshots_image" width="300">
 
 # Design Patterns
 VioletDroid uses three major design patterns: Decorator Pattern, Composite Pattern, and Observer Pattern.
