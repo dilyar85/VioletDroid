@@ -33,7 +33,7 @@ We utilized a cloud service framework called **LeanCloud** in our project to fac
 * No need to write codes for backend service and database.
 * Easy to implement, support importing through Gradle.
 * Free if there are under **1 million** requests per day.  
-<a href= "https://github.com/dilyar85/VioletDroid/blob/master/screenshots/leancloud_icon.png" alt="service_img" height="200">
+<img src= "https://github.com/dilyar85/VioletDroid/blob/master/screenshots/leancloud_icon.png" alt="LeanCloud Logo" height="200">
 
 
 # How to Run
